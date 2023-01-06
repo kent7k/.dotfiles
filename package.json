@@ -1,0 +1,45 @@
+{
+  "name": "integrate-prettier-with-eslint",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.47.0",
+    "@typescript-eslint/parser": "5.47.0",
+    "eslint": "8.30.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "17.0.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsx-a11y": "6.6.1",
+    "eslint-plugin-simple-import-sort": "8.0.0",
+    "eslint-plugin-sort-export-all": "1.2.2",
+    "husky": "8.0.2",
+    "lint-staged": "13.1.0",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.8.1",
+    "stylelint": "14.16.0",
+    "stylelint-config-prettier": "9.0.4",
+    "stylelint-config-recess-order": "3.1.0",
+    "typescript": "4.9.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged --no-stash"
+    }
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "fix": "npm-run-all -p fix:*",
+    "fix:code": "run-s format:eslint format:prettier",
+    "fix:style": "stylelint --fix 'src/**/*.{css,scss}'",
+    "format:eslint": "yarn lint:eslint --fix",
+    "format:prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "run-p -l lint:*",
+    "lint:eslint": "eslint --cache 'src/**/*.ts{,x}'",
+    "lint:locale": "comparejson -e ./src/locales/*.json",
+    "lint:md": "markdownlint README.md",
+    "lint:style": "stylelint 'src/**/*.{css,scss}'",
+    "postinstall": "husky install",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "version": "0.1.0"
+}
