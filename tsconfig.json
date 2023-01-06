@@ -24,11 +24,9 @@
   },
   "exclude": [
     "node_modules",
-    ".next",
     "out"
   ],
   "include": [
     "src",
-    "next-env.d.ts"
   ]
 }
