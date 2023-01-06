@@ -26,7 +26,5 @@
     "node_modules",
     "out"
   ],
-  "include": [
-    "src",
-  ]
+  "include": []
 }

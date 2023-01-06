@@ -58,8 +58,6 @@ module.exports = {
           '**/*.setup.{js,ts}',
           '**/*.config.{js,ts}',
           '**/*.spec.{ts,tsx}',
-          '**/.storybook/**/*.{ts,tsx}',
-          '**/*.stories.{ts,tsx}',
           '**/__fixtures__/**/*.{ts,tsx}',
           '**/mocks/**/*.{ts,tsx}',
         ],
