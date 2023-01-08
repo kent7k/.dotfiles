@@ -14,7 +14,7 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Load a few important annexes, without Turbo (this is currently required for annexes)
+# Loads a few important annexes, without Turbo (this is currently required for annexes).
 zinit light-mode for \
     zdharma-continuum/zinit-annex-as-monitor \
     zdharma-continuum/zinit-annex-bin-gem-node \
@@ -26,15 +26,18 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-# secrets
+# Loads secrets.
 if [ -e ~/.secrets ]; then
   source ~/.secrets
 fi
 
-# Configs of zsh
+# Sets basic configs of zsh
 setopt interactivecomments
 setopt nonomatch
 
-# Loading Configs about zsh
+# Loads configs about zsh.
 export DOT_FILES=$HOME/ghq/.dotfiles
 for config_file ($DOT_FILES/.zsh/**/*.zsh) source $config_file
+
+# Loads Configs about zsh.
+alias sh2='source ~/.zshrc'

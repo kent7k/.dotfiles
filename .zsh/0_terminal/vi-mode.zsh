@@ -1,4 +1,4 @@
-# The setting for using vim as nvim
+# Sets for using vim as nvim.
 
 set -o vi
 export EDITOR=vim
@@ -12,5 +12,5 @@ if [ $MACVIM_INSTALLED -eq 0 ]; then
   alias vim="mvim -v"
 fi
 
-# mimic vim functions
+# Sets mimic vim functions.
 alias :q='exit'

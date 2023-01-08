@@ -1,4 +1,4 @@
-# Override rm -i alias which makes rm prompt for every action
+# Overrides rm -i alias which makes rm prompt for every action.
 # ------------------------
 # When nocorrect isn't set, zsh will try to correct a misspelled command. But it's not always what you want.
 # $ nslooku

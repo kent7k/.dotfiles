@@ -13,18 +13,18 @@
 function dividePaneIntoQuarters () {
   cd "$1" || exit
 
-  # Set both 1st & 2nd quadrant (= 象限 in Japanese)
+  # Sets both 1st & 2nd quadrant (= 象限 in Japanese).
     tmux split-window -v -p 50
     tmux select-pane -t 1
     tmux split-window -h -p 50
 
-  # Set both 3rd & 4th quadrant
+  # Sets both 3rd & 4th quadrant.
     tmux select-pane -t 3; sleep 0.5
     tmux split-window -h -p 50
     tmux send-keys -t 3 "cd $2" C-m
     tmux send-keys -t 4 "cd $2" C-m
 
-  # Clear & select-pane -t 1
+  # Clears & Returns to the first pane.
     for i in {1..4}; do tmux send-keys -t "$i" "clear" C-m; done
     tmux select-pane -t 1
 }
@@ -50,7 +50,7 @@ function dividePaneIntoThirdsTypeNormalT () {
 }
 
 function dividePaneIntoThirdsTypeJapaneseUp () {
-    # JapaneseUp means Character '上' in Japanese
+    # JapaneseUp means Character '上 = up' in Japanese.
     cd "$1" || exit
     tmux split-window -v
     tmux select-pane -t 1
@@ -72,7 +72,9 @@ function killAllPanes() {
     tmux send-keys -t "$i" C-c;
   done
 
-  sleep 4 # sleep 1 wouldn't work "tmux kill-pane".
+  # Command 'sleep 1' wouldn't work "tmux kill-pane" in time.
+  # Because Docker completes to down, a framework completes to stop, etc.
+  sleep 4
 
   # TODO: Set the upper limit by getting the last number of a tmux-pane; 10 is just a big number.
   for i in {2..10}; do

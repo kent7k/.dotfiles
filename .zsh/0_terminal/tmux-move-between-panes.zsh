@@ -2,7 +2,7 @@
 # When you use shell, editor, Fuzzy Finder, etc..., you should use unique commands (like C-h or C-k) on each process.
 # For movements of pane (C-h,j,k,l), they are not conflict with other commands as follows:
 # - 1: Shell checks if the process is tmux, zsh, vim.
-# - 2: If the process is tmux, tmux sends the command for movement between panes.
+# - 2: If the process is tmux, it sends the command for movement between panes.
 
 function _left-pane() {
   tmux select-pane -L
