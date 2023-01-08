@@ -1,4 +1,4 @@
-# cdd - cd to selected directory one accessed before
+# cdd - cd to selected directory directly one accessed before
 alias cdd='fzf-cdr'
 function fzf-cdr() {
     target_dir=`cdr -l | sed 's/^[^ ][^ ]*  *//' | fzf`
@@ -8,8 +8,8 @@ function fzf-cdr() {
     fi
 }
 
-# cdd - cd to selected directory of repository
-alias cdd='fzf-cdr'
+# cdr - cd to selected directory of repository
+alias cdr='fzf-cdr'
 function ghq-fzf() {
   local src=$(ghq list | fzf --preview "ls -laTp $(ghq root)/{} | tail -n+4 | awk '{print \$9\"/\"\$6\"/\"\$7 \" \" \$10}'")
   if [ -n "$src" ]; then
