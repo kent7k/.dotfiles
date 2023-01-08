@@ -9,5 +9,5 @@ export FZF_CTRL_T_OPTS='--preview "bat  --color=always --style=header,grid --lin
 
 # Browses files with fzf and bat
 # shellcheck disable=SC2142
-TODO: LINT
+# TODO: LINT
 alias ff='(){ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/$1.*"}'
