@@ -5,4 +5,4 @@
 # echo '{"message":"Hello!"}' | teee | jq -r .message
 # => Hello!
 # ---------------------------------------------------
-alias teee='tee >(pbcopy)'
+alias tree='tee >(pbcopy)'
