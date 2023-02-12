@@ -9,7 +9,7 @@ function git_add() {
     echo -e "$(c_light_gray "Added file:")"
     while read -r file; do
       git add "$file"
-    echo -e "$(c_cyan "    $added_files")"
+    echo -e "$(c_cyan "  - $added_files")"
     done <<< "$added_files"
     use_commit
   else
@@ -30,9 +30,9 @@ function use_commit() {
 
 alias gic='git_commit'
 function git_commit() {
-       echo
        echo "$(c_green "What's the commit name?") (Y/n)"
        read -r COMMIT_NAME;
+       echo
        echo "$(c_green "Do you want to use --no-verify option?") (Y/n)"
        read -r VERIFY
        if [ "$VERIFY" = "y" ] || [ -z "$VERIFY" ]; then
@@ -44,6 +44,7 @@ function git_commit() {
 }
 
 function git_push() {
+       echo
        echo "$(c_green "Do you want to push now") (Y/n)?"
        read -r CONFIRM_PUSH;
        if [ "$CONFIRM_PUSH" = "y" ] || [ -z "$CONFIRM_PUSH" ]; then
