@@ -1,3 +1,4 @@
+
 # Sets GitHub CLI setting for completion
 eval "$(gh completion -s zsh)"
 
@@ -6,39 +7,28 @@ __git_files () {
     _wanted files expl 'local files' _files
 }
 
-# Opens the project repository in browser
-alias ghb='gh browse'
-
 # Makes git logs more readable
 alias gitlog="ghq list | fzf --preview "git --git-dir $(ghq root)/{}/.git log --date=short --pretty=format:'-%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --color""
 
 # Makes git more easy to command
-# TODO: Makes workflows or Moves to navi, or Uses Fig.
-alias gist='git status'
+
+alias gist='git status -s'
 alias gilo='git log --oneline --graph'
 alias girl='git reflog'
 alias giba='git branch -a'
-alias gia='(){git add $1}'
-alias gic='(){git commit -m $1}'
-alias gica='(){git commit -am $1}'
-alias gip='git push'
+
+
 
 # Pushes to the develop branch.
 gmpd () {
     git pull origin develop
-    echo "Type branche name to merge : " && read branch;
-    git merge ${branch};
+    echo "Type the branch name to merge : " && read branch;
+    git merge "${branch}";
     git status;
     echo "Is it okay to continue?" && read;
     git push origin develop
 }
 
-# Pushes all changes to current branch.
-gcom () {
-    git add . && git status
-    echo "Type commit comment" && read comment;
-    git commit -m ${comment} && git push origin HEAD
-}
 
 # Creates a new repository.
 alias ghcr='ghcr'
