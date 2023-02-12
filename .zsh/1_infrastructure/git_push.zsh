@@ -15,24 +15,24 @@ function git_add() {
   fi
 }
 
-alias gic='gic'
 function use_commit() {
-          echo "Do you want to commit now (y/n)?"
-          read -r -n 1 CONFIRM;
-          if [ "$CONFIRM" == "y" ]; then
-            git_commit
-          else
-            echo "Okay, you can commit later."
-          fi
+        echo "Do you want to commit now (Y/n)?"
+        read -r CONFIRM_CONFIRM;
+  if [ "$CONFIRM_CONFIRM" = "y" ] || [ -z "$CONFIRM_CONFIRM" ]; then
+      git_commit
+  else
+        echo "Okay, you can commit later."
+  fi
 }
 
+alias gic='git_commit'
 function git_commit() {
+       # gic = git commit.
        echo "What's the commit name?"
        read -r COMMIT_NAME;
-       echo "Do you want to use --no-verify option? (y/n) [n]:"
-       read -r -n 1 VERIFY
-       VERIFY=${VERIFY:-n}
-       if [ "$VERIFY" = "y" ]; then
+       echo "Do you want to use --no-verify option? (Y/n)"
+       read -r VERIFY
+       if [ "$VERIFY" = "y" ] || [ -z "$VERIFY" ]; then
          git commit -m "$COMMIT_NAME" --no-verify
        else
          git commit -m "$COMMIT_NAME"
@@ -41,9 +41,9 @@ function git_commit() {
 }
 
 function git_push() {
-       echo "Do you want to push now (y/n)?"
-       read -r CONFIRM;
-       if [ "$CONFIRM" == "y" ]; then
+       echo "$(c_green "Do you want to push now") (Y/n)?"
+       read -r CONFIRM_PUSH;
+       if [ "$CONFIRM_PUSH" = "y" ] || [ -z "$CONFIRM_PUSH" ]; then
          git push
        else
          echo "Okay, you can push later."
