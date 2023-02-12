@@ -30,7 +30,7 @@ function use_commit() {
 
 alias gic='git_commit'
 function git_commit() {
-       echo "$(c_green "? Commit name?") (Y/n)"
+       echo -e "$(c_green "? Commit name")"
        read -r COMMIT_NAME;
        echo
        echo "$(c_green "Do you want to use --no-verify option?") (Y/n)"
@@ -76,11 +76,6 @@ function create_pr() {
 
 alias ghb='open_pr'
 function open_pr() {
-  echo
-  echo "$(c_green "Open the pull request now?") (Y/n)"
-         read -r CONFIRM_PR;
-         if [ "$CONFIRM_PR" = "y" ] || [ -z "$CONFIRM_PR" ]; then
-
   select_pr=$(gh pr list --state=open | fzf --preview='echo {}')
   pr_number=$(echo "$select_pr" | awk '{print $1}')
   open "$(gh pr view "$pr_number" --web)"
