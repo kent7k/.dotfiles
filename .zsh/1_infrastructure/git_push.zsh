@@ -9,7 +9,7 @@ function git_add() {
     echo -e "$(c_light_gray "Added file:")"
     while read -r file; do
       git add "$file"
-    echo -e "$(c_cyan "  - $added_files")"
+    echo -e "$(c_cyan "  - $file")"
     done <<< "$added_files"
     use_commit
   else
@@ -30,7 +30,7 @@ function use_commit() {
 
 alias gic='git_commit'
 function git_commit() {
-       echo "$(c_green "What's the commit name?") (Y/n)"
+       echo "$(c_green "? Commit name?") (Y/n)"
        read -r COMMIT_NAME;
        echo
        echo "$(c_green "Do you want to use --no-verify option?") (Y/n)"
@@ -45,11 +45,47 @@ function git_commit() {
 
 function git_push() {
        echo
-       echo "$(c_green "Do you want to push now") (Y/n)?"
+       echo "$(c_green "Do you want to push now?") (Y/n)?"
        read -r CONFIRM_PUSH;
        if [ "$CONFIRM_PUSH" = "y" ] || [ -z "$CONFIRM_PUSH" ]; then
          git push
+         create_or_open_pr
        else
          echo "Okay, you can push later."
        fi
+}
+
+function create_or_open_pr() {
+      echo
+      echo "$(c_green "Do you want to create/open a pull request?") ( [end] / c: create / o: open)"
+      read -r CREATE_PR;
+      if [ "$CREATE_PR" = "c" ]; then
+        create_pr
+      elif [ "$CREATE_PR" = "o" ]; then
+        open_pr
+      else
+        echo "Okay, you can create/open a pull request later."
+      fi
+}
+
+function create_pr() {
+           current_branch=$(git branch | grep \* | cut -d ' ' -f2)
+           gh pr create --base=main --head="$current_branch"
+           open_pr
+}
+
+alias ghb='open_pr'
+function open_pr() {
+  echo
+  echo "$(c_green "Open the pull request now?") (Y/n)"
+         read -r CONFIRM_PR;
+         if [ "$CONFIRM_PR" = "y" ] || [ -z "$CONFIRM_PR" ]; then
+
+  select_pr=$(gh pr list --state=open | fzf --preview='echo {}')
+  pr_number=$(echo "$select_pr" | awk '{print $1}')
+  open "$(gh pr view "$pr_number" --web)"
+
+         else
+           echo "Okay, you can push later."
+         fi
 }
