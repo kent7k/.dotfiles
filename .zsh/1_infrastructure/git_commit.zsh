@@ -11,6 +11,16 @@ function git_add() {
       git add "$file"
       echo -e "$(c_cyan "  - $file")"
     done <<<"$added_files"
+
+    added_untracked_files=$(git ls-files --others --exclude-standard | fzf --multi)
+    if [ -n "$added_untracked_files" ]; then
+      echo -e "$(c_light_gray "Added untracked file:")"
+      while IFS= read -r file; do
+        git add "$file"
+        echo -e "$(c_cyan "  - $file")"
+      done <<<"$added_untracked_files"
+    fi
+
     use_commit
   else
     echo "No files selected."
@@ -79,4 +89,16 @@ function open_pr() {
   select_pr=$(gh pr list --state=open | fzf --preview='echo {}')
   pr_number=$(echo "$select_pr" | awk '{print $1}')
   open "$(gh pr view "$pr_number" --web)"
+}
+
+#---------- Other files are related to this function ----------#
+function git_force_push() {
+  echo
+  echo "$(c_green "Do you want to force push now?") (Y/n)?"
+  read -r CONFIRM_FORCE_PUSH
+  if [ "$CONFIRM_FORCE_PUSH" = "y" ] || [ -z "$CONFIRM_FORCE_PUSH" ]; then
+    git push --force-with-lease
+  else
+    echo "Okay, you can push later."
+  fi
 }
