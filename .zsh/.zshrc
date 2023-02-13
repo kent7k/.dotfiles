@@ -1,6 +1,5 @@
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -36,8 +35,17 @@ setopt interactivecomments
 setopt nonomatch
 
 # Loads configs about zsh.
-export DOT_FILES=$HOME/ghq/.dotfiles
+export DOT_FILES="$HOME/ghq/.dotfiles"
+export OBSIDIAN_FILES="$HOME/Downloads/Kemari"
+
 for config_file ($DOT_FILES/.zsh/**/*.zsh) source $config_file
 
 # Loads Configs about zsh.
 alias sh2='source ~/.zshrc'
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+

@@ -1,9 +1,4 @@
-const path = require('path')
-
-const rootDir = __dirname
-
 const OFF = 0
-const WARNING = 1
 const ERROR = 2
 
 module.exports = {
@@ -24,7 +19,6 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    tsconfigRootDir: rootDir,
     project: 'tsconfig.json',
   },
 
