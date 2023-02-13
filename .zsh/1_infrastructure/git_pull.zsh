@@ -16,11 +16,10 @@ function git_fetch_merge() {
     return
   fi
 
-  CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
+  call_current_branch
 
   git diff "$CURRENT_BRANCH" origin/"$MERGED_BRANCH"
-  echo
-  echo "$(c_green "Do you want to merge main to current branch now?") (y/N)"
+  printf "\n%s\n" "$(c_green "Do you want to merge main to current branch now?") (y/N)"
   read -r CONFIRM_MERGE
   if [ "$CONFIRM_MERGE" = "y" ]; then
     git merge origin/"$MERGED_BRANCH"

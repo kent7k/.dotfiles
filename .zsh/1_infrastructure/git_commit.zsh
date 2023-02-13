@@ -36,8 +36,7 @@ function git_add_untracked_files() {
 }
 
 function use_commit() {
-  echo
-  echo "$(c_green "Do you want to commit files above?") (Y/n)"
+  printf "\n%s\n" "$(c_green "Do you want to commit files above?") (Y/n)"
   read -r CONFIRM_CONFIRM
   if [ "$CONFIRM_CONFIRM" = "y" ] || [ -z "$CONFIRM_CONFIRM" ]; then
     git_commit
@@ -50,8 +49,7 @@ alias gic='git_commit'
 function git_commit() {
   echo -e "$(c_green "? Commit name")"
   read -r COMMIT_NAME
-  echo
-  echo "$(c_green "Do you want to use --no-verify option?") (Y/n)"
+  printf "\n%s\n" "$(c_green "Do you want to use --no-verify option?") (Y/n)"
   read -r VERIFY
   if [ "$VERIFY" = "y" ] || [ -z "$VERIFY" ]; then
     git commit -m "$COMMIT_NAME" --no-verify
@@ -62,8 +60,7 @@ function git_commit() {
 }
 
 function git_push() {
-  echo
-  echo "$(c_green "Do you want to push now?") (Y/n)?"
+  printf "\n%s\n" "$(c_green "Do you want to push now?") (Y/n)?"
   read -r CONFIRM_PUSH
   if [ "$CONFIRM_PUSH" = "y" ] || [ -z "$CONFIRM_PUSH" ]; then
     git push
@@ -74,8 +71,7 @@ function git_push() {
 }
 
 function create_or_open_pr() {
-  echo
-  echo "$(c_green "Do you want to create/open a pull request?") ( [end] / c: create / o: open)"
+  printf "\n%s\n" "$(c_green "Do you want to create/open a pull request?") ( [end] / c: create / o: open)"
   read -r CREATE_PR
   if [ "$CREATE_PR" = "c" ]; then
     create_pr
@@ -87,22 +83,25 @@ function create_or_open_pr() {
 }
 
 function create_pr() {
-  current_branch=$(git branch | grep \* | cut -d ' ' -f2)
-  gh pr create --base=main --head="$current_branch"
+  call_current_branch
+  gh pr create --base=main --head="$CURRENT_BRANCH"
   open_pr
 }
 
 alias ghb='open_pr'
 function open_pr() {
-  select_pr=$(gh pr list --state=open | fzf --preview='echo {}')
-  pr_number=$(echo "$select_pr" | awk '{print $1}')
-  open "$(gh pr view "$pr_number" --web)"
+  get_pr_number
+  if [[ -n $PR_NAMBER ]]; then
+    pr_number=$(echo "$PR_NAMBER" | awk '{print $1}')
+    open "$(gh pr view "$pr_number" --web)"
+  else
+    get_owner_and_repo
+    open "https://github.com/${GET_OWNER_AND_REPO}"
+  fi
 }
 
-#---------- Other files are related to this function ----------#
-function git_force_push() {
-  echo
-  echo "$(c_green "Do you want to force push now?") (Y/n)?"
+function git_force_push() { #---------- Other files are related to this function ----------#
+  printf "\n%s\n" "$(c_green "Do you want to force push now?") (Y/n)?"
   read -r CONFIRM_FORCE_PUSH
   if [ "$CONFIRM_FORCE_PUSH" = "y" ] || [ -z "$CONFIRM_FORCE_PUSH" ]; then
     git push --force-with-lease

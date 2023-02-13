@@ -11,25 +11,11 @@ alias giba='git branch -a'
 
 # Pushes to the develop branch.
 gipm() {
-  read -r -p "Which branch do you want to merge? (main or develop) " branch
-  if [ -z "$branch" ]; then
-    git pull origin main
-  else
-    git pull origin develop
-  fi
-
-  read -r -p "Type the branch name to merge: " branch_to_merge
-  git merge "$branch_to_merge"
-
+  echo -e "$(c_green "Which branch do you want to merge?")"
+  access_main_or_develop_by "git fetch origin"
+  read -r -p "Type the branch name to merge: " BRANCH_TO_MERGE
+  git merge "$BRANCH_TO_MERGE"
   git status
-  read -r -p "Is it okay to continue? (yes or no) " answer
-  if [ "$answer" = "yes" ]; then
-    if [ "$branch" = "main" ]; then
-      git push origin main
-    else
-      git push origin develop
-    fi
-  fi
 }
 
 # Creates a new repository.
@@ -55,8 +41,7 @@ function create_repository() {
 
 alias gire='git_reset'
 function git_reset() {
-  echo
-  echo "$(c_green "Do you want to reset repository?") (y/N)"
+  printf "\n%s\n" "$(c_green "Do you want to reset repository?") (y/N)"
   read -r CONFIRM_RESET
   if [ "$CONFIRM_RESET" = "y" ]; then
     echo -e "$(c_green "  1: Return back 'add' (=Unstage everything)")"
@@ -79,15 +64,9 @@ function git_reset() {
 }
 
 function git_clean_untracked_files() {
-  git clean -dn
-  echo
-  echo "$(c_green "Do you want to clean files above?") (y/N)"
-  read -r CONFIRM_CLEAN
-  if [ "$CONFIRM_CLEAN" = "y" ]; then
-    git clean -df
-  else
-    echo "Okay, you can clean files later."
-  fi
+  # FIXME
+  printf "\n%s\n" "$(c_green "Do you want to clean files?")"
+  git clean -i
 }
 
 function reset_repository_commit_log() {
