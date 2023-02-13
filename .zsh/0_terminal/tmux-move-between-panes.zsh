@@ -27,7 +27,7 @@ zle -N right-pane _right-pane
 function _backspace-or-left-pane() {
   if [[ $#BUFFER -gt 0 ]]; then
     zle backward-delete-char
-  elif [[ ! -z ${TMUX} ]]; then
+  elif [[ -n ${TMUX} ]]; then
     zle left-pane
   fi
 }
@@ -36,7 +36,7 @@ zle -N backspace-or-left-pane _backspace-or-left-pane
 function _kill-line-or-up-pane() {
   if [[ $#BUFFER -gt 0 ]]; then
     zle kill-line
-  elif [[ ! -z ${TMUX} ]]; then
+  elif [[ -n ${TMUX} ]]; then
     zle up-pane
   fi
 }
@@ -45,7 +45,7 @@ zle -N kill-line-or-up-pane _kill-line-or-up-pane
 function _accept-line-or-down-pane() {
   if [[ $#BUFFER -gt 0 ]]; then
     zle accept-line
-  elif [[ ! -z ${TMUX} ]]; then
+  elif [[ -n ${TMUX} ]]; then
     zle down-pane
   fi
 }

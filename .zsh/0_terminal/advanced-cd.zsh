@@ -1,11 +1,11 @@
 # cdd - cd to selected directory directly one accessed before
 alias cdd='fzf-cdr'
 function fzf-cdr() {
-    target_dir=`cdr -l | sed 's/^[^ ][^ ]*  *//' | fzf`
-    target_dir=`echo ${target_dir/\~/$HOME}`
-    if [ -n "$target_dir" ]; then
-        cd $target_dir
-    fi
+  target_dir=$(cdr -l | sed 's/^[^ ][^ ]*  *//' | fzf)
+  target_dir=$(echo ${target_dir/\~/$HOME})
+  if [ -n "$target_dir" ]; then
+    cd $target_dir
+  fi
 }
 
 # cdr - cd to selected directory of repository
@@ -27,8 +27,6 @@ bindkey '^]' ghq-fzf
 fd() {
   local dir
   dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
+    -o -type d -print 2>/dev/null | fzf +m) &&
+    cd "$dir"
 }
-
-

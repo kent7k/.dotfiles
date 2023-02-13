@@ -6,6 +6,6 @@
 # ------------------------
 # alias rm='nocorrect rm'
 
-if type trash > /dev/null 2>&1; then
-    alias rm='trash -r'
+if type trash >/dev/null 2>&1; then
+  alias rm='trash -r'
 fi

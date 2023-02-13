@@ -1,9 +1,10 @@
 # Selects a container by fzf, then run it.
 fdup() {
   local cid
-  cid=$(docker ps -a \
-  | fzf -m --header-lines=1  \
-  | awk '{print $NF}' \
+  cid=$(
+    docker ps -a |
+      fzf -m --header-lines=1 |
+      awk '{print $NF}'
   )
   [ -n "$cid" ] && echo $cid | xargs docker-compose up
 }
@@ -11,10 +12,11 @@ fdup() {
 # Selects a container by fzf, then remove it.
 fdrm() {
   local cid
-  cid=$(docker ps -a \
-  | sed 1d \
-  | fzf -m -q "$1" \
-  | awk '{print $1}'\
+  cid=$(
+    docker ps -a |
+      sed 1d |
+      fzf -m -q "$1" |
+      awk '{print $1}'
   )
   [ -n "$cid" ] && echo $cid | xargs docker rm -f
 }
@@ -32,9 +34,10 @@ docker-run() {
 # Selects a image by fzf, then remove it.
 fdrmi() {
   local cid
-  cid=$(docker images \
-  | fzf -m --header-lines=1  \
-  | awk '{print $3}'\
+  cid=$(
+    docker images |
+      fzf -m --header-lines=1 |
+      awk '{print $3}'
   )
   [ -n "$cid" ] && echo $cid | xargs docker rmi
 }
