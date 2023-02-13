@@ -19,7 +19,6 @@ gipm() {
 }
 
 # Creates a new repository.
-GH_USERNAME='kent7k'
 alias ghcr='create_repository'
 function create_repository() {
   echo -e "$(c_green "? Repository")" &&
@@ -34,7 +33,7 @@ function create_repository() {
   git add README.md
   git commit -m "Initial commit"
   git branch -M main
-  git remote add origin git@github.com:$GH_USERNAME/"$REPO".git
+  git remote add origin git@github.com:"$GIT_AUTHOR_NAME"/"$REPO".git
   git remote add origin
   git push -u origin main
 }

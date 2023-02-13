@@ -96,7 +96,7 @@ function open_pr() {
     open "$(gh pr view "$pr_number" --web)"
   else
     get_owner_and_repo
-    open "https://github.com/${GET_OWNER_AND_REPO}"
+    open "https://github.com/${OWNER_AND_REPO}"
   fi
 }
 

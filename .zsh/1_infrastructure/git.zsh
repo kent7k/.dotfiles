@@ -11,10 +11,10 @@ alias giba='git branch -a'
 # Pushes to the develop branch.
 gmpd() {
   git pull origin develop
-  echo "Type the branch name to merge : " && read branch
+  echo "Type the branch name to merge : " && read -r branch
   git merge "${branch}"
   git status
-  echo "Is it okay to continue?" && read
+  echo "Is it okay to continue?" && read -r
   git push origin develop
 }
 
@@ -33,7 +33,7 @@ function create_repository() {
   git add README.md
   git commit -m "Initial commit"
   git branch -M main
-  git remote add origin git@github.com:kent7k/"$REPO"[1].git
+  git remote add origin git@github.com:$"GIT_AUTHOR_NAME"/"$REPO"[1].git
   git remote add origin
   git push -u origin main
 }
