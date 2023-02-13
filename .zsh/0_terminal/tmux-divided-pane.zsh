@@ -1,6 +1,6 @@
 # You can set tmux-panes as you use habitually like below.
 # Author's setting is not public by .gitignore because sensitive information of project is included.
-# --------------------------------------------------------
+# -------------------------- ex ----------------------------
 # function setIdeAsUsual() {
 #   dividePaneIntoQuarters "${HOME}/ghq/working-directory/"
 #   tmux send-keys -t 1 "open https://some-websites-you-need" C-m; sleep 0.5

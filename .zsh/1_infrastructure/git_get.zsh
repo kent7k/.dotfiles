@@ -1,9 +1,9 @@
 function get_pr_number() {
-  PR_NAMBER=$(gh pr list --state=open | fzf --preview='echo {}')
+  PR_LIST=$(gh pr list --state=open | fzf --preview='echo {}')
 
-  if [[ -n $PR_NAMBER ]]; then
-    pr_number=$(echo "$PR_NAMBER" | awk '{print $1}')
-    echo "$pr_number"
+  if [[ -n $PR_LIST ]]; then
+    PR_NUMBER=$(echo "$PR_LIST" | awk '{print $1}')
+    echo "$PR_NUMBER"
   else
     return
   fi
