@@ -36,8 +36,16 @@ setopt interactivecomments
 setopt nonomatch
 
 # Loads configs about zsh.
-export DOT_FILES=$HOME/ghq/.dotfiles
+export DOT_FILES="$HOME/ghq/.dotfiles"
+export OBSIDIAN_FILES="$HOME/Downloads/Kemari"
+
 for config_file ($DOT_FILES/.zsh/**/*.zsh) source $config_file
 
 # Loads Configs about zsh.
 alias sh2='source ~/.zshrc'
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

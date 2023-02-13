@@ -4,4 +4,8 @@
 # $ nslooku
 # zsh: correct nslooku to nslookup [nyae]?
 # ------------------------
-alias rm='nocorrect rm'
+# alias rm='nocorrect rm'
+
+if type trash >/dev/null 2>&1; then
+  alias rm='trash -r'
+fi
