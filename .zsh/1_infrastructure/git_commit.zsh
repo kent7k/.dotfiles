@@ -27,6 +27,23 @@ function git_add() {
   fi
 }
 
+alias giau='git_add_untracked_files'
+function git_add_untracked_files() {
+  echo
+  added_untracked_files=$(git ls-files --others --exclude-standard | fzf --multi)
+  if [ -n "$added_untracked_files" ]; then
+    echo -e "$(c_light_gray "Added untracked file:")"
+    while IFS= read -r file; do
+      git add "$file"
+      echo -e "$(c_cyan "  - $file")"
+    done <<<"$added_untracked_files"
+
+    use_commit
+  else
+    echo "No files selected."
+  fi
+}
+
 function use_commit() {
   echo
   echo "$(c_green "Do you want to commit files above?") (Y/n)"
