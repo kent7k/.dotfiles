@@ -1,5 +1,4 @@
 # Docs: https://starship.rs/ja-jp/config/
-
 [aws]
 format = ''
 style = "bold blue"
