@@ -16,4 +16,4 @@ brew "tree"
 brew "trash"
 
 # Need to install bash 5 or above first, because it's not installed by default on macOS
-brew install bash
+brew "bash"

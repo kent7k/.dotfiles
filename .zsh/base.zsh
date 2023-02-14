@@ -1,1 +1,1 @@
-export BREWPATH="${DOT_FILES}/3_packages/.brewfile"
+export BREW_PATH="${DOT_FILES}/3_packages/.brewfile"

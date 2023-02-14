@@ -1,21 +1,22 @@
-BREWFILES= \
-	${BREWPATH}/00-app.Brewfile \
-	${BREWPATH}/00-bash.Brewfile \
-	${BREWPATH}/00-terminal.Brewfile \
-	${BREWPATH}/01_infrastructure.Brewfile \
-	${BREWPATH}/09-database.Brewfile \
-	${BREWPATH}/09-img.Brewfile \
-	${BREWPATH}/09-lint.Brewfile \
-	${BREWPATH}/09-others.Brewfile
+BREW_FILES= \
+	${BREW_PATH}/00-app.Brewfile \
+	${BREW_PATH}/00-bash.Brewfile \
+	${BREW_PATH}/00-terminal.Brewfile \
+	${BREW_PATH}/01_infrastructure.Brewfile \
+	${BREW_PATH}/09-database.Brewfile \
+	${BREW_PATH}/09-img.Brewfile \
+	${BREW_PATH}/09-lint.Brewfile \
+	${BREW_PATH}/09-others.Brewfile
 
 all: init link defaults brew install_via_homebrew
 
 install_via_homebrew:
-	for file in $(BREWFILES); do \
+	for file in $(BREW_FILES); do \
       echo "-------------------------"; \
       echo "brew bundle --file $$file"; \
       brew bundle --file "$$file"; \
     done
+    echo "------ finish install_via_homebrew ------"
 
 # Link dotfiles.
 link:
