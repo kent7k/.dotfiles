@@ -1,0 +1,2 @@
+cask "zoom"
+cask "docker"
