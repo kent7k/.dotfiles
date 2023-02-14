@@ -1,8 +1,9 @@
-# Associative arrays are only available in Bash 4 or later, but macOS only
-# supports Bash 3. To work around this, we're using
+# Associative arrays are only available in Bash 4 or later.
+# But macOS only supports Bash 3.
+# Therefore, an array is declared using declare -a instead.
 declare -a LINKS=(
   ".zsh/.zshrc" "$HOME/.zshrc"
-  "0_terminal/alacritty/.alacritty.yml" "$HOME/.config/.alacritty.yml"
+  "0_terminal/.alacritty.yml" "$HOME/.config/.alacritty.yml"
   "0_terminal/tmux/.tmux.conf" "$HOME/.tmux.conf"
   "0_terminal/nvim/init.vim" "$HOME/.config/nvim/init.vim"
   "0_terminal/nvim/coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
