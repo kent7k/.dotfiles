@@ -13,7 +13,7 @@ function git_squash() {
   git merge --squash "$CURRENT_BRANCH"
   git fetch origin main
 
-  if [ -n "$(git stash list)" ]; then
-    git stash pop
-  fi
+  #  if [ -n "$(git stash list)" ]; then
+  #    git stash pop
+  #  fi
 }
