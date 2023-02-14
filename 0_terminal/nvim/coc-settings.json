@@ -1,0 +1,14 @@
+{
+  "eslint.options": {
+    "configFile": "${DOT_FILES}/.eslintrc"
+  },
+  "eslint.nodePath": "~/node_modules",
+  "eslint.autoFixOnSave": true,
+  "eslint.filetypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ]
+}
