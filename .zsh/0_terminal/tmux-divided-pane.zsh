@@ -13,12 +13,12 @@
 function dividePaneIntoQuarters() {
   cd "$1" || exit
 
-  # Sets both 1st & 2nd quadrant (= 象限 in Japanese).
+  # Set both 1st & 2nd quadrant (= 象限 in Japanese).
   tmux split-window -v -p 50
   tmux select-pane -t 1
   tmux split-window -h -p 50
 
-  # Sets both 3rd & 4th quadrant.
+  # Set both 3rd & 4th quadrant.
   tmux select-pane -t 3
   sleep 0.5
   tmux split-window -h -p 50

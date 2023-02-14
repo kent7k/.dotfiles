@@ -1,5 +1,5 @@
 alias gip='git push'
-alias gip='git pull'
+alias gipu='git pull'
 
 alias gia='git_add'
 function git_add() {
@@ -83,19 +83,18 @@ function create_or_open_pr() {
 }
 
 function create_pr() {
-  call_current_branch
+  CURRENT_BRANCH=$(call_current_branch)
   gh pr create --base=main --head="$CURRENT_BRANCH"
   open_pr
 }
 
 alias ghb='open_pr'
 function open_pr() {
-  get_pr_number
+  PR_NAMBER=$(get_pr_number)
   if [[ -n $PR_NAMBER ]]; then
-    pr_number=$(echo "$PR_NAMBER" | awk '{print $1}')
     open "$(gh pr view "$pr_number" --web)"
   else
-    get_owner_and_repo
+    OWNER_AND_REPO=$(get_owner_and_repo)
     open "https://github.com/${OWNER_AND_REPO}"
   fi
 }

@@ -10,6 +10,6 @@ function get_pr_number() {
 }
 
 function get_owner_and_repo() {
-  # shellcheck disable=SC2034
   OWNER_AND_REPO=$(gh repo view | awk 'NR==1 {print $2}')
+  echo "$OWNER_AND_REPO"
 }
