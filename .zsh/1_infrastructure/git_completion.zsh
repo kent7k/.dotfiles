@@ -1,4 +1,4 @@
-# Sets GitHub CLI setting for completion
+# Set GitHub CLI setting for completion
 eval "$(gh completion -s zsh)"
 
 # Makes git auto completion faster favouring for local completions

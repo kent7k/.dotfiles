@@ -31,13 +31,12 @@ if [ -e ~/.secrets ]; then
   source ~/.secrets
 fi
 
-# Sets basic configs of zsh
+# Set basic configs of zsh
 setopt interactivecomments
 setopt nonomatch
 
 # Loads configs about zsh.
 export DOT_FILES="$HOME/ghq/.dotfiles"
-export OBSIDIAN_FILES="$HOME/Downloads/Kemari"
 
 for config_file ($DOT_FILES/.zsh/**/*.zsh) source $config_file
 

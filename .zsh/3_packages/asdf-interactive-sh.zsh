@@ -5,7 +5,7 @@ function asdfa() {
   asdf current
   echo "----------------------------"
   echo "Do you wanna list up all plugins? (It takes a minute) (y/[n])"
-  read input
+  read -r input
 
   case $input in
     [Yy]*)

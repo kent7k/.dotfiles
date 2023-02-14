@@ -1,13 +1,21 @@
 [core]
 	editor = /usr/bin/vim
 	symlinks = true
-
 [user]
 	name = "${GIT_AUTHOR_NAME}"
 	email = "${GIT_AUTHOR_EMAIL}"
-
+[pull]
+    rebase = true
+[init]
+    defaultBranch = main
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[ghq]
+    root = ~/ghq
+[push]
+    autoSetupRemote = true
+[diff]
+	renamelimit = 0
