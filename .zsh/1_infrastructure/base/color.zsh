@@ -28,12 +28,6 @@ function c_yellow() {
   echo "$color_code$1$reset_code"
 }
 
-function c_gray() {
-  color_code="\033[37m"
-  reset_code="\033[0m"
-  echo "$color_code$1$reset_code"
-}
-
 function c_pink() {
   color_code="\033[35m"
   reset_code="\033[0m"
@@ -48,6 +42,11 @@ function c_lime() {
 
 function c_purple() {
   color_code="\033[95m"
+  reset_code="\033[0m"
+  echo "$color_code$1$reset_code"
+}
+function c_gray() {
+  color_code="\033[37m"
   reset_code="\033[0m"
   echo "$color_code$1$reset_code"
 }
