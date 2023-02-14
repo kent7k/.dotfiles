@@ -8,7 +8,7 @@ function git_squash() {
     git stash
   fi
 
-  access_main_or_develop_by "git checkout"
+  git_checkout_main_or_develop
 
   git merge --squash "$CURRENT_BRANCH"
   git fetch origin main
