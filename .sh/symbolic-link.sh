@@ -9,10 +9,10 @@ declare -a LINKS=(
   "0_terminal/nvim/coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
   "1_infrastructure/.gitconfig" "$HOME/.gitconfig"
   "2_languages/asdf/.tool-versions" "$HOME/.tool-versions"
-  "3_packages/.cargo/.crates.toml" "$HOME/.cargo/.crates.toml"
+  "3_packages/.crates.toml" "$HOME/.cargo/.crates.toml"
 
   #  FIXME
-  #  "3_packages/tealdeer/config.toml" "$HOME/Library/Application Support/tealdeer"
+  #  "3_packages/tealdeer/.tealdeer.toml" "$HOME/Library/Application Support/tealdeer"
 )
 
 for ((i = 0; i < ${#LINKS[@]}; i += 2)); do
