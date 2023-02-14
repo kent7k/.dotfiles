@@ -1,5 +1,5 @@
 alias gip='git push'
-alias gip='git pull'
+alias gipu='git pull'
 
 alias gia='git_add'
 function git_add() {
