@@ -1,0 +1,18 @@
+# FIXME:
+# unbind 0 # Select window 0
+# unbind 1
+# unbind 2
+# unbind 3
+# unbind 4
+# unbind 5
+# unbind 6
+# unbind 7
+# unbind 8
+# unbind 9
+# unbind M-Down
+# unbind M-Left
+# unbind M-Right
+# unbind C-Up
+# unbind C-Down
+# unbind C-Left
+# unbind C-Right
