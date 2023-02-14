@@ -6,7 +6,6 @@ tap "homebrew/services"
 tap "superfly/tap"
 brew "automake"
 
-
 # This is a custom homebrew tap for things that are not included in homebrew-core, but eventually will be!
 tap "schniz/tap"
 
