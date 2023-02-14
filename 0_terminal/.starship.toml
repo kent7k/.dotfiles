@@ -1,13 +1,4 @@
-# https://starship.rs/ja-jp/config/
-
-# TODO: starship で任意のディレクトリ配下にいる時だけ、必要な情報を出すようにしてみた。
-# TODO:　aws.zsh と一緒にみて
-# https://qiita.com/ototonari/items/fef4bca7504e0cbc790d
-#[custom.projectName]
-#when = 'am_i_in_the projectDirName'
-#command = 'get_gcloud_envs'
-#format = "[$output]($style) "
-#style = "#707070"
+# Docs: https://starship.rs/ja-jp/config/
 
 [aws]
 format = ''
