@@ -1,7 +1,7 @@
 alias gisq='git_squash'
 
 function git_squash() {
-  call_current_branch
+  CURRENT_BRANCH=$(call_current_branch)
 
   # Check if there are uncommitted changes in the current branch
   if [ -n "$(git status --porcelain)" ]; then

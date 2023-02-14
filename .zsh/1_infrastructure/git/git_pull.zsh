@@ -1,7 +1,7 @@
 alias gifm='git_fetch_merge'
 function git_fetch_merge() {
   echo
-  call_current_branch
+  CURRENT_BRANCH=$(call_current_branch)
 
   c_green "? Branch to merge"
   access_main_or_develop_by "git fetch origin"
