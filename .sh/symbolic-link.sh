@@ -7,7 +7,7 @@ declare -a LINKS=(
   "0_terminal/tmux/.tmux.conf" "$HOME/.tmux.conf"
   "0_terminal/nvim/init.vim" "$HOME/.config/nvim/init.vim"
   "0_terminal/nvim/coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
-  "1_infrastructure/git/gitconfig" "$HOME/.gitconfig"
+  "1_infrastructure/.gitconfig" "$HOME/.gitconfig"
   "2_languages/asdf/.tool-versions" "$HOME/.tool-versions"
   "3_packages/.cargo/.crates.toml" "$HOME/.cargo/.crates.toml"
 

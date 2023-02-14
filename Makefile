@@ -15,8 +15,8 @@ install_via_homebrew:
       echo "-------------------------"; \
       echo "brew bundle --file $$file"; \
       brew bundle --file "$$file"; \
-    done
-    echo "------ finish install_via_homebrew ------"
+	done
+	echo "------ finish install_via_homebrew ------"
 
 # Link dotfiles.
 link:
