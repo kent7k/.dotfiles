@@ -1,6 +1,6 @@
 # Set asdf's config.
 . "$HOME"/.asdf/asdf.sh
-export ASDF_CONFIG_FILE="${DOT_FILES}/2_languages/asdf/.asdfrc"
+export ASDF_CONFIG_FILE="$ASDF_CONFIG_PATH"
 
 # append completions to fpath
 fpath=(${ASDF_DIR}/completions $fpath)
