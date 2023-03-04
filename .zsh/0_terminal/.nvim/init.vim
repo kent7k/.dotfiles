@@ -7,7 +7,7 @@ call dein#begin(s:dein_base)
 call dein#add(s:dein_src)
 
 "--- Use Plugins ---"
-let g:rc_dir = expand('~/ghq/.dotfiles/0_terminal/nvim')
+let g:rc_dir = expand('~/ghq/.dotfiles/.zsh/0_terminal/.nvim')
 let s:toml = g:rc_dir . '/dein.toml'
 let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
 call dein#load_toml(s:toml, {'lazy': 0})
