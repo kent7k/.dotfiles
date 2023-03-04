@@ -8,7 +8,7 @@ declare -a LINKS=(
   "0_terminal/nvim/init.vim" "$HOME/.config/nvim/init.vim"
   "0_terminal/nvim/coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
   "1_infrastructure/.gitconfig" "$HOME/.gitconfig"
-  "2_languages/asdf/.tool-versions" "$HOME/.tool-versions"
+  "2_languages/.tool-versions" "$HOME/.tool-versions"
   "3_packages/.crates.toml" "$HOME/.cargo/.crates.toml"
 
   #  FIXME

@@ -69,20 +69,17 @@ function finishSettingPanes() {
 }
 
 function killAllPanes() {
-  for i in {1..10}; do
+  pane_count=$(tmux list-panes | wc -l)
+
+  for i in $(seq 1 "$pane_count"); do
     tmux send-keys -t "$i" C-c
   done
 
   # Command 'sleep 1' wouldn't work "tmux kill-pane" in time.
   # Because Docker completes to down, a framework completes to stop, etc.
-  sleep 4
-
-  # TODO: Set the upper limit by getting the last number of a tmux-pane; 10 is just a big number.
-  for i in {2..10}; do
-    tmux send-keys -t "$i" "tmux kill-pane" C-m
-  done
-
   sleep 5
 
-  tmux send-keys -t 1 "tmux kill-pane" C-m
+  for i in $(seq 1 "$pane_count"); do
+    tmux send-keys -t "$i" "tmux kill-pane" C-m
+  done
 }

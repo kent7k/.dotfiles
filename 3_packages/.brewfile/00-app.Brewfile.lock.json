@@ -6,12 +6,6 @@
         "options": {
           "full_name": "zoom"
         }
-      },
-      "docker": {
-        "version": "4.16.2,95914",
-        "options": {
-          "full_name": "docker"
-        }
       }
     }
   },
