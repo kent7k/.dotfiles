@@ -1,4 +1,4 @@
 export BREW_PATH="${DOT_FILES}/.zsh/3_packages/.brewfile"
 export TMUX_CONF_PATH="${DOT_FILES}/0_terminal/tmux/conf"
 
-export ASDF_CONFIG_PATH="${DOT_FILES}/2_languages/.asdfrc"
+export ASDF_CONFIG_PATH="${DOT_FILES}/.zsh/2_languages/.asdfrc"
