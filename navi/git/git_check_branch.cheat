@@ -1,0 +1,69 @@
+; FIXME: Just a memo. So, it's incomplete. 23-02-14
+
+;-------------------------------------------------------
+; Manage GitHub issues from the command-line.
+; More information: <https://cli.github.com/manual/gh_issue>.
+;-------------------------------------------------------
+
+# gc 1: Switch to an existing local branch && stash apply Newest
+git checkout <branch_name> && \
+read -n1 -p "git stash apply newest, ok? (y/N): " yn; [[ $yn = [yY] ]] && \
+    git stash apply $(git stash list | grep $(git rev-parse --abbrev-ref HEAD 2>/dev/null) | head -1 | awk -F: '{print $1}') \
+    || echo abort
+$ branch_name: git branch | fzf
+
+# gc m: Switch to main branch && stash apply Newest
+git status && \
+read -n1 -p "git stash, ok? (y/N): " yn; [[ $yn = [yY] ]] && \
+    git stash && git checkout main \
+    || echo abort
+
+# gc -b: Create and switch to a new branch:
+git checkout -b <branch_name_origin>
+
+# gc -b: Create and switch to a new branch based on a specific reference (branch, remote/branch, tag are examples of valid references):
+git checkout -b <branch_name> reference
+
+# gc: Switch to an existing remote branch:
+git checkout --track <remote_name/branch_name>
+
+# gc: Discard all unstaged changes in the current directory (see `git reset` for more undo-like commands):
+git checkout .
+
+# gc: Discard unstaged changes to a given file:
+git checkout <filename>
+
+# gc: Replace a file in the current directory with the version of it committed in a given branch:
+git checkout <branch_name> -- filename
+
+
+;-------------------------------------------------------
+; Stash local Git changes in a temporary area.
+; More information: <https://git-scm.com/docs/git-stash>.
+;
+"; TODO: apply newest_stash" is working correctly. However, everything else is somewhat unorganized.
+;-------------------------------------------------------
+
+# Stash current changes, including new (untracked) files:
+git stash -u
+
+# Interactively select parts of changed files for stashing:
+git stash -p
+
+# Save a stash with a message:
+git stash save <stash_message>
+
+# List all stashes (shows stash name, related branch and message):
+git stash list
+
+# Apply a stash (default is the latest, named stash@{0}):
+git stash apply <optional_stash_name_or_commit>
+
+# Apply a stash (default is stash@{0}), and remove it from the stash list if applying doesn't cause conflicts:
+git stash pop <optional_stash_name>
+
+# Drop a stash (default is stash@{0}):
+git stash drop <optional_stash_name>
+
+# Drop all stashes:
+git stash clear

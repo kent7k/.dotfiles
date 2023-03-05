@@ -1,0 +1,15 @@
+; FIXME: Just a memo. So, it's incomplete. 23-02-14
+;-------------------------------------------------------
+
+; Manage GitHub issues from the command-line.
+; More information: <https://cli.github.com/manual/gh_issue>.
+
+# Display a specific issue in the default web browser:
+gh issue view <issue_number> --web
+$ issue_number: gh issue list | fzf | awk '{print $1}'
+
+# Create a new issue in the default web browser:
+gh issue create
+
+# Display the status of issues relevant to the user, in a specific repository:
+gh issue status
