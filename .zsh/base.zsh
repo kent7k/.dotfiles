@@ -1,6 +1,9 @@
 # Config about Base
 export BREW_PATH="${DOT_FILES}/.zsh/3_packages/.brewfile"
 
+# Config about Terminal
+export TMUX_CONF_PATH="${DOT_FILES}/.tmux/conf"
+
 # Config about Language
 export ASDF_CONFIG_PATH="${DOT_FILES}/.zsh/2_languages/.asdfrc"
 
