@@ -83,3 +83,17 @@ function killAllPanes() {
     tmux send-keys -t "$i" "tmux kill-pane" C-m
   done
 }
+
+function openBrowser() {
+  printf "\n%s\n" "$(c_green "Do you want to open in browser?") (y/N)"
+  read -r OPEN_BROWSER
+  if [ "$OPEN_BROWSER" = "y" ]; then
+    for url in "$@"; do
+      echo "Opening $url"
+      tmux send-keys -t 1 "open $url" C-m
+      sleep 0.1
+    done
+  else
+    echo "Okay, you can open in browser later."
+  fi
+}
