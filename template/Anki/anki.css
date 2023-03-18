@@ -1,0 +1,169 @@
+
+* {
+    margin:0;
+    padding:0;
+}
+
+.card {
+    margin: 0;
+    font-size: 10px;
+    text-align: center;
+    background-position: center 138px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-attachment: fixed;
+    letter-spacing: 0.02em;
+    font-family: Arial, Helvetica, serif;
+}
+
+
+/* ================= start of bl_qBox ====================== */
+
+.bl_qBox {
+    height: 150px;
+    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 20px;
+}
+
+.bl_qBox__black {
+    margin: 0 20px 0;
+    height: 150px;
+    padding: 30px 0 0 1em;
+    border-radius: 20px;
+    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.8);
+    background-color: rgba(160, 0, 0, 0.6);
+}
+
+/* ---------------- */
+
+.bl_pronounciation {
+    color: #686B6F;
+    padding-top: 1.5em;
+    padding-bottom: 0.3em;
+    font-size: 16px;
+}
+
+/* ---------------- */
+
+.bl_qWord {
+    font-size: 45px;
+    font-family: "Times New Roman", Times, serif;
+    margin: 0;
+    color: #3B3F45;
+}
+
+.hp_fs20 { font-size: 20px; }
+.hp_fs25 { font-size: 25px; }
+.hp_fs30 { font-size: 30px; }
+.hp_fs35 { font-size: 35px; }
+
+
+/* ================= start of bl_aImage ====================== */
+
+.bl_aImage__wrapper {
+    height: 80vh;
+}
+
+.bl_aImage {
+    object-fit: cover;
+    overflow: hidden;
+    margin: 0 calc(50% - 50vw);
+    opacity: 0.99;
+    mix-blend-mode: darken;
+    top: -10px;
+}
+
+
+/* ================= end of bl_aImage ====================== */
+
+.bl_sentense__wrapper {
+    font-family: Gentium Plus, serif;
+    text-align: left;
+    padding-bottom: 20px;
+}
+
+.bl_etymology {
+    font-family: "Times New Roman", Times, serif;
+    color: #686B6F;
+    padding: 0.5em;
+    font-size: 16px;
+}
+
+
+/* ================= start of codeblock ====================== */
+
+.codeblock {
+    font-size: 16px;
+    white-space: pre-line;
+    text-align: left;
+}
+
+.highlight pre {
+    padding-right: 100px;
+}
+
+table {
+    margin-top: -10px !important;
+}
+
+td.code {
+    padding-top: 17px !important;
+}
+
+center {
+    text-align: left;
+}
+
+
+/* ================= start of bl_footnote ====================== */
+
+.bl_footnote {
+    font-size: 10px;
+    padding-bottom: 40px;
+    color: #A0AAB1;
+}
+
+.bl_footnote__note {
+    font-size: 14px;
+    color: #A0AAB1;
+}
+
+
+/* ================= start of bl_descBox ====================== */
+
+.bl_descBox {
+    padding-top: 30px;
+    height: 150px;
+    margin: 20px;
+    padding-left: 1em;
+    border-radius: 20px;
+    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.8);
+    background-color: rgba(0,0,0,0.6);
+}
+
+.bl_descSentense {
+    font-family: "SimSun", serif;
+    font-size: 3.5em;
+    text-align: left;
+}
+
+.bl_descSentense__IPA {
+    font-size: 2.5em;
+    color: #A0AAB1;
+}
+
+.sentense_img {
+    border: 1px solid gray;
+    border-radius: 20px;
+    margin-bottom: 3em;
+}
+
+.meaningSent {
+    font-family: Georgia, serif;
+    font-size: 2em;
+    text-align:left
+}
