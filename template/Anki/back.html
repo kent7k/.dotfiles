@@ -1,0 +1,140 @@
+<!--
+Anki 2.0 does not support the ES6 specification of JavaScript. Anki 2.0 uses a codebase
+written in the Python 2 series and utilizes old versions of the Qt and PyQt libraries,
+which do not support modern web technologies like ES6.
+
+However, Anki 2.1 supports the ES6 specification of JavaScript. Anki 2.1 uses a codebase
+written in the Python 3 series and utilizes Qt 5 and PyQt5 libraries, which support
+modern web technologies including ES6.
+
+Therefore, to use ES6 features, you need to use Anki 2.1 instead of Anki 2.0. Anki 2.1
+includes modern card design, add-on support, and other improvements. However, note
+that Anki 2.1 is not compatible with Anki 2.0, so caution is advised.
+-->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Back of Card</title>
+</head>
+
+<body>
+<span hidden>{{aSound}}</span>
+
+{{#qSentence}}
+    <section class="bl_qBox__black">
+    <div class="bl_descSentense">{{qSentence}}</div>
+    </section>
+{{/qSentence}}
+
+<section class="bl_qBox">
+    <div class="bl_pronounciation">
+        {{IPA}}{{^IPA}}{{IPA_BackSide}}　{{/IPA}}
+    </div>
+    <div id="qWord" class="bl_qWord">
+        {{aWord}}{{^aWord}}{{qWord}}{{/aWord}}
+        <div id="gender" style="display:none;">{{gender}}</div>
+    </div>
+    <div class="bl_etymology">
+        {{etymology}}{{^etymology}}　{{/etymology}}
+    </div>
+</section>
+
+<div class="codeblock">
+    {{codeblock}}
+</div>
+
+{{#aWord_replaced_to_image}}
+    <section class="bl_qBox">
+        <div class="bl_pronounciation">　</div>
+        <div id="word_replaced_to_image" class="bl_qWord">
+            {{aWord_replaced_to_image}}
+        </div>
+    </section>
+{{/aWord_replaced_to_image}}
+
+{{#aImage}}
+    <section class="bl_aImage">{{aImage}}</section>
+{{/aImage}}
+
+{{#below_questioned_sentence}}
+<section class="bl_descBox">
+    <section class="bl_sentense__wrapper">
+        <div class="bl_descSentense__IPA">
+            {{below_questioned_sentence_IPA}}
+        </div>
+        <div class="bl_descSentense">
+            <p>{{below_questioned_sentence}}</p>
+            <p>{{china_SentenceTraditional}}</p>
+        </div>
+        <div class="meaningSent">
+            {{below_questioned_sentence_meaning}}
+        </div>
+    </section>
+
+    <section class="sentense_img">
+        {{below_questioned_sentence_image}}
+    </section>
+{{/below_questioned_sentence}}
+
+
+    <section class="bl_footnote">
+        <div class="bl_footnote__noun_adjective_etc">
+            {{noun_adjective_etc}}
+        </div>
+        <div class="bl_footnote__note">
+            {{note}}
+        </div>
+        <div class="bl_footnote__note">
+            {{answer_ja}}
+        </div>
+    </section>
+</section>
+
+<script>
+    // qWord: A box located at the top of the two boxes.
+    (function () {
+        // When using Anki, using 'var' instead of 'let' will cause the code to execute every time a card is flipped."
+        var qWord = document.getElementById('qWord');
+        var qWordLength = `{{text:qWord}}`.length
+        var aWordLength = `{{text:aWord}}`.length
+
+        if (qWordLength > 40 || aWordLength > 40) {
+            qWord.classList.add('hp_fs20');
+        } else if (qWordLength > 10 || aWordLength > 20) {
+            qWord.classList.add('hp_fs30');
+        } else if (qWordLength > 10 || aWordLength > 10) {
+            qWord.classList.add('hp_fs35');
+        }
+    })();
+
+    // aWord: A box located at the bottom of the two boxes.
+    (function () {
+        if (`{{aWord_replaced_to_image}}`.length > 10) {
+            var element = document.getElementById('word_replaced_to_image')
+            element.classList.add('hp_fs20')
+        } else {
+        }
+    })();
+
+    /* Change the color of the noun based on its gender. */
+    (function () {
+        const genderClass = document.querySelector('#gender').textContent;
+        const qWord = document.querySelector('#qWord');
+
+        const fooColorMap = {
+            n: '#228B22', // Indian Red
+            m: '#1E90FF', // Dodger Blue
+            f: '#CD5C5C', // Forest Green)
+            '': '',
+        }
+
+        if (fooColorMap.hasOwnProperty(genderClass)) {
+            qWord.style.color = fooColorMap[genderClass];
+        }
+    })();
+</script>
+
+</body>
+</html>
