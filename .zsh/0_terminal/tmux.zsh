@@ -4,7 +4,6 @@ if command -v tmux >/dev/null 2>&1; then
   if [[ ! $TERM =~ screen ]] && [ -z "$TMUX" ]; then
     if tmux has-session &>/dev/null; then
       tmux attach
-
     else
       tmux new-session -s default -d
       tmux
