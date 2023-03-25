@@ -20,12 +20,10 @@
 /* ================= start of bl_qBox ====================== */
 
 .bl_qBox {
-    height: 150px;
+    min-height: 150px;
     box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.8);
     background-color: rgba(255, 255, 255, 0.9);
-    margin-top: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 20px 10px 0;
     border-radius: 20px;
 }
 
