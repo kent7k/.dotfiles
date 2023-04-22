@@ -72,8 +72,10 @@ function git_push() {
 
 function create_or_open_pr() {
   printf "\n%s\n" "$(c_green "Do you want to create/open a pull request?") ( [end] / c: create / o: open)"
-  read -r CREATE_PR
-  if [ "$CREATE_PR" = "c" ]; then
+  read -r -t 10 CREATE_PR
+  if [ -z "$CREATE_PR" ]; then
+    echo "Timeout exceeded. You can create/open a pull request later."
+  elif [ "$CREATE_PR" = "c" ]; then
     create_pr
   elif [ "$CREATE_PR" = "o" ]; then
     open_pr
