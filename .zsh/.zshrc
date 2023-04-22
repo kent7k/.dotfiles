@@ -19,8 +19,9 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust \
-#     zsh-users/zsh-autosuggestions \
-#     zdharma-continuum/fast-syntax-highlighting \
+    # --- Not working with Fig ---
+    # zsh-users/zsh-autosuggestions \
+    # zdharma-continuum/fast-syntax-highlighting \
     # zdharma/history-search-multi-word # ctrl+r could search command-history
 
 ### End of Zinit's installer chunk
