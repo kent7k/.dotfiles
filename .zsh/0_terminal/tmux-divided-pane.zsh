@@ -97,3 +97,9 @@ function openBrowser() {
     echo "Okay, you can open in browser later."
   fi
 }
+
+function sendKeysToPanes234() {
+  tmux send-keys -t 2 "$1" C-m
+  tmux send-keys -t 3 "$2" C-m
+  tmux send-keys -t 4 "$3" C-m
+}
