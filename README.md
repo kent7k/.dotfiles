@@ -1,4 +1,5 @@
 # .dotfiles
+![something__---B41BF70C-3A96-4DCF-8028-64AEB002DD71_000695](https://github.com/kent7k/.dotfiles/assets/46371150/e2c10025-f52e-4e27-a4f7-6ad9f3476e17)
 
 The author organizes the development environment setup into four main
 categories:
