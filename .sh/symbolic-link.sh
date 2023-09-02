@@ -9,7 +9,7 @@ declare -a LINKS=(
 
   # neovim
   ".zsh/0_terminal/.nvim/init.vim" "$HOME/.config/nvim/init.vim"
-#  ".zsh/0_terminal/.nvim/coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
+  ".zsh/0_terminal/.nvim/coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
 
 #  ".zsh/1_infrastructure/git/.gitconfig" "$HOME/.gitconfig"
 #  ".zsh/2_languages/asdf/.tool-versions" "$HOME/.tool-versions"
