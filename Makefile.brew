@@ -53,3 +53,15 @@ brew_doctor:
 
 init_gh:
 	gh auth login
+
+init_neovim:
+	mkdir -p ~/.config/nvim
+	touch ~/.config/nvim/init.vim
+	mkdir -p ~/.config/nvim/dein
+	@(cd ~/.config/nvim/dein && \
+	  curl -fsSL https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh > installer.sh; \
+	  if [ $$? -eq 0 ]; then \
+	    sh ./installer.sh ~/.config/nvim/dein; \
+	  else \
+	    echo "Error downloading installer.sh"; \
+	  fi)
