@@ -50,3 +50,6 @@ brew_cleanup:
 brew_doctor:
 	@echo "Checking for potential brew issues..."
 	@brew doctor
+
+init_gh:
+	gh auth login
