@@ -29,3 +29,19 @@ brew "watchman"
 tap "yt-dlp/taps"
 brew "yt-dlp/taps/yt-dlp"
 # TODO: Arrange Brew Packages
+
+
+# Starship prompt
+brew "starship"
+
+# GitHub CLI
+brew "gh"
+
+# ghq - Assuming ghq is available in Homebrew
+brew "ghq"
+
+# direnv
+brew "direnv"
+
+# zoxide - Assuming zoxide is available in Homebrew
+brew "zoxide"

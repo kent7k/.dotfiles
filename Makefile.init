@@ -1,0 +1,27 @@
+DOT_FILES := $(HOME)/ghq/.dotfiles
+BREW_PATH := $(DOT_FILES)/.zsh/3_packages/.brewfile
+export DOT_FILES
+export BREW_PATH
+
+init: init_setup ubuntu_check
+
+ubuntu_check:
+	@if grep -qi "ubuntu" /etc/os-release; then \
+		echo "Detected Ubuntu. Running sudo apt update..."; \
+		sudo apt update; \
+		sudo apt install build-essential git; \
+	fi
+
+ubuntu_zsh:
+	@echo "/home/linuxbrew/.linuxbrew/bin/zsh" | sudo tee -a /etc/shells
+	@echo "Contents of /etc/shells:"
+	@cat /etc/shells
+
+set_zsh:
+	@echo "Setting up zsh..."
+	@if [ "$$SHELL" != "$$(which zsh)" ]; then \
+		echo "Attempting to change shell to zsh..."; \
+		chsh -s $$(which zsh) && echo "Shell changed to zsh. Please restart the terminal." || echo "Failed to change shell to zsh. Please manually change it using the chsh command."; \
+	else \
+		echo "zsh is already the default shell."; \
+	fi

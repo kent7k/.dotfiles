@@ -1,0 +1,12 @@
+all: init link defaults brew install_via_homebrew
+
+include Makefile.init
+include Makefile.brew
+
+# Link dotfiles.
+link:
+	chmod +x .sh/symbolic-link.sh
+	.sh/symbolic-link.sh
+
+init_source_after_symbolic_link_to_zsh:
+	zsh -c "source ~/.zshrc"
