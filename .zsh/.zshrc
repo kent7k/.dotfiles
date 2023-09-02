@@ -39,6 +39,10 @@ setopt nonomatch
 export DOT_FILES="$HOME/ghq/.dotfiles"
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
 for config_file ($DOT_FILES/.zsh/**/*.zsh) source $config_file
 
 # Loads Configs about zsh.
@@ -51,9 +55,3 @@ source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-
-
-
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
