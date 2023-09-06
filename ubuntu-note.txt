@@ -1,0 +1,18 @@
+
+===============================================
+
+> sudo apt install aptitude
+> aptitude why xdg-utils
+
+The output you've shown provides a chain of dependencies/recommendations that led to xdg-utils being installed:
+
+You have npm installed, which recommends the package node-tap.
+node-tap in turn recommends node-opener.
+node-opener directly depends on xdg-utils.
+So, in your case, the presence of xdg-utils can be traced back to having npm and its chain of recommendations/dependencies.
+
+To clarify, the "Recommends" relationship in Debian-based distributions like Ubuntu suggests that one package (in this case, npm and node-tap) thinks that another package (like node-tap and node-opener, respectively) will be useful in conjunction with it. However, unlike a "Depends" relationship, a "Recommends" package isn't strictly required. The package manager will typically install recommended packages by default unless explicitly told otherwise.
+
+So, while xdg-utils was not a direct part of the build-essential package or a default installation, in your environment, it was installed due to the chain starting from npm.
+
+===============================================

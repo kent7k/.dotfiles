@@ -9,7 +9,12 @@ ubuntu_check:
 	@if grep -qi "ubuntu" /etc/os-release; then \
 		echo "Detected Ubuntu. Running sudo apt update..."; \
 		sudo apt update; \
+		# Installing essential tools \
 		sudo apt install build-essential git; \
+		# Installing xsel for clipboard functionality similar to pbcopy on macOS \
+		sudo apt install xsel; \
+		# Installing xdg-utils for the xdg-open command, similar to the open command on macOS \
+		sudo apt install xdg-utils; \
 	fi
 
 ubuntu_zsh:
