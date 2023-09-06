@@ -42,3 +42,9 @@ Coming soon...
 ## Display
 
 Coming soon...
+
+### Start
+
+```
+make -f Makefile.main 
+```

@@ -1,3 +1,33 @@
+# Always load Fig - seems relevant for both macOS and Ubuntu with zsh
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+
+# Platform Specific Configurations
+case "$(uname)" in
+    "Darwin") # macOS specifics
+        # Load cargo environment for macOS
+        # . "$HOME/.cargo/env"
+
+        # Docker for Mac
+        # source /Users/kent/.docker/init-zsh.sh || true
+        source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
+        echo "$(uname)"
+        ;;
+    "Linux") # Ubuntu specifics
+        # Basic bashrc configurations you might still want with zsh
+        # HISTCONTROL=ignoreboth
+        # HISTSIZE=1000
+        # HISTFILESIZE=2000
+        echo "$(uname)"
+
+        # Check for Ubuntu for some specific commands
+        if grep -qi "ubuntu" /etc/os-release; then
+            # Additional Ubuntu specific configurations can be added here
+            # export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+        fi
+
+        ;;
+esac
+
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 ### Added by Zinit's installer
@@ -37,6 +67,11 @@ setopt nonomatch
 
 # Loads configs about zsh.
 export DOT_FILES="$HOME/ghq/.dotfiles"
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 
 for config_file ($DOT_FILES/.zsh/**/*.zsh) source $config_file
 
@@ -46,7 +81,7 @@ alias sh2='source ~/.zshrc'
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
-source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
 
-# Fig post block. Keep at the bottom of this file.
+
+# Always load Fig at the end - relevant for both macOS and Ubuntu
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
