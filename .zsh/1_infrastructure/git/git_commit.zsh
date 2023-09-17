@@ -47,8 +47,12 @@ function use_commit() {
 
 alias gic='git_commit'
 function git_commit() {
-  echo -e "$(c_green "? Commit name")"
-  read -r COMMIT_NAME
+  COMMIT_NAME=""                  # Set initial value to an empty string
+  while [ -z "$COMMIT_NAME" ]; do # Check if variable is empty using the -z option
+    echo -e "$(c_green "? Commit name")"
+    read -r COMMIT_NAME
+  done
+
   printf "\n%s\n" "$(c_green "Do you want to use --no-verify option?") (Y/n)"
   read -r VERIFY
   if [ "$VERIFY" = "y" ] || [ -z "$VERIFY" ]; then
@@ -87,6 +91,7 @@ function create_or_open_pr() {
 function create_pr() {
   CURRENT_BRANCH=$(call_current_branch)
   gh pr create --base=main --head="$CURRENT_BRANCH"
+  sleep 1
   open_pr
 }
 

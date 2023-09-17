@@ -98,6 +98,24 @@ function openBrowser() {
   fi
 }
 
+function autoOpenBrowser() {
+  printf "\n%s\n" "$(c_green "-- Auto Open Browser --") "
+  for url in "$@"; do
+    echo "Opening $url"
+    tmux send-keys -t 1 "open $url" C-m
+    sleep 0.1
+  done
+}
+
+function autoOpenObsidian() {
+  for url in "$@"; do
+    echo "Opening $url"
+    # FIXME: Vars
+    tmux send-keys -t 1 "open obsidian://vault/60840284c9cd48be/$url" C-m
+    sleep 0.1
+  done
+}
+
 function sendKeysToPanes234() {
   tmux send-keys -t 2 "$1" C-m
   tmux send-keys -t 3 "$2" C-m
