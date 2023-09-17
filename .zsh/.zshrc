@@ -85,3 +85,5 @@ alias sh2='source ~/.zshrc'
 
 # Always load Fig at the end - relevant for both macOS and Ubuntu
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
