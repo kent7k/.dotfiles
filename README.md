@@ -1,4 +1,6 @@
 # .dotfiles
+<img width="1492" alt="something__---B41BF70C-3A96-4DCF-8028-64AEB002DD71_000696 copy" src="https://github.com/kent7k/.dotfiles/assets/46371150/3b78ae73-1442-4e41-9dc3-151a68ae7667">
+
 
 The author organizes the development environment setup into four main
 categories:
@@ -40,3 +42,9 @@ Coming soon...
 ## Display
 
 Coming soon...
+
+### Start
+
+```
+make -f Makefile.main 
+```
