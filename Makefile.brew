@@ -1,5 +1,5 @@
 DOT_FILES := $(HOME)/ghq/.dotfiles
-BREW_PATH := $(DOT_FILES)/.zsh/3_packages/.brewfile
+BREW_PATH := $(DOT_FILES)/.brewfile
 export DOT_FILES
 export BREW_PATH
 

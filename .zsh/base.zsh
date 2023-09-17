@@ -1,5 +1,5 @@
 # Config about Base
-export BREW_PATH="${DOT_FILES}/.zsh/3_packages/.brewfile"
+export BREW_PATH="${DOT_FILES}/.br"
 
 # Config about Terminal
 export TMUX_CONF_PATH="${DOT_FILES}/.tmux/conf"
