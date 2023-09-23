@@ -1,0 +1,23 @@
+DOT_FILES := $(HOME)/ghq/.dotfiles
+export DOT_FILES
+
+MAS_APPS_FILE := /Users/kent/ghq/.dotfiles/.masfile/Masfile
+MAS_APPS := $(shell awk -F '//' '{print $$1}' $(MAS_APPS_FILE) | tr -d ' ')
+MAS_APPS_FILE := /Users/kent/ghq/.dotfiles/.masfile/Masfile
+
+BOLD := $(shell tput bold)
+NORMAL := $(shell tput sgr0)
+GREEN := $(shell tput setaf 2)
+YELLOW := $(shell tput setaf 3)
+
+install_via_mas:
+	@if [ "$(shell uname)" = "Darwin" ]; then \
+		echo "${BOLD}${GREEN}---- Installing apps via MAS ----${NORMAL}"; \
+		while IFS='//' read -r app_id app_name; do \
+			printf "${YELLOW}Installing app: ${BOLD}%-15s${NORMAL} | ID: ${BOLD}%-12s${NORMAL}\n" "$$app_name" "$$app_id"; \
+			/opt/homebrew/bin/mas install $$app_id; \
+		done < $(MAS_APPS_FILE); \
+	else \
+		echo "${BOLD}${RED}This script is intended for macOS only.${NORMAL}"; \
+		exit 1; \
+	fi
