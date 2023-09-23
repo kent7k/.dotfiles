@@ -1,9 +1,8 @@
 DOT_FILES := $(HOME)/ghq/.dotfiles
 export DOT_FILES
 
-MAS_APPS_FILE := /Users/kent/ghq/.dotfiles/.masfile/Masfile
+MAS_APPS_FILE := $(DOT_FILES)/.masfile/Masfile
 MAS_APPS := $(shell awk -F '//' '{print $$1}' $(MAS_APPS_FILE) | tr -d ' ')
-MAS_APPS_FILE := /Users/kent/ghq/.dotfiles/.masfile/Masfile
 
 BOLD := $(shell tput bold)
 NORMAL := $(shell tput sgr0)
