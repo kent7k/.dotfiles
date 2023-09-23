@@ -18,16 +18,6 @@ alias gist='git status'
 alias gilo='git log --oneline --graph'
 alias girl='git reflog'
 
-# Pushes to the develop branch.
-gmpd() {
-  git pull origin develop
-  echo "Type branche name to merge : " && read branch
-  git merge ${branch}
-  git status
-  echo "Is it okay to continue?" && read
-  git push origin develop
-}
-
 # Creates a new repository.
 alias ghcr='ghcr'
 function ghcr() {
