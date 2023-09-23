@@ -1,8 +1,0 @@
-brew "gh"
-brew "git"
-brew "git-lfs"
-tap "nektos/tap"
-brew "ghq"
-brew "terraformer"
-brew "act"
-brew "amazon-ecs-cli"

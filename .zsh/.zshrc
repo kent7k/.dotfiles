@@ -1,5 +1,6 @@
-# Always load Fig - seems relevant for both macOS and Ubuntu with zsh
+# Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+# Always load Fig - seems relevant for both macOS and Ubuntu with zsh
 
 # Platform Specific Configurations
 case "$(uname)" in
@@ -7,8 +8,22 @@ case "$(uname)" in
         # Load cargo environment for macOS
         # . "$HOME/.cargo/env"
 
+        # Evaluate the environment settings required for Homebrew.
+        # This ensures that Homebrew binaries and other resources are accessible in the current shell session.
+        # The "brew shellenv" command outputs environment variable assignments necessary for Homebrew's operation,
+        # such as modifying PATH, MANPATH, and INFOPATH.
+        # ------------------------------------------------------------------
+        # ❯ /opt/homebrew/bin/brew shellenv
+        # export HOMEBREW_PREFIX="/opt/homebrew";
+        # export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+        # export HOMEBREW_REPOSITORY="/opt/homebrew";
+        # export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+        # export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+        # export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+        # ------------------------------------------------------------------
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+
         # Docker for Mac
-        # source /Users/kent/.docker/init-zsh.sh || true
         source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
         echo "$(uname)"
         ;;
@@ -19,6 +34,10 @@ case "$(uname)" in
         # HISTFILESIZE=2000
         echo "$(uname)"
 
+        # Fixme: PATH for Ubuntu, between eval and export
+
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
         # Check for Ubuntu for some specific commands
         if grep -qi "ubuntu" /etc/os-release; then
             # Additional Ubuntu specific configurations can be added here
@@ -28,8 +47,6 @@ case "$(uname)" in
         ;;
 esac
 
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -78,10 +95,8 @@ for config_file ($DOT_FILES/.zsh/**/*.zsh) source $config_file
 # Loads Configs about zsh.
 alias sh2='source ~/.zshrc'
 
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
-
-
 # Always load Fig at the end - relevant for both macOS and Ubuntu
+source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+# Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
