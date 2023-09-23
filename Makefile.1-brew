@@ -1,0 +1,105 @@
+DOT_FILES := $(HOME)/ghq/.dotfiles
+export DOT_FILES
+
+ifeq ($(shell uname -s), Darwin)
+    ifeq ($(shell uname -m), arm64)
+        BREW_BIN_PATH = /opt/homebrew/bin
+    else
+        BREW_BIN_PATH = /usr/local/bin
+    endif
+else ifeq ($(shell uname -s), Linux)
+    BREW_BIN_PATH = /home/linuxbrew/.linuxbrew/bin
+else
+    $(error Unsupported OS)
+endif
+
+BREW_FORMULAE_PATH := $(DOT_FILES)/.brewfile/formulae
+BREW_CASK_PATH := $(DOT_FILES)/.brewfile/cask
+
+BREW_CASK_FILES= \
+	${BREW_CASK_PATH}/00-app.Brewfile
+
+BREW_FORMULAE_FILES= \
+	${BREW_FORMULAE_PATH}/00-terminal.Brewfile \
+	${BREW_FORMULAE_PATH}/01_infrastructure.Brewfile \
+	${BREW_FORMULAE_PATH}/09-database.Brewfile \
+	${BREW_FORMULAE_PATH}/09-img.Brewfile \
+	${BREW_FORMULAE_PATH}/09-lint.Brewfile
+
+MAS_APPS_FILE := /Users/kent/ghq/.dotfiles/.masfile/Masfile
+MAS_APPS := $(shell awk -F '//' '{print $$1}' $(MAS_APPS_FILE) | tr -d ' ')
+MAS_APPS_FILE := /Users/kent/ghq/.dotfiles/.masfile/Masfile
+
+BOLD := $(shell tput bold)
+NORMAL := $(shell tput sgr0)
+GREEN := $(shell tput setaf 2)
+YELLOW := $(shell tput setaf 3)
+
+install_via_mas:
+	@echo "${BOLD}${GREEN}---- Installing apps via MAS ----${NORMAL}"
+	@while IFS='//' read -r app_id app_name; do \
+		printf "${YELLOW}Installing app: ${BOLD}%-15s${NORMAL} | ID: ${BOLD}%-12s${NORMAL}\n" "$$app_name" "$$app_id"; \
+		/opt/homebrew/bin/mas install $$app_id; \
+	done < $(MAS_APPS_FILE)
+
+install_cask_homebrew:
+	@echo "------ Start installing apps via Homebrew ------";
+	@for file in $(BREW_CASK_FILES); do \
+    	echo "Installing from: $$file"; \
+   		$(BREW_BIN_PATH)/brew bundle --file "$$file"; \
+	done
+	@echo "------ Finish installing apps via Homebrew ------";
+
+install_homebrew:
+	@if [ -z $$(which brew) ]; then \
+		echo "\n${BOLD}${GREEN}► Homebrew not detected. Installing...${NORMAL}\n"; \
+		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+		echo "\n${BOLD}${YELLOW}► Installation command executed${NORMAL}\n"; \
+		echo "${BOLD}${GREEN}-----------------------------------------------${NORMAL}"; \
+		echo "${BOLD}${GREEN}► Setting up Homebrew environment variables...${NORMAL}"; \
+		echo "This command sets the environment variables necessary for Homebrew."; \
+        echo "However, these changes are temporary for the current shell session."; \
+        echo "To make them permanent, add the output of 'brew shellenv' to your shell's init file (e.g., ~/.zshrc)."; \
+        eval "$$($(BREW_BIN_PATH)/brew shellenv)"; \
+        $(BREW_BIN_PATH)/brew shellenv; \
+		echo "${BOLD}${GREEN}-----------------------------------------------${NORMAL}"; \
+		echo "\n${BOLD}${GREEN}► Updating Homebrew and installing formulas...${NORMAL}\n"; \
+		brew update; \
+	 	brew --version; \
+		echo "\nFor each Brewfile, install and upgrade packages based on its content."; \
+        echo "Also, remove any packages not in the Brewfile due to the --cleanup flag."; \
+        for file in $(BREW_FORMULAE_FILES); do \
+              echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"; \
+              echo "${BOLD}${GREEN}► Processing Brewfile: $$file${NORMAL}"; \
+              echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}\n"; \
+        	  brew bundle --file "$$file"; \
+              echo "\n${BOLD}${GREEN}✓ Processed successfully!${NORMAL}\n"; \
+		done; \
+		echo "\n${BOLD}${GREEN}► Installation via Homebrew completed ◄${NORMAL}\n"; \
+	else \
+		echo "\n${BOLD}${YELLOW}► Homebrew already installed.${NORMAL}\n"; \
+	fi
+
+
+maintain_homebrew: brew_upgrade brew_cleanup brew_doctor
+
+brew_upgrade:
+	@echo "\n${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
+	@echo "${BOLD}${GREEN}► Upgrading all outdated brew formulas...${NORMAL}"
+	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}\n"
+	@/opt/homebrew/bin/brew upgrade
+	@echo "\n${BOLD}${GREEN}✓ Upgrade completed!${NORMAL}\n"
+
+brew_cleanup:
+	@echo "\n${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
+	@echo "${BOLD}${GREEN}► Cleaning up old brew installations...${NORMAL}"
+	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}\n"
+	@/opt/homebrew/bin/brew cleanup
+	@echo "\n${BOLD}${GREEN}✓ Cleanup completed!${NORMAL}\n"
+
+brew_doctor:
+	@echo "\n${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
+	@echo "${BOLD}${GREEN}► Checking for potential brew issues...${NORMAL}"
+	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}\n"
+	@/opt/homebrew/bin/brew doctor
+	@echo "\n${BOLD}${GREEN}✓ Brew doctor check completed!${NORMAL}\n"

@@ -1,0 +1,104 @@
+{
+  "entries": {
+    "cask": {
+      "zoom": {
+        "version": "5.16.0.22929",
+        "options": {
+          "full_name": "zoom"
+        }
+      },
+      "slack": {
+        "version": "4.34.119",
+        "options": {
+          "full_name": "slack"
+        }
+      },
+      "fig": {
+        "version": "2.16.0",
+        "options": {
+          "full_name": "fig"
+        }
+      },
+      "xcodes": {
+        "version": "1.10.0b18",
+        "options": {
+          "full_name": "xcodes"
+        }
+      },
+      "1password": {
+        "version": "8.10.16",
+        "options": {
+          "full_name": "1password"
+        }
+      },
+      "google-chrome": {
+        "version": "117.0.5938.92",
+        "options": {
+          "full_name": "google-chrome"
+        }
+      },
+      "notion": {
+        "version": "2.2.0",
+        "options": {
+          "full_name": "notion"
+        }
+      },
+      "kindle": {
+        "version": "1.40.65626",
+        "options": {
+          "full_name": "kindle"
+        }
+      },
+      "vlc": {
+        "version": "3.0.18",
+        "options": {
+          "full_name": "vlc"
+        }
+      },
+      "dropbox": {
+        "version": "182.4.6427",
+        "options": {
+          "full_name": "dropbox"
+        }
+      },
+      "synthesia": {
+        "version": "10.9",
+        "options": {
+          "full_name": "synthesia"
+        }
+      },
+      "the-unarchiver": {
+        "version": "4.3.5,139,1652457131",
+        "options": {
+          "full_name": "the-unarchiver"
+        }
+      },
+      "sidequest": {
+        "version": "0.10.38",
+        "options": {
+          "full_name": "sidequest"
+        }
+      }
+    }
+  },
+  "system": {
+    "macos": {
+      "ventura": {
+        "HOMEBREW_VERSION": "4.1.12",
+        "HOMEBREW_PREFIX": "/opt/homebrew",
+        "Homebrew/homebrew-core": "api",
+        "CLT": "14.3.1.0.1.1683849156",
+        "Xcode": "14.3",
+        "macOS": "13.4.1"
+      }
+    },
+    "linux": {
+      "Ubuntu 22.04.2 LTS (jammy)": {
+        "HOMEBREW_VERSION": "4.1.7",
+        "HOMEBREW_PREFIX": "/home/linuxbrew/.linuxbrew",
+        "Homebrew/homebrew-core": "api",
+        "GCC": "11.4.0"
+      }
+    }
+  }
+}

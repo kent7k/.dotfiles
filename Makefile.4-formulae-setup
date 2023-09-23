@@ -1,0 +1,8 @@
+init_gh:
+	gh auth login
+
+init_fig:
+	fig login
+
+init_fig_doctor:
+	fig doctor
