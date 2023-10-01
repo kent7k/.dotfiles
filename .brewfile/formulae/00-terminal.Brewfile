@@ -2,6 +2,8 @@ brew "asdf"
 
 brew "starship"
 brew "neovim"
+brew "tmux"
+
 
 # Install GnuPG to enable PGP-signing commits.
 brew install gpg

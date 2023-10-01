@@ -95,10 +95,7 @@ for config_file ($DOT_FILES/.zsh/**/*.zsh) source $config_file
 # Loads Configs about zsh.
 alias sh2='source ~/.zshrc'
 
-
 # Always load Fig at the end - relevant for both macOS and Ubuntu
-source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
-
 source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # Fig post block. Keep at the bottom of this file.
