@@ -1,3 +1,9 @@
+# Increase command timeout to 2 seconds (2000 milliseconds). Default is 500 milliseconds.
+command_timeout = 2000
+# --- warning ---
+# [WARN] - (starship::utils): Executing command "/Users/kent/.asdf/shims/node" timed out.
+# [WARN] - (starship::utils): You can set command_timeout in your config to a higher value to allow longer-running commands to keep executing.
+
 # Docs: https://starship.rs/ja-jp/config/
 [aws]
 format = ''

@@ -1,0 +1,89 @@
+# Define the path to the .plugin-lists
+PLUGIN_LIST_PATH := $(HOME)/ghq/.dotfiles/.asdf/.plugin-lists
+
+# Shell commands to make text bold and colored
+BOLD := $(shell tput bold)
+NORMAL := $(shell tput sgr0)
+GREEN := $(shell tput setaf 2)
+YELLOW := $(shell tput setaf 3)
+RED := $(shell tput setaf 1)
+
+# The main target
+check-asdf-plugins:
+	@PLUGINS=$$(grep -v '^#' $(PLUGIN_LIST_PATH)); \
+	for PLUGIN in $$PLUGINS; do \
+		echo "\n${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"; \
+		echo "${BOLD}${GREEN}► Checking ASDF plugin: $$PLUGIN ${NORMAL}"; \
+		echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"; \
+		PLUGIN_EXISTS=`asdf plugin list | grep -q $$PLUGIN && echo 1 || echo 0`; \
+		if [ $$PLUGIN_EXISTS -eq 0 ]; then \
+            echo "${BOLD}${RED}Plugin $$PLUGIN is not installed${NORMAL}"; \
+            echo "${BOLD}${GREEN}Installing plugin $$PLUGIN${NORMAL}"; \
+            asdf plugin add $$PLUGIN; \
+        else \
+            echo "\n${BOLD}${GREEN}✓ $$PLUGIN is installed${NORMAL}\n"; \
+        fi; \
+	done; \
+	printf "${BOLD}${GREEN}Updating all ASDF plugins...${NORMAL}\n"; \
+	asdf plugin-update --all
+
+# -------------------------------------
+# > asdf plugin-update --all
+# Updating python to master
+# From https://github.com/danhper/asdf-python
+#    8505457..5e277e2  master     -> master
+#    8505457..5e277e2  master     -> origin/master
+# Already on 'master'
+# Your branch is up to date with 'origin/master'.
+#   ---
+# Updating nodejs to main
+# Already on 'main'
+# Your branch is up to date with 'origin/main'.
+# -------------------------------------
+
+
+TOOL_VERSIONS_PATH := $(HOME)/ghq/.dotfiles/.asdf/.tool-versions
+
+check-asdf-tools:
+	@TOOLS=$$(grep -v '^#' $(TOOL_VERSIONS_PATH) | awk '{print $$1}' | awk 'NF' | tr '\n' ' '); \
+	VERSIONS=$$(grep -v '^#' $(TOOL_VERSIONS_PATH) | awk '{print $$2}' | awk 'NF' | tr '\n' ' '); \
+	i=1; \
+	for TOOL in $$TOOLS; do \
+		VERSION=$$(echo $$VERSIONS | cut -d' ' -f$$i); \
+		CURRENT_VERSION=$$(asdf current $$TOOL 2>/dev/null | awk 'NF' | awk '{print $$2}' | grep -v 'path:' || echo ""); \
+		if [ "$$TOOL" = "nodejs" ]; then \
+			CURRENT_VERSION=$$(asdf current $$TOOL 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+'); \
+		fi; \
+		if [ -z "$$CURRENT_VERSION" ]; then \
+			printf "${BOLD}${RED}✗ %-15s %-15s Not installed.${NORMAL}\n" $$TOOL $$VERSION; \
+		elif [ "$$CURRENT_VERSION" = "$$VERSION" ]; then \
+			printf "${BOLD}${GREEN}✓ %-15s %-15s Installed${NORMAL}\n" $$TOOL $$VERSION; \
+		fi; \
+		i=$$((i+1)); \
+	done
+	@echo "\n-------------------------------------------------\n"
+
+
+install-asdf-tools:
+	@TOOLS=$$(grep -v '^#' $(TOOL_VERSIONS_PATH) | awk '{print $$1}' | awk 'NF' | tr '\n' ' '); \
+	VERSIONS=$$(grep -v '^#' $(TOOL_VERSIONS_PATH) | awk '{print $$2}' | awk 'NF' | tr '\n' ' '); \
+	i=1; \
+	for TOOL in $$TOOLS; do \
+		VERSION=$$(echo $$VERSIONS | cut -d' ' -f$$i); \
+		CURRENT_VERSION=$$(asdf current $$TOOL 2>/dev/null | awk 'NF' | awk '{print $$2}' | grep -v 'path:' || echo ""); \
+		if [ -z "$$CURRENT_VERSION" ]; then \
+			printf "${BOLD}${YELLOW}Installing %-15s %-15s...${NORMAL}\n" $$TOOL $$VERSION; \
+			asdf install $$TOOL $$VERSION; \
+		fi; \
+		i=$$((i+1)); \
+	done
+
+
+
+
+
+
+
+# asdf install ruby 3.1.4
+# 最新版についてのリリース情報を知れるかな？
+

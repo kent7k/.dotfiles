@@ -1,109 +1,162 @@
-# Makes version by asdf interactively.
-# TODO: When using this, one couldn't escape from a loop.
-alias asdfa='asdfa'
-function asdfa() {
-  asdf current
-  echo "----------------------------"
-  echo "Do you wanna list up all plugins? (It takes a minute) (y/[n])"
-  read -r input
+# Source File: /Users/kent/ghq/.dotfiles/.zsh/3_packages/asdf-interactive-sh.zsh
 
-  case $input in
-    [Yy]*)
-      echo "----------------------------"
-      echo "Note: if the plugins is new, then 'asdf plugin add python'"
-      echo "Note: if the plugins is old, then 'asdf plugin remove python'"
-      echo "----------------------------"
-      echo "Let's show all plugins"
-      asdf plugin list all
-      echo "----------------------------"
-      ;;
-    "" | *)
-      echo "----------------------------"
-      echo "Enter Plugin to search version. (Above/Sth)"
-      read pluginName
-      asdf list all "$pluginName" &&
-        echo "----------------------------"
-      latestVersion=$(asdf latest $pluginName)
-      echo "$pluginName's latest stable version is $latestVersion"
-      echo "----------------------------"
-      installedVersion=$(asdf list $pluginName)
-      echo "Installed $pluginName's versions are ..."
-      echo $installedVersion
-      echo "----------------------------"
-      asdf_SelectPluginVersion
-      ;;
-  esac
-}
+# Define color variables
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+BOLD='\033[1m'
+NC='\033[0m' # No Color
 
-alias asdf_SelectPluginVersion='asdf_SelectPluginVersion'
 function asdf_SelectPluginVersion() {
-  echo "Please, Choose Version you wanna install from Above ( $latestVersion /[n])"
-  read pluginVersion
+    local pluginName="$1"
+    local suggestedVersion="$2"
+    local pluginVersion=""
+    local availableVersions
+    local majorMinorVersions
+    local selectedMajorMinor
+    local patchVersions
 
-  case $pluginVersion in
-    "")
-      asdf_ShownVersion
-      ;;
-    *)
-      echo "Let's install $pluginName $pluginVersion"
-      sleep 0.5
-      asdf install $pluginName $pluginVersion
-      ;;
-  esac
+    availableVersions=$(asdf list all "$pluginName")
 
-  echo "----------------------------"
-  asdf_ShownVersion
+    # Get unique major.minor versions
+    majorMinorVersions=$(echo "$availableVersions" | awk -F. '{print $1"."$2}' | uniq)
+
+    # Prompt user to select major.minor version
+    selectedMajorMinor=$(echo "$majorMinorVersions" | fzf --prompt "${BOLD}Select the major.minor version:${NC} ")
+
+    # Exit if no version was selected
+    if [ -z "$selectedMajorMinor" ]; then
+        echo "${YELLOW}No version selected. Exiting.${NC}"
+        return
+    fi
+
+    # Now show the patch versions for the selected major.minor
+    patchVersions=$(echo "$availableVersions" | grep "^$selectedMajorMinor")
+
+    pluginVersion=$(echo "$patchVersions" | fzf --prompt "${BOLD}Select the patch version for $selectedMajorMinor:${NC} ")
+
+    # Continue only if a version is selected
+    if [ -n "$pluginVersion" ]; then
+        echo "${GREEN}Installing $pluginName $pluginVersion...${NC}"
+        asdf install "$pluginName" "$pluginVersion"
+        print_separator
+        asdf_SetVersion "$pluginName" "$pluginVersion"
+    else
+        echo "${YELLOW}Skipped installation.${NC}"
+    fi
 }
 
-alias asdf_ShownVersion='asdf_ShownVersion'
-function asdf_ShownVersion() {
-  echo "Installed $pluginName"
-  asdf list $pluginName &&
-    echo "----------------------------"
-  asdf_SetVersion
+function print_separator() {
+    echo "${BOLD}${GREEN}----------------------------${NC}"
 }
 
-alias asdf_SetVersion='asdf_SetVersion'
+function asdfa() {
+    # Display currently installed versions
+    asdf current
+    print_separator
+
+    echo "${BOLD}Do you want to list all plugins?${NORMAL} This might take a minute. (y/[n])"
+    read -r input
+
+    case $input in
+    [Yy]*)
+        print_separator
+        echo "${BOLD}Displaying all plugins:${NC}"
+        asdf plugin list all
+        print_separator
+        ;;
+    esac
+
+    # Use fzf to let the user select the plugin
+    local pluginName=$(asdf plugin list | fzf --prompt "${BOLD}Select the plugin to manage its version:${NC} ")
+
+    # If no plugin was selected, exit
+    if [ -z "$pluginName" ]; then
+        echo "${YELLOW}No plugin selected. Exiting.${NC}"
+        return
+    fi
+
+    print_separator
+    local latestVersion
+    local installedVersion
+
+    latestVersion=$(asdf latest $pluginName)
+    echo "${BOLD}${pluginName}'s latest stable version is ${latestVersion}${NC}"
+    print_separator
+
+    installedVersion=$(asdf list $pluginName)
+    echo "${BOLD}Installed ${pluginName}'s versions are:${NC}"
+    echo "$installedVersion"
+    print_separator
+
+    asdf_SelectPluginVersion "$pluginName" "$latestVersion"
+    asdf_uninstall "$pluginName"
+}
+
 function asdf_SetVersion() {
-  echo "Are you wanna set $pluginName $pluginVersion ? ([g]/l/n)"
-  asdf list $pluginName &&
-    read setting
+    local pluginName="$1"
+    local pluginVersion="$2"
 
-  case $setting in
-    "" | [g])
-      asdf global $pluginName $pluginVersion
-      echo "DONE: Setting $pluginName $pluginVersion as global"
-      echo "----------------------------"
-      ;;
-    [l])
-      asdf local $pluginName $pluginVersion
-      echo "DONE: Setting $pluginName $pluginVersion as local"
-      echo "----------------------------"
-      ;;
+    echo "${BOLD}How do you want to set the version for $pluginName?${NC}"
+    echo "(g)lobal, (l)ocal, or (n)ot now"
+    read -r setting
+
+    case $setting in
+    g|G)
+        asdf global "$pluginName" "$pluginVersion"
+        echo "${GREEN}DONE: Set $pluginName $pluginVersion as global${NC}"
+        ;;
+    l|L)
+        asdf local "$pluginName" "$pluginVersion"
+        echo "${GREEN}DONE: Set $pluginName $pluginVersion as local${NC}"
+        ;;
     *)
-      echo "----------------------------"
-      ;;
-  esac
-
-  asdf_uninstall
+        print_separator
+        ;;
+    esac
 }
 
-alias asdf_uninstall='asdf_uninstall'
 function asdf_uninstall() {
-  echo "Wanna Uninstall Above?　( $pluginVersion / [n] )"
-  read deletedPluginVersion
+    local pluginName="$1"
 
-  case $deletedPluginVersion in
-    "")
-      echo "----------------------------"
-      echo "Done"
-      ;;
-    *)
-      echo "----------------------------"
-      asdf uninstall $pluginName $deletedPluginVersion &&
-        echo "You Finished uninstalling $pluginName $deletedPluginVersion"
-      echo "----------------------------"
-      asdf_ShownVersion
-      ;;
-  esac
+    # While loop to keep the uninstall prompt going
+    while true; do
+        # Fetch and count the current installed versions
+        local installedVersions
+        installedVersions=$(asdf list "$pluginName")
+        local installedVersionsCount
+        installedVersionsCount=$(echo "$installedVersions" | wc -l | awk '{print $1}')
+
+        # Print installed versions
+        print_separator
+        echo "${BOLD}Installed versions of $pluginName:${NC}"
+        echo "$installedVersions"
+        print_separator
+
+        # If there's only one version installed, break the loop
+        if (( installedVersionsCount <= 1 )); then
+            echo "${YELLOW}Only one version remains for $pluginName. Exiting uninstallation loop.${NC}"
+            break
+        fi
+
+        # Use the updated list of versions for fzf selection
+        deletedPluginVersion=$(echo "$installedVersions" | fzf --prompt "${BOLD}Select a version of $pluginName to uninstall or ESC to skip:${NC} " | awk '{$1=$1};1')
+
+        # If user skips (by pressing ESC in fzf), break the loop
+        if [ -z "$deletedPluginVersion" ]; then
+            break
+        fi
+
+        # Uninstall the selected version
+        asdf uninstall "$pluginName" "$deletedPluginVersion"
+
+        if [[ $? -eq 0 ]]; then
+            echo "${GREEN}Uninstalled $pluginName $deletedPluginVersion${NC}"
+            print_separator
+        else
+            echo "${RED}There was an error uninstalling $pluginName $deletedPluginVersion${NC}"
+            print_separator
+        fi
+    done
 }
