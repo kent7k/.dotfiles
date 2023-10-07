@@ -47,7 +47,6 @@ function use_commit() {
 
 alias gic='git_commit'
 function git_commit() {
-    # Load .env file if it exists
     if [ -f "./.env" ]; then
         source "./.env"
     fi
