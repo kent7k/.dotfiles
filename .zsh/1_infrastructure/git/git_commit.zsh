@@ -47,20 +47,50 @@ function use_commit() {
 
 alias gic='git_commit'
 function git_commit() {
-  # Load .env file if it exists
-  if [ -f "./.env" ]; then
-    source "./.env"
-  fi
+    # Load .env file if it exists
+    if [ -f "./.env" ]; then
+        source "./.env"
+    fi
 
-  # Use the argument passed to the function or the GIT_COMMIT_NAME from .env as the default value
-  COMMIT_NAME=${1:-$GIT_COMMIT_NAME}
+    # Display the default commit name from .env
+    echo "Default commit name from .env is: $GIT_COMMIT_NAME"
 
-  while [ -z "$COMMIT_NAME" ]; do # Check if variable is empty using the -z option
-    echo -e "$(c_green "? Commit name")"
-    read -r COMMIT_NAME
-  done
+    # Prompt the user to enter a new commit name or use the default one
+    echo -e "$(c_green "? Type a commit name (or press Enter to use the default)")"
+    read -r TYPED_COMMIT_NAME
 
-  echo "Commit name is: $COMMIT_NAME"
+    # If the user typed something, update GIT_COMMIT_NAME
+    if [ ! -z "$TYPED_COMMIT_NAME" ]; then
+        COMMIT_NAME="$TYPED_COMMIT_NAME"
+        if grep -q "GIT_COMMIT_NAME=" "./.env"; then
+            sed -i "" "s/^GIT_COMMIT_NAME=.*/GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.env"
+        else
+            echo "GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >> ./.env
+        fi
+    else
+        COMMIT_NAME="$GIT_COMMIT_NAME"
+    fi
+
+    # Get today's date and calculate the difference in days
+    TODAY_DATE=$(date +"%Y-%m-%d")
+    if [ ! -z "$GIT_COMMIT_DATE" ]; then
+        DATE_DIFF=$(( ( $(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s) ) / 86400 ))
+        echo "Days since last commit: $DATE_DIFF days"
+    else
+        DATE_DIFF=0
+    fi
+
+    # Update or append GIT_COMMIT_DATE
+    if grep -q "GIT_COMMIT_DATE=" "./.env"; then
+        sed -i "" "s/^GIT_COMMIT_DATE=.*/GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.env"
+    else
+        echo "GIT_COMMIT_DATE=\"$TODAY_DATE\"" >> ./.env
+    fi
+
+    echo ".env has been updated."
+
+    # Display the chosen commit name
+    echo "Using commit name: $COMMIT_NAME"
 
   printf "\n%s\n" "$(c_green "Do you want to use --no-verify option?") (Y/n)"
   read -r VERIFY
@@ -69,6 +99,8 @@ function git_commit() {
   else
     git commit -m "$COMMIT_NAME"
   fi
+
+
   git_push
 }
 
