@@ -52,6 +52,14 @@ function git_commit() {
         source "./.env"
     fi
 
+    # Check if GIT_COMMIT_NAME exists in .env, if not, set a default value
+    if ! grep -q "GIT_COMMIT_NAME=" "./.env"; then
+        echo "GIT_COMMIT_NAME=\"Default Commit Message\"" >> ./.env
+    fi
+
+    # Display the default commit name from .env
+    echo "Default commit name from .env is: $GIT_COMMIT_NAME"
+
     # Get today's date and calculate the difference in days
     TODAY_DATE=$(date +"%Y-%m-%d")
     if [ ! -z "$GIT_COMMIT_DATE" ]; then
@@ -60,9 +68,6 @@ function git_commit() {
     else
         DATE_DIFF=0
     fi
-
-    # Display the default commit name from .env
-    echo "Default commit name from .env is: $GIT_COMMIT_NAME"
 
     # Prompt the user to enter a new commit name or use the default one
     echo -e "$(c_green "? Type a commit name (or press Enter to use the default)")"
