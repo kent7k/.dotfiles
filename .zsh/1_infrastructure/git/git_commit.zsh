@@ -47,11 +47,20 @@ function use_commit() {
 
 alias gic='git_commit'
 function git_commit() {
-  COMMIT_NAME=""                  # Set initial value to an empty string
+  # Load .env file if it exists
+  if [ -f "./.env" ]; then
+    source "./.env"
+  fi
+
+  # Use the argument passed to the function or the GIT_COMMIT_NAME from .env as the default value
+  COMMIT_NAME=${1:-$GIT_COMMIT_NAME}
+
   while [ -z "$COMMIT_NAME" ]; do # Check if variable is empty using the -z option
     echo -e "$(c_green "? Commit name")"
     read -r COMMIT_NAME
   done
+
+  echo "Commit name is: $COMMIT_NAME"
 
   printf "\n%s\n" "$(c_green "Do you want to use --no-verify option?") (Y/n)"
   read -r VERIFY
