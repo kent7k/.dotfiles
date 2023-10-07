@@ -52,6 +52,15 @@ function git_commit() {
         source "./.env"
     fi
 
+    # Get today's date and calculate the difference in days
+    TODAY_DATE=$(date +"%Y-%m-%d")
+    if [ ! -z "$GIT_COMMIT_DATE" ]; then
+        DATE_DIFF=$(( ( $(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s) ) / 86400 ))
+        echo "Days since last commit: $DATE_DIFF days"
+    else
+        DATE_DIFF=0
+    fi
+
     # Display the default commit name from .env
     echo "Default commit name from .env is: $GIT_COMMIT_NAME"
 
@@ -69,15 +78,6 @@ function git_commit() {
         fi
     else
         COMMIT_NAME="$GIT_COMMIT_NAME"
-    fi
-
-    # Get today's date and calculate the difference in days
-    TODAY_DATE=$(date +"%Y-%m-%d")
-    if [ ! -z "$GIT_COMMIT_DATE" ]; then
-        DATE_DIFF=$(( ( $(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s) ) / 86400 ))
-        echo "Days since last commit: $DATE_DIFF days"
-    else
-        DATE_DIFF=0
     fi
 
     # Update or append GIT_COMMIT_DATE
