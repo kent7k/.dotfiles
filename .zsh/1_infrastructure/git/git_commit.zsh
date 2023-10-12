@@ -4,13 +4,21 @@ alias gipu='git pull'
 alias gia='git_add'
 function git_add() {
   echo
-  added_files=$(git diff --name-only | fzf --multi)
-  if [ -n "$added_files" ]; then
-    echo -e "$(c_light_gray "Added file:")"
-    while read -r file; do
+
+  # Fetch files and their statuses, but exclude untracked files
+  local files_and_status=$(git status --short | grep -v '^??' | fzf --multi)
+
+  if [ -n "$files_and_status" ]; then
+    echo -e "$(c_light_gray "Added files:")"
+    while IFS= read -r line; do
+      # Split the file_status and filename
+      local file_status="${line:0:2}"
+      local file="${line:3}"
+
       git add "$file"
-      echo -e "$(c_cyan "  - $file")"
-    done <<<"$added_files"
+      # Show both the file_status and filename
+      echo -e "$(c_cyan "  $file_status $file")"
+    done <<<"$files_and_status"
 
     use_commit
   else
@@ -18,12 +26,18 @@ function git_add() {
   fi
 }
 
+
+
 alias giau='git_add_untracked_files'
+
 function git_add_untracked_files() {
   echo
-  added_untracked_files=$(git ls-files --others --exclude-standard | fzf --multi)
+
+  # Fetch untracked files using git ls-files
+  local added_untracked_files=$(git ls-files --others --exclude-standard | fzf --multi)
+
   if [ -n "$added_untracked_files" ]; then
-    echo -e "$(c_light_gray "Added untracked file:")"
+    echo -e "$(c_light_gray "Added untracked files:")"
     while IFS= read -r file; do
       git add "$file"
       echo -e "$(c_cyan "  - $file")"
@@ -34,6 +48,7 @@ function git_add_untracked_files() {
     echo "No files selected."
   fi
 }
+
 
 function use_commit() {
   printf "\n%s\n" "$(c_green "Do you want to commit files above?") (Y/n)"
