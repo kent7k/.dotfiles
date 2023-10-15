@@ -1,4 +1,4 @@
-init_nnn: init_neovim link_neovim_config
+neovim: init_neovim link_neovim_config
 
 init_neovim:
 	mkdir -p ~/.config/nvim
@@ -14,5 +14,5 @@ init_neovim:
 
 link_neovim_config:
 	@# Symlink for neovim
-	@ln -snfv $(HOME)/ghq/.dotfiles/.zsh/0_terminal/.nvim/init.vim $(HOME)/.config/nvim/init.vim
-	@ln -snfv $(HOME)/ghq/.dotfiles/.zsh/0_terminal/.nvim/coc-settings.json $(HOME)/.config/nvim/coc-settings.json
+	@ln -snfv $(HOME)/.dotfiles/.zsh/0_terminal/.nvim/init.vim $(HOME)/.config/nvim/init.vim
+	@ln -snfv $(HOME)/.dotfiles/.zsh/0_terminal/.nvim/coc-settings.json $(HOME)/.config/nvim/coc-settings.json

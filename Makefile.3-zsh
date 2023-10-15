@@ -1,4 +1,5 @@
-# Add Homebrew's zsh to /etc/shells based on OS.
+zsh: add_brew_zsh_to_shells set_zsh
+
 add_brew_zsh_to_shells:
 	@case "$(shell uname)" in \
 	Darwin) \
@@ -31,9 +32,13 @@ add_brew_zsh_to_shells:
 
 set_zsh:
 	@echo "\n${BOLD}${GREEN}► Setting up zsh...${NORMAL}\n";
+	chmod +x .zsh/.zshrc-before.sh
+	.zsh/.zshrc-before.sh
 	@case "$(shell uname)" in \
 	Darwin) \
 		if [ "$$SHELL" != "/opt/homebrew/bin/zsh" ]; then \
+			printf "zsh -c \"source ~/.zshrc\"" | pbcopy; \
+			echo "\n${BOLD}${GREEN}zsh -c \"source ~/.zshrc\"${NORMAL} has been copied to the clipboard."; \
 			echo "${BOLD}${YELLOW}Attempting to change shell to zsh installed by Homebrew on macOS...${NORMAL}"; \
 			chsh -s /opt/homebrew/bin/zsh && echo "\n${BOLD}${GREEN}✓ Shell changed to zsh. Please restart the terminal.${NORMAL}\n" || echo "\n${BOLD}${RED}✗ Failed to change shell to zsh. Please manually change it using the chsh command.${NORMAL}\n"; \
 		else \
@@ -42,6 +47,7 @@ set_zsh:
 		;; \
 	Linux) \
 		if [ "$$SHELL" != "/home/linuxbrew/.linuxbrew/bin/zsh" ]; then \
+			echo "\n${BOLD}${GREEN}TODO: printf or echo for zsh -c \"source ~/.zshrc\"${NORMAL}"; \
 			echo "${BOLD}${YELLOW}Attempting to change shell to zsh installed by Homebrew on Linux...${NORMAL}"; \
 			chsh -s /home/linuxbrew/.linuxbrew/bin/zsh && echo "\n${BOLD}${GREEN}✓ Shell changed to zsh. Please restart the terminal.${NORMAL}\n" || echo "\n${BOLD}${RED}✗ Failed to change shell to zsh. Please manually change it using the chsh command.${NORMAL}\n"; \
 		else \
@@ -49,11 +55,3 @@ set_zsh:
 		fi \
 		;; \
 	esac;
-
-# Link dotfiles.
-link:
-	chmod +x .zsh/.zshrc-before.sh
-	.zsh/.zshrc-before.sh
-
-init_source_after_symbolic_link_to_zsh:
-	zsh -c "source ~/.zshrc"

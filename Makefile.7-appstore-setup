@@ -1,4 +1,4 @@
-DOT_FILES := $(HOME)/ghq/.dotfiles
+DOT_FILES := $(HOME)/.dotfiles
 export DOT_FILES
 
 MAS_APPS_FILE := $(DOT_FILES)/.masfile/Masfile

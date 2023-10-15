@@ -1,4 +1,4 @@
-DOT_FILES := $(HOME)/ghq/.dotfiles
+DOT_FILES := $(HOME)/.dotfiles
 export DOT_FILES
 
 ifeq ($(shell uname -s), Darwin)
@@ -16,9 +16,6 @@ endif
 BREW_FORMULAE_PATH := $(DOT_FILES)/.brewfile/formulae
 BREW_CASK_PATH := $(DOT_FILES)/.brewfile/cask
 
-BREW_CASK_FILES= \
-	${BREW_CASK_PATH}/00-app.Brewfile
-
 BREW_FORMULAE_FILES= \
 	${BREW_FORMULAE_PATH}/00-terminal.Brewfile \
 	${BREW_FORMULAE_PATH}/01_infrastructure.Brewfile \
@@ -31,13 +28,7 @@ NORMAL := $(shell tput sgr0)
 GREEN := $(shell tput setaf 2)
 YELLOW := $(shell tput setaf 3)
 
-install_cask_homebrew:
-	@echo "------ Start installing apps via Homebrew ------";
-	@for file in $(BREW_CASK_FILES); do \
-    	echo "Installing from: $$file"; \
-   		$(BREW_BIN_PATH)/brew bundle --file "$$file"; \
-	done
-	@echo "------ Finish installing apps via Homebrew ------";
+brew: install_homebrew maintain_homebrew
 
 install_homebrew:
 	@if [ -z $$(which brew) ]; then \
@@ -68,7 +59,6 @@ install_homebrew:
 	else \
 		echo "\n${BOLD}${YELLOW}► Homebrew already installed.${NORMAL}\n"; \
 	fi
-
 
 maintain_homebrew: brew_upgrade brew_cleanup brew_doctor
 
