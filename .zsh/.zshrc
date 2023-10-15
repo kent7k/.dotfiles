@@ -83,7 +83,7 @@ setopt interactivecomments
 setopt nonomatch
 
 # Loads configs about zsh.
-export DOT_FILES="$HOME/ghq/.dotfiles"
+export DOT_FILES="$HOME/.dotfiles"
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 export LC_ALL=en_US.UTF-8

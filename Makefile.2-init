@@ -1,4 +1,4 @@
-init: ubuntu_check ubuntu_zsh set_zsh
+init: ubuntu_check
 
 ubuntu_check:
 	@if grep -qi "ubuntu" /etc/os-release; then \
