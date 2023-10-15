@@ -1,4 +1,4 @@
-init_nnn: init_neovim link_neovim_config
+neovim: init_neovim link_neovim_config
 
 init_neovim:
 	mkdir -p ~/.config/nvim
