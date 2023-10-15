@@ -1,3 +1,64 @@
+#!/opt/homebrew/bin/zsh
+# Git Status Reference:
+# ======================
+#
+# Staging area (first column):
+# ---------------------------
+# ` ` (space): File is unchanged (not staged).
+# A: File is added.
+# M: File is modified.
+# D: File is deleted.
+# R: File is renamed.
+# C: File is copied.
+#
+# Working directory (second column):
+# ---------------------------------
+# ` ` (space): File is unchanged (not modified in the working directory since the index).
+# M: File is modified in the working directory but not staged.
+# D: File is deleted in the working directory but not staged.
+# A: File is added to the working directory but not staged.
+# R: File is renamed in the working directory but not staged.
+# C: File is copied in the working directory but not staged.
+# ?: File is not tracked by Git.
+# !: File is ignored.
+
+alias ghars="git_unstage"
+function git_unstage() {
+  local entries
+  local selected
+
+  # Extract the files under "Changes to be committed" with their status, formatted as per your request
+  entries=$(git status --porcelain | grep '^[MADR]' | awk '{
+      if ($1 == "D") print $2 "  (deleted)";
+      else if ($1 == "M") print $2;
+      else if ($1 == "A") print $2 "  (added)";
+      else if ($1 == "R") print $2 "  (renamed)";
+      else if ($1 == "C") print $2 "  (copied)";
+      # You can add other statuses here as needed
+      Staging area (first column):
+
+  }')
+
+  # Check if there are any entries to be shown
+  if [ -z "$entries" ]; then
+    echo "No files to unstage!"
+    return
+  fi
+
+  # Use fzf to select an entry
+  selected=$(echo "$entries" | fzf --height 30% --reverse --multi | awk '{gsub(/  \(.*\)$/, "", $0); print}')
+
+  # Check if an entry was selected
+  if [ -n "$selected" ]; then
+    # Use git restore to unstage the selected files
+    git restore --staged $selected
+  else
+    echo "No file selected!"
+  fi
+
+  git status --short
+}
+
 alias gire='git_reset'
 function git_reset() {
   printf "\n%s\n" "$(c_green "Do you want to reset repository?") (y/N)"
