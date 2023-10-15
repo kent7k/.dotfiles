@@ -38,9 +38,6 @@ function ghcr() {
   git push -u origin main
 }
 
-
-
-
 # Makes git logs more readable
 alias gitlog="ghq list | fzf --preview "git --git-dir $(ghq root)/{}/.git log --date=short --pretty=format:'-%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --color""
 

@@ -59,8 +59,6 @@ function git_unstage() {
   git status --short
 }
 
-
-
 alias gire='git_reset'
 function git_reset() {
   printf "\n%s\n" "$(c_green "Do you want to reset repository?") (y/N)"

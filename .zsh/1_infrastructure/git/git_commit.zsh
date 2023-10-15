@@ -49,7 +49,6 @@ function git_add_untracked_files() {
   fi
 }
 
-
 function use_commit() {
   printf "\n%s\n" "$(c_green "Do you want to commit files above?") (Y/n)"
   read -r CONFIRM_CONFIRM
@@ -118,7 +117,6 @@ function git_commit() {
   else
     git commit -m "$COMMIT_NAME"
   fi
-
 
   git_push
 }
