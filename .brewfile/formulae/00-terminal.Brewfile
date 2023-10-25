@@ -12,6 +12,9 @@ brew "bat"
 brew "tealdeer"
 brew "glow"
 
+# tmux
+brew "reattach-to-user-namespace"
+
 # curl
 brew "curl"
 
