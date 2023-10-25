@@ -1,7 +1,4 @@
-alias gip='git push'
-alias gipu='git pull'
-
-alias gia='git_add'
+alias gha='git_add'
 function git_add() {
   echo
 
@@ -26,10 +23,7 @@ function git_add() {
   fi
 }
 
-
-
-alias giau='git_add_untracked_files'
-
+alias ghau='git_add_untracked_files'
 function git_add_untracked_files() {
   echo
 
@@ -59,7 +53,7 @@ function use_commit() {
   fi
 }
 
-alias gic='git_commit'
+alias ghc='git_commit'
 function git_commit() {
     if [ -f "./.env" ]; then
         source "./.env"
