@@ -1,4 +1,4 @@
-BASE_PATH = $(HOME)/ghq/.dotfiles
+BASE_PATH = $(HOME)/.dotfiles
 
 include $(BASE_PATH)/Makefile.1-brew
 include $(BASE_PATH)/Makefile.2-init

@@ -1,4 +1,4 @@
-# Source File: /Users/kent/ghq/.dotfiles/.zsh/3_packages/asdf-interactive-sh.zsh
+# Source File: /Users/kent/.dotfiles/.zsh/3_packages/asdf-interactive-sh.zsh
 
 # Define color variables
 RED='\033[0;31m'

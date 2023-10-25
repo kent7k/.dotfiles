@@ -1,5 +1,5 @@
 # Define the path to the .plugin-lists
-PLUGIN_LIST_PATH := $(HOME)/ghq/.dotfiles/.asdf/.plugin-lists
+PLUGIN_LIST_PATH := $(HOME)/.dotfiles/.asdf/.plugin-lists
 
 # Shell commands to make text bold and colored
 BOLD := $(shell tput bold)
@@ -42,7 +42,7 @@ check-asdf-plugins:
 # -------------------------------------
 
 
-TOOL_VERSIONS_PATH := $(HOME)/ghq/.dotfiles/.asdf/.tool-versions
+TOOL_VERSIONS_PATH := $(HOME)/.dotfiles/.asdf/.tool-versions
 
 check-asdf-tools:
 	@TOOLS=$$(grep -v '^#' $(TOOL_VERSIONS_PATH) | awk '{print $$1}' | awk 'NF' | tr '\n' ' '); \
@@ -63,7 +63,6 @@ check-asdf-tools:
 	done
 	@echo "\n-------------------------------------------------\n"
 
-
 install-asdf-tools:
 	@TOOLS=$$(grep -v '^#' $(TOOL_VERSIONS_PATH) | awk '{print $$1}' | awk 'NF' | tr '\n' ' '); \
 	VERSIONS=$$(grep -v '^#' $(TOOL_VERSIONS_PATH) | awk '{print $$2}' | awk 'NF' | tr '\n' ' '); \
@@ -77,13 +76,3 @@ install-asdf-tools:
 		fi; \
 		i=$$((i+1)); \
 	done
-
-
-
-
-
-
-
-# asdf install ruby 3.1.4
-# 最新版についてのリリース情報を知れるかな？
-

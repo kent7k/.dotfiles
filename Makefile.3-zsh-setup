@@ -1,4 +1,3 @@
-# Add Homebrew's zsh to /etc/shells based on OS.
 add_brew_zsh_to_shells:
 	@case "$(shell uname)" in \
 	Darwin) \
