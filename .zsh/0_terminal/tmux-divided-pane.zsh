@@ -11,7 +11,7 @@
 # --------------------------------------------------------
 
 function dividePaneIntoQuarters() {
-  cd "$1" || exit
+  cd "$1" || { echo "Failed to change directory to $1"; exit; }
 
   # Set both 1st & 2nd quadrant (= 象限 in Japanese).
   tmux split-window -v -p 50
@@ -31,7 +31,7 @@ function dividePaneIntoQuarters() {
 }
 
 function dividePaneIntoThirdsTypeReversedT() {
-  cd "$1" || exit
+  cd "$1" || { echo "Failed to change directory to $1"; exit; }
   tmux split-window -v
   tmux select-pane -t 1
   tmux resize-pane -D 10
@@ -41,7 +41,7 @@ function dividePaneIntoThirdsTypeReversedT() {
 }
 
 function dividePaneIntoThirdsTypeNormalT() {
-  cd "$1" || exit
+  cd "$1" || { echo "Failed to change directory to $1"; exit; }
   tmux split-window -v
   tmux select-pane -t 1
   tmux resize-pane -D 10
@@ -52,7 +52,7 @@ function dividePaneIntoThirdsTypeNormalT() {
 
 function dividePaneIntoThirdsTypeJapaneseUp() {
   # JapaneseUp means Character '上 = up' in Japanese.
-  cd "$1" || exit
+  cd "$1" || { echo "Failed to change directory to $1"; exit; }
   tmux split-window -v
   tmux select-pane -t 1
   tmux resize-pane -D 10
