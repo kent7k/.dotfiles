@@ -2,19 +2,19 @@
   "entries": {
     "cask": {
       "zoom": {
-        "version": "5.16.0.22929",
+        "version": "5.16.5.24419",
         "options": {
           "full_name": "zoom"
         }
       },
       "slack": {
-        "version": "4.34.119",
+        "version": "4.35.121",
         "options": {
           "full_name": "slack"
         }
       },
       "fig": {
-        "version": "2.16.0",
+        "version": "2.17.0",
         "options": {
           "full_name": "fig"
         }
@@ -26,19 +26,19 @@
         }
       },
       "1password": {
-        "version": "8.10.16",
+        "version": "8.10.18",
         "options": {
           "full_name": "1password"
         }
       },
       "google-chrome": {
-        "version": "117.0.5938.92",
+        "version": "118.0.5993.117",
         "options": {
           "full_name": "google-chrome"
         }
       },
       "notion": {
-        "version": "2.2.0",
+        "version": "2.2.4",
         "options": {
           "full_name": "notion"
         }
@@ -50,13 +50,13 @@
         }
       },
       "vlc": {
-        "version": "3.0.18",
+        "version": "3.0.19",
         "options": {
           "full_name": "vlc"
         }
       },
       "dropbox": {
-        "version": "182.4.6427",
+        "version": "185.4.6054",
         "options": {
           "full_name": "dropbox"
         }
@@ -68,7 +68,7 @@
         }
       },
       "the-unarchiver": {
-        "version": "4.3.5,139,1652457131",
+        "version": "4.3.6,143,1697809946",
         "options": {
           "full_name": "the-unarchiver"
         }
@@ -78,13 +78,19 @@
         "options": {
           "full_name": "sidequest"
         }
+      },
+      "unity-hub": {
+        "version": "3.6.0",
+        "options": {
+          "full_name": "unity-hub"
+        }
       }
     }
   },
   "system": {
     "macos": {
       "ventura": {
-        "HOMEBREW_VERSION": "4.1.12",
+        "HOMEBREW_VERSION": "4.1.17",
         "HOMEBREW_PREFIX": "/opt/homebrew",
         "Homebrew/homebrew-core": "api",
         "CLT": "14.3.1.0.1.1683849156",

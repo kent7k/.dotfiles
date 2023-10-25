@@ -100,5 +100,3 @@ source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-
-source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
