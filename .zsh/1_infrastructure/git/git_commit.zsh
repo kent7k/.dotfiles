@@ -4,13 +4,21 @@ alias gipu='git pull'
 alias gia='git_add'
 function git_add() {
   echo
-  added_files=$(git diff --name-only | fzf --multi)
-  if [ -n "$added_files" ]; then
-    echo -e "$(c_light_gray "Added file:")"
-    while read -r file; do
+
+  # Fetch files and their statuses, but exclude untracked files
+  local files_and_status=$(git status --short | grep -v '^??' | fzf --multi)
+
+  if [ -n "$files_and_status" ]; then
+    echo -e "$(c_light_gray "Added files:")"
+    while IFS= read -r line; do
+      # Split the file_status and filename
+      local file_status="${line:0:2}"
+      local file="${line:3}"
+
       git add "$file"
-      echo -e "$(c_cyan "  - $file")"
-    done <<<"$added_files"
+      # Show both the file_status and filename
+      echo -e "$(c_cyan "  $file_status $file")"
+    done <<<"$files_and_status"
 
     use_commit
   else
@@ -18,12 +26,18 @@ function git_add() {
   fi
 }
 
+
+
 alias giau='git_add_untracked_files'
+
 function git_add_untracked_files() {
   echo
-  added_untracked_files=$(git ls-files --others --exclude-standard | fzf --multi)
+
+  # Fetch untracked files using git ls-files
+  local added_untracked_files=$(git ls-files --others --exclude-standard | fzf --multi)
+
   if [ -n "$added_untracked_files" ]; then
-    echo -e "$(c_light_gray "Added untracked file:")"
+    echo -e "$(c_light_gray "Added untracked files:")"
     while IFS= read -r file; do
       git add "$file"
       echo -e "$(c_cyan "  - $file")"
@@ -47,11 +61,54 @@ function use_commit() {
 
 alias gic='git_commit'
 function git_commit() {
-  COMMIT_NAME=""                  # Set initial value to an empty string
-  while [ -z "$COMMIT_NAME" ]; do # Check if variable is empty using the -z option
-    echo -e "$(c_green "? Commit name")"
-    read -r COMMIT_NAME
-  done
+    if [ -f "./.env" ]; then
+        source "./.env"
+    fi
+
+    # Check if GIT_COMMIT_NAME exists in .env, if not, set a default value
+    if ! grep -q "GIT_COMMIT_NAME=" "./.env"; then
+        echo "GIT_COMMIT_NAME=\"Default Commit Message\"" >> ./.env
+    fi
+
+    # Display the default commit name from .env
+    echo "Default commit name from .env is: $GIT_COMMIT_NAME"
+
+    # Get today's date and calculate the difference in days
+    TODAY_DATE=$(date +"%Y-%m-%d")
+    if [ ! -z "$GIT_COMMIT_DATE" ]; then
+        DATE_DIFF=$(( ( $(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s) ) / 86400 ))
+        echo "Days since last commit: $DATE_DIFF days"
+    else
+        DATE_DIFF=0
+    fi
+
+    # Prompt the user to enter a new commit name or use the default one
+    echo -e "$(c_green "? Type a commit name (or press Enter to use the default)")"
+    read -r TYPED_COMMIT_NAME
+
+    # If the user typed something, update GIT_COMMIT_NAME
+    if [ ! -z "$TYPED_COMMIT_NAME" ]; then
+        COMMIT_NAME="$TYPED_COMMIT_NAME"
+        if grep -q "GIT_COMMIT_NAME=" "./.env"; then
+            sed -i "" "s/^GIT_COMMIT_NAME=.*/GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.env"
+        else
+            echo "GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >> ./.env
+        fi
+    else
+        COMMIT_NAME="$GIT_COMMIT_NAME"
+    fi
+
+    # Update or append GIT_COMMIT_DATE
+    if grep -q "GIT_COMMIT_DATE=" "./.env"; then
+        sed -i "" "s/^GIT_COMMIT_DATE=.*/GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.env"
+    else
+        echo "GIT_COMMIT_DATE=\"$TODAY_DATE\"" >> ./.env
+    fi
+
+    echo ".env has been updated."
+
+    # Display the chosen commit name
+    echo "Using commit name: $COMMIT_NAME"
 
   printf "\n%s\n" "$(c_green "Do you want to use --no-verify option?") (Y/n)"
   read -r VERIFY
@@ -60,6 +117,7 @@ function git_commit() {
   else
     git commit -m "$COMMIT_NAME"
   fi
+
   git_push
 }
 

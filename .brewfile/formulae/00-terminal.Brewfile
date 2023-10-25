@@ -37,6 +37,9 @@ brew "tealdeer"
 brew "glow"
 brew "direnv"
 
+# tmux
+brew "reattach-to-user-namespace"
+
 # curl
 brew "curl"
 
