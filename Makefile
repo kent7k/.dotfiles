@@ -7,4 +7,3 @@ include $(BASE_PATH)/Makefile.4-formulae-setup
 include $(BASE_PATH)/Makefile.6-asdf-setup
 include $(BASE_PATH)/Makefile.7-neovim-setup
 include $(BASE_PATH)/Makefile.8-appstore-setup
-
