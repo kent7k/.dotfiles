@@ -1,4 +1,4 @@
-BASE_PATH = $(HOME)/.dotfiles
+BASE_PATH = $(HOME)/.dotfiles/.makefile
 
 include $(BASE_PATH)/Makefile.1-brew
 include $(BASE_PATH)/Makefile.2-init
