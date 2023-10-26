@@ -59,9 +59,10 @@ function git_commit() {
         source "./.envrc"
     fi
 
-    # Check if GIT_COMMIT_NAME exists in .envrc, if not, set a default value
-    if ! grep -q "GIT_COMMIT_NAME=" "./.envrc"; then
-        echo "GIT_COMMIT_NAME=\"Default Commit Message\"" >> ./.envrc
+    # If GIT_COMMIT_NAME doesn't exist (wasn't exported), set a default value
+    if [ -z "${GIT_COMMIT_NAME}" ]; then
+        echo 'export GIT_COMMIT_NAME="Default Commit Message"' >> ./.envrc
+        export GIT_COMMIT_NAME="Default Commit Message"
     fi
 
     # Display the default commit name from .envrc
@@ -83,20 +84,20 @@ function git_commit() {
     # If the user typed something, update GIT_COMMIT_NAME
     if [ ! -z "$TYPED_COMMIT_NAME" ]; then
         COMMIT_NAME="$TYPED_COMMIT_NAME"
-        if grep -q "GIT_COMMIT_NAME=" "./.envrc"; then
-            sed -i "" "s/^GIT_COMMIT_NAME=.*/GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
+        if grep -q "export GIT_COMMIT_NAME=" "./.envrc"; then
+            sed -i "" "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
         else
-            echo "GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >> ./.envrc
+            echo "export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >> ./.envrc
         fi
     else
         COMMIT_NAME="$GIT_COMMIT_NAME"
     fi
 
     # Update or append GIT_COMMIT_DATE
-    if grep -q "GIT_COMMIT_DATE=" "./.envrc"; then
-        sed -i "" "s/^GIT_COMMIT_DATE=.*/GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
+    if grep -q "export GIT_COMMIT_DATE=" "./.envrc"; then
+        sed -i "" "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
     else
-        echo "GIT_COMMIT_DATE=\"$TODAY_DATE\"" >> ./.envrc
+        echo "export GIT_COMMIT_DATE=\"$TODAY_DATE\"" >> ./.envrc
     fi
 
     echo ".envrc has been updated."
