@@ -63,19 +63,19 @@ brew_upgrade:
 	@echo "\n${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
 	@echo "${BOLD}${GREEN}► Upgrading all outdated brew formulas...${NORMAL}"
 	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}\n"
-	@/opt/homebrew/bin/brew upgrade
+	@$(BREW_BIN_PATH)/brew upgrade
 	@echo "\n${BOLD}${GREEN}✓ Upgrade completed!${NORMAL}\n"
 
 brew_cleanup:
 	@echo "\n${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
 	@echo "${BOLD}${GREEN}► Cleaning up old brew installations...${NORMAL}"
 	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}\n"
-	@/opt/homebrew/bin/brew cleanup
+	@$(BREW_BIN_PATH)/brew cleanup
 	@echo "\n${BOLD}${GREEN}✓ Cleanup completed!${NORMAL}\n"
 
 brew_doctor:
 	@echo "\n${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
 	@echo "${BOLD}${GREEN}► Checking for potential brew issues...${NORMAL}"
 	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}\n"
-	@/opt/homebrew/bin/brew doctor
+	@$(BREW_BIN_PATH)/brew doctor
 	@echo "\n${BOLD}${GREEN}✓ Brew doctor check completed!${NORMAL}\n"
