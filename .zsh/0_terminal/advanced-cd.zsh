@@ -2,10 +2,10 @@ alias cdd='select_cd_option'
 
 function select_cd_option() {
   echo
-  echo -e "$(c_green "Select cd option")"
-  echo -e "$(c_green "  1: cdd - to a directory directly one accessed before")"
-  echo -e "$(c_green "  2: cdr - to a directory of repository'")"
-  echo -e "$(c_green "  3: fd  - to a directory (=All directories)'")"
+  printf "%sSelect cd option%s\n" "${GREEN}" "${NORMAL}"
+  printf "  %s1: cdd - to a directory directly one accessed before%s\n" "${GREEN}" "${NORMAL}"
+  printf "  %s2: cdr - to a directory of repository'%s\n" "${GREEN}" "${NORMAL}"
+  printf "  %s3: fd  - to a directory (=All directories)'%s\n" "${GREEN}" "${NORMAL}"
   read -r SELECT_CD_TYPE
   case "$SELECT_CD_TYPE" in
     [1]) fzf-cdr ;;

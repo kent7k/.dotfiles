@@ -8,6 +8,8 @@ GREEN := $(shell tput setaf 2)
 YELLOW := $(shell tput setaf 3)
 RED := $(shell tput setaf 1)
 
+asdf: check-asdf-plugins install-asdf-tools
+
 # The main target
 check-asdf-plugins:
 	@PLUGINS=$$(grep -v '^#' $(PLUGIN_LIST_PATH)); \

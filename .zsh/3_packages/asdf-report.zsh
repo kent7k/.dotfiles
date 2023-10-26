@@ -53,11 +53,6 @@ function list_1password_versions() {
   printf "${BOLD}${GREEN}%-10s %-8s:${NORMAL}${YELLOW} %-12s\n" "1Password" "$absolute_latest" "$absolute_latest"
 }
 
-function list_direnv_versions() {
-  local absolute_latest=$(asdf list-all direnv | grep -E "^[0-9]+\.[0-9]+\.[0-9]+$" | tail -n 1)
-  printf "${BOLD}${GREEN}%-10s %-8s:${NORMAL}${YELLOW} %-12s\n" "Direnv" "$absolute_latest" "$absolute_latest"
-}
-
 function list_all_versions() {
   printf "\n%16s\n" "${BOLD}${GREEN}Latest${NORMAL}"
 
@@ -68,7 +63,6 @@ function list_all_versions() {
   list_1password_versions
   list_php_versions
   list_ruby_versions
-  list_direnv_versions
 
   echo "\n"
 }
@@ -99,9 +93,4 @@ function list_ruby_versions() {
     printf "%-12s" "$version"
   done
   echo
-}
-
-function list_direnv_versions() {
-  local absolute_latest=$(asdf list-all direnv | grep -E "^[0-9]+\.[0-9]+\.[0-9]+$" | tail -n 1)
-  printf "${BOLD}${GREEN}%-10s %-8s:${NORMAL}${YELLOW} %-12s\n" "Direnv" "$absolute_latest" "$absolute_latest"
 }

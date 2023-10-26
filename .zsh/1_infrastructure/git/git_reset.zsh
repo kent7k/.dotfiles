@@ -61,14 +61,15 @@ function git_unstage() {
 
 alias gire='git_reset'
 function git_reset() {
-  printf "\n%s\n" "$(c_green "Do you want to reset repository?") (y/N)"
+  printf "\n%sDo you want to reset repository?%s (y/N)\n" "${GREEN}" "${NORMAL}"
   read -r CONFIRM_RESET
   if [ "$CONFIRM_RESET" = "y" ]; then
-    echo -e "$(c_green "  1: Return back 'add' (=Unstage everything)")"
-    echo -e "$(c_green "  2: Return back 'added specific file'")"
-    echo -e "$(c_green "  3: Return back 'commit'")"
-    echo -e "$(c_green "  4: Reset 'any uncommitted changes, staged or not  (for only unstaged changes)'")"
-    echo -e "$(c_green "  5: Reset 'add, commit, change'")"
+    printf "  %s1: Return back 'add' (=Unstage everything)%s\n" "${GREEN}" "${NORMAL}"
+    printf "  %s2: Return back 'added specific file'%s\n" "${GREEN}" "${NORMAL}"
+    printf "  %s3: Return back 'commit'%s\n" "${GREEN}" "${NORMAL}"
+    printf "  %s4: Reset 'any uncommitted changes, staged or not  (for only unstaged changes)'%s\n" "${GREEN}" "${NORMAL}"
+    printf "  %s5: Reset 'add, commit, change'%s\n" "${GREEN}" "${NORMAL}"
+
     read -r RESET_TYPE
     case "$RESET_TYPE" in
       [1]) git reset ;;
@@ -85,14 +86,14 @@ function git_reset() {
 
 function git_clean_untracked_files() {
   # FIXME
-  printf "\n%s\n" "$(c_green "Do you want to clean files?")"
+  printf "\n%sDo you want to clean files?%s\n" "${GREEN}"
   git clean -i
 }
 
 function reset_repository_commit_log() {
   echo
-  c_red "[ WARNING ]"
-  echo "$(c_red "Do you want to reset commit log?") (yes/N)"
+  printf "%s[ WARNING ]%s\n" "${RED}" "${NORMAL}"
+  printf "%sDo you want to reset commit log?%s (yes/N)\n" "${RED}" "${NORMAL}"
   read -r CONFIRM_RESET_COMMIT
   if [ "$CONFIRM_RESET_COMMIT" = "yes" ]; then
     git checkout --orphan latest_branch

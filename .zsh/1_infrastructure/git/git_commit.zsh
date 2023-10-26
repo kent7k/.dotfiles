@@ -1,12 +1,12 @@
 alias gha='git_add'
 function git_add() {
-  echo
+  echo_section "Adding Selected Files"
 
   # Fetch files and their statuses, but exclude untracked files
   local files_and_status=$(git status --short | grep -v '^??' | fzf --multi)
 
   if [ -n "$files_and_status" ]; then
-    echo -e "$(c_light_gray "Added files:")"
+    printf "${LIGHT_GRAY}Added files:%s\n" "${NORMAL}"
     while IFS= read -r line; do
       # Split the file_status and filename
       local file_status="${line:0:2}"
@@ -14,7 +14,7 @@ function git_add() {
 
       git add "$file"
       # Show both the file_status and filename
-      echo -e "$(c_cyan "  $file_status $file")"
+      echo -e "${CYAN}  $file_status $file${NORMAL}"
     done <<<"$files_and_status"
 
     use_commit
@@ -25,16 +25,16 @@ function git_add() {
 
 alias ghau='git_add_untracked_files'
 function git_add_untracked_files() {
-  echo
+    echo_section "Adding Untracked Files"
 
   # Fetch untracked files using git ls-files
   local added_untracked_files=$(git ls-files --others --exclude-standard | fzf --multi)
 
   if [ -n "$added_untracked_files" ]; then
-    echo -e "$(c_light_gray "Added untracked files:")"
+    printf "${LIGHT_GRAY}Added untracked files:%s\n" "${NORMAL}"
     while IFS= read -r file; do
       git add "$file"
-      echo -e "$(c_cyan "  - $file")"
+      echo -e "${CYAN}  - $file${NORMAL}"
     done <<<"$added_untracked_files"
 
     use_commit
@@ -44,7 +44,10 @@ function git_add_untracked_files() {
 }
 
 function use_commit() {
-  printf "\n%s\n" "$(c_green "Do you want to commit files above?") (Y/n)"
+  echo_section "Committing Selected Files"
+
+  printf "\n%sDo you want to commit files above?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
+
   read -r CONFIRM_CONFIRM
   if [ "$CONFIRM_CONFIRM" = "y" ] || [ -z "$CONFIRM_CONFIRM" ]; then
     git_commit
@@ -55,21 +58,21 @@ function use_commit() {
 
 alias ghc='git_commit'
 function git_commit() {
-    if [ -f "./.env" ]; then
-        source "./.env"
+    if [ -f "./.envrc" ]; then
+        source "./.envrc"
     fi
 
-    # Check if GIT_COMMIT_NAME exists in .env, if not, set a default value
-    if ! grep -q "GIT_COMMIT_NAME=" "./.env"; then
-        echo "GIT_COMMIT_NAME=\"Default Commit Message\"" >> ./.env
-    fi
+    echo_section "Committing Changes as $GIT_COMMIT_NAME"
 
-    # Display the default commit name from .env
-    echo "Default commit name from .env is: $GIT_COMMIT_NAME"
+    # If GIT_COMMIT_NAME doesn't exist (wasn't exported), set a default value
+    if [ -z "${GIT_COMMIT_NAME}" ]; then
+        echo 'export GIT_COMMIT_NAME="Default Commit Message"' >> ./.envrc
+        export GIT_COMMIT_NAME="Default Commit Message"
+    fi
 
     # Get today's date and calculate the difference in days
     TODAY_DATE=$(date +"%Y-%m-%d")
-    if [ ! -z "$GIT_COMMIT_DATE" ]; then
+    if [ -n "$GIT_COMMIT_DATE" ]; then
         DATE_DIFF=$(( ( $(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s) ) / 86400 ))
         echo "Days since last commit: $DATE_DIFF days"
     else
@@ -77,34 +80,38 @@ function git_commit() {
     fi
 
     # Prompt the user to enter a new commit name or use the default one
-    echo -e "$(c_green "? Type a commit name (or press Enter to use the default)")"
+    # Note: this message is being called twice. So, I'm using shellcheck disable to ignore the second one.
+    # shellcheck disable=SC2059
+    printf "\n${GREEN}? commit name: ${NORMAL}"
+
     read -r TYPED_COMMIT_NAME
 
     # If the user typed something, update GIT_COMMIT_NAME
     if [ ! -z "$TYPED_COMMIT_NAME" ]; then
         COMMIT_NAME="$TYPED_COMMIT_NAME"
-        if grep -q "GIT_COMMIT_NAME=" "./.env"; then
-            sed -i "" "s/^GIT_COMMIT_NAME=.*/GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.env"
+        if grep -q "export GIT_COMMIT_NAME=" "./.envrc"; then
+            sed -i "" "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
         else
-            echo "GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >> ./.env
+            echo "export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >> ./.envrc
         fi
     else
         COMMIT_NAME="$GIT_COMMIT_NAME"
     fi
 
     # Update or append GIT_COMMIT_DATE
-    if grep -q "GIT_COMMIT_DATE=" "./.env"; then
-        sed -i "" "s/^GIT_COMMIT_DATE=.*/GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.env"
+    if grep -q "export GIT_COMMIT_DATE=" "./.envrc"; then
+        sed -i "" "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
     else
-        echo "GIT_COMMIT_DATE=\"$TODAY_DATE\"" >> ./.env
+        echo "export GIT_COMMIT_DATE=\"$TODAY_DATE\"" >> ./.envrc
     fi
 
-    echo ".env has been updated."
+    echo ".envrc has been updated."
 
     # Display the chosen commit name
     echo "Using commit name: $COMMIT_NAME"
 
-  printf "\n%s\n" "$(c_green "Do you want to use --no-verify option?") (Y/n)"
+  printf "\n%sDo you want to use --no-verify option?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
+
   read -r VERIFY
   if [ "$VERIFY" = "y" ] || [ -z "$VERIFY" ]; then
     git commit -m "$COMMIT_NAME" --no-verify
@@ -116,7 +123,10 @@ function git_commit() {
 }
 
 function git_push() {
-  printf "\n%s\n" "$(c_green "Do you want to push now?") (Y/n)?"
+  echo_section "Pushing Changes"
+
+  printf "\n%sDo you want to push now?%s (Y/n)?\n" "${GREEN}" "${NORMAL}"
+
   read -r CONFIRM_PUSH
   if [ "$CONFIRM_PUSH" = "y" ] || [ -z "$CONFIRM_PUSH" ]; then
     git push
@@ -127,7 +137,10 @@ function git_push() {
 }
 
 function create_or_open_pr() {
-  printf "\n%s\n" "$(c_green "Do you want to create/open a pull request?") ( [end] / c: create / o: open)"
+  echo_section "Managing Pull Requests"
+
+  printf "\n%sDo you want to create/open a pull request?%s ( [end] / c: create / o: open)\n" "${GREEN}" "${NORMAL}"
+
   read -r -t 10 CREATE_PR
   if [ -z "$CREATE_PR" ]; then
     echo "Timeout exceeded. You can create/open a pull request later."
@@ -159,7 +172,9 @@ function open_pr() {
 }
 
 function git_force_push() { #---------- Other files are related to this function ----------#
-  printf "\n%s\n" "$(c_green "Do you want to force push now?") (Y/n)?"
+  echo_section "Force Pushing Changes"
+
+  printf "\n%sDo you want to force push now?%s (Y/n)?\n" "${GREEN}" "${NORMAL}"
   read -r CONFIRM_FORCE_PUSH
   if [ "$CONFIRM_FORCE_PUSH" = "y" ] || [ -z "$CONFIRM_FORCE_PUSH" ]; then
     git push --force-with-lease
