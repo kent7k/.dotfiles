@@ -63,17 +63,17 @@ function git_commit() {
         source "./.envrc"
     fi
 
+    echo_section "Committing Changes as $GIT_COMMIT_NAME"
+
     # If GIT_COMMIT_NAME doesn't exist (wasn't exported), set a default value
     if [ -z "${GIT_COMMIT_NAME}" ]; then
         echo 'export GIT_COMMIT_NAME="Default Commit Message"' >> ./.envrc
         export GIT_COMMIT_NAME="Default Commit Message"
     fi
 
-    echo_section "Committing Changes as $GIT_COMMIT_NAME"
-
     # Get today's date and calculate the difference in days
     TODAY_DATE=$(date +"%Y-%m-%d")
-    if [ ! -z "$GIT_COMMIT_DATE" ]; then
+    if [ -n "$GIT_COMMIT_DATE" ]; then
         DATE_DIFF=$(( ( $(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s) ) / 86400 ))
         echo "Days since last commit: $DATE_DIFF days"
     else
@@ -81,7 +81,9 @@ function git_commit() {
     fi
 
     # Prompt the user to enter a new commit name or use the default one
-    printf "\n%s? Type a commit name (or press Enter to use the default)" "${GREEN}" "${NORMAL}"
+    # Note: this message is being called twice. So, I'm using shellcheck disable to ignore the second one.
+    # shellcheck disable=SC2059
+    printf "\n${GREEN}? commit name: ${NORMAL}"
 
     read -r TYPED_COMMIT_NAME
 
