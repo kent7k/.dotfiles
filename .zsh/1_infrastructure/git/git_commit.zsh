@@ -55,17 +55,17 @@ function use_commit() {
 
 alias ghc='git_commit'
 function git_commit() {
-    if [ -f "./.env" ]; then
-        source "./.env"
+    if [ -f "./.envrc" ]; then
+        source "./.envrc"
     fi
 
-    # Check if GIT_COMMIT_NAME exists in .env, if not, set a default value
-    if ! grep -q "GIT_COMMIT_NAME=" "./.env"; then
-        echo "GIT_COMMIT_NAME=\"Default Commit Message\"" >> ./.env
+    # Check if GIT_COMMIT_NAME exists in .envrc, if not, set a default value
+    if ! grep -q "GIT_COMMIT_NAME=" "./.envrc"; then
+        echo "GIT_COMMIT_NAME=\"Default Commit Message\"" >> ./.envrc
     fi
 
-    # Display the default commit name from .env
-    echo "Default commit name from .env is: $GIT_COMMIT_NAME"
+    # Display the default commit name from .envrc
+    echo "Default commit name from .envrc is: $GIT_COMMIT_NAME"
 
     # Get today's date and calculate the difference in days
     TODAY_DATE=$(date +"%Y-%m-%d")
@@ -83,23 +83,23 @@ function git_commit() {
     # If the user typed something, update GIT_COMMIT_NAME
     if [ ! -z "$TYPED_COMMIT_NAME" ]; then
         COMMIT_NAME="$TYPED_COMMIT_NAME"
-        if grep -q "GIT_COMMIT_NAME=" "./.env"; then
-            sed -i "" "s/^GIT_COMMIT_NAME=.*/GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.env"
+        if grep -q "GIT_COMMIT_NAME=" "./.envrc"; then
+            sed -i "" "s/^GIT_COMMIT_NAME=.*/GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
         else
-            echo "GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >> ./.env
+            echo "GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >> ./.envrc
         fi
     else
         COMMIT_NAME="$GIT_COMMIT_NAME"
     fi
 
     # Update or append GIT_COMMIT_DATE
-    if grep -q "GIT_COMMIT_DATE=" "./.env"; then
-        sed -i "" "s/^GIT_COMMIT_DATE=.*/GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.env"
+    if grep -q "GIT_COMMIT_DATE=" "./.envrc"; then
+        sed -i "" "s/^GIT_COMMIT_DATE=.*/GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
     else
-        echo "GIT_COMMIT_DATE=\"$TODAY_DATE\"" >> ./.env
+        echo "GIT_COMMIT_DATE=\"$TODAY_DATE\"" >> ./.envrc
     fi
 
-    echo ".env has been updated."
+    echo ".envrc has been updated."
 
     # Display the chosen commit name
     echo "Using commit name: $COMMIT_NAME"
