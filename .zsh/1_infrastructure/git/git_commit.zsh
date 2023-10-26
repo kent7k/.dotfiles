@@ -1,6 +1,15 @@
+BOLD=$(tput bold)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+NORMAL=$(tput sgr0)
+
+echo_section() {
+    printf "\n%s%s► %s%s\n%s-----------------------------------------------%s\n" "${BOLD}" "${GREEN}" "$1" "${NORMAL}" "${YELLOW}" "${NORMAL}"
+}
+
 alias gha='git_add'
 function git_add() {
-  echo
+  echo_section "Adding Selected Files"
 
   # Fetch files and their statuses, but exclude untracked files
   local files_and_status=$(git status --short | grep -v '^??' | fzf --multi)
@@ -25,7 +34,7 @@ function git_add() {
 
 alias ghau='git_add_untracked_files'
 function git_add_untracked_files() {
-  echo
+    echo_section "Adding Untracked Files"
 
   # Fetch untracked files using git ls-files
   local added_untracked_files=$(git ls-files --others --exclude-standard | fzf --multi)
@@ -44,6 +53,8 @@ function git_add_untracked_files() {
 }
 
 function use_commit() {
+  echo_section "Committing Selected Files"
+
   printf "\n%s\n" "$(c_green "Do you want to commit files above?") (Y/n)"
   read -r CONFIRM_CONFIRM
   if [ "$CONFIRM_CONFIRM" = "y" ] || [ -z "$CONFIRM_CONFIRM" ]; then
@@ -55,6 +66,8 @@ function use_commit() {
 
 alias ghc='git_commit'
 function git_commit() {
+    echo_section "Committing Changes"
+
     if [ -f "./.envrc" ]; then
         source "./.envrc"
     fi
@@ -117,6 +130,8 @@ function git_commit() {
 }
 
 function git_push() {
+  echo_section "Pushing Changes"
+
   printf "\n%s\n" "$(c_green "Do you want to push now?") (Y/n)?"
   read -r CONFIRM_PUSH
   if [ "$CONFIRM_PUSH" = "y" ] || [ -z "$CONFIRM_PUSH" ]; then
@@ -128,6 +143,8 @@ function git_push() {
 }
 
 function create_or_open_pr() {
+  echo_section "Managing Pull Requests"
+
   printf "\n%s\n" "$(c_green "Do you want to create/open a pull request?") ( [end] / c: create / o: open)"
   read -r -t 10 CREATE_PR
   if [ -z "$CREATE_PR" ]; then
@@ -160,6 +177,8 @@ function open_pr() {
 }
 
 function git_force_push() { #---------- Other files are related to this function ----------#
+  echo_section "Force Pushing Changes"
+
   printf "\n%s\n" "$(c_green "Do you want to force push now?") (Y/n)?"
   read -r CONFIRM_FORCE_PUSH
   if [ "$CONFIRM_FORCE_PUSH" = "y" ] || [ -z "$CONFIRM_FORCE_PUSH" ]; then
