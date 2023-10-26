@@ -85,7 +85,7 @@ function killAllPanes() {
 }
 
 function openBrowser() {
-  printf "\n%s\n" "$(c_green "Do you want to open in browser?") (y/N)"
+  printf "\n%sDo you want to open in browser?%s (y/N)\n" "${GREEN}" "${NORMAL}"
   read -r OPEN_BROWSER
   if [ "$OPEN_BROWSER" = "y" ]; then
     for url in "$@"; do
@@ -99,7 +99,7 @@ function openBrowser() {
 }
 
 function autoOpenBrowser() {
-  printf "\n%s\n" "$(c_green "-- Auto Open Browser --") "
+  printf "\n%s-- Auto Open Browser --%s\n" "${GREEN}" "${NORMAL}"
   for url in "$@"; do
     echo "Opening $url"
     tmux send-keys -t 1 "open $url" C-m

@@ -74,8 +74,8 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 # Loads secrets.
-if [ -e ~/.secrets ]; then
-  source ~/.secrets
+if [ -e "${DOT_FILES}/.secrets" ]; then
+  source "${DOT_FILES}/.secrets"
 fi
 
 # Set basic configs of zsh

@@ -1,5 +1,5 @@
 function git_rm() {
-  echo "\n$(c_red "Remove file from repository index but keep it untouched locally?") (y/N)"
+  printf "\n%sRemove file from repository index but keep it untouched locally?%s (y/N)\n" "${RED}" "${NORMAL}"
   read -r CONFIRM_REMOVE_FROM_INDEX
   if [ "$CONFIRM_REMOVE_FROM_INDEX" = "y" ]; then
 
@@ -12,7 +12,7 @@ function git_rm() {
     fi
 
     echo
-    echo "$(c_red "Do you want to force push? (Need to resolve conflicts on remote repository)") (y/N)"
+    printf "%sDo you want to force push? (Need to resolve conflicts on remote repository)%s (y/N)\n" "${RED}" "${NORMAL}"
     git_force_push
     rm_cached_file_that_removed_from_git "$target"
 
@@ -27,13 +27,13 @@ function rm_cached_file_that_removed_from_git() {
   echo
 
   # List Target
-  echo -e "$(c_light_gray "Cashed file:")"
+  printf "${LIGHT_GRAY}Cashed file:%s\n" "${NORMAL}"
   while read -r file; do
-    echo -e "$(c_cyan "  - $file")"
+    echo -e "${CYAN}  - $file${NORMAL}"
   done <<<"$target"
 
   # Confirm
-  echo "$(c_red "Remove cached file that removed from git?") (y/N)"
+  printf "%sRemove cached file that removed from git?%s (y/N)\n" "${RED}" "${NORMAL}"
   read -r CONFIRM_REMOVE_CACHED_FILE
   if [ "$CONFIRM_REMOVE_CACHED_FILE" = "y" ]; then
     if [ -f "$target" ]; then
