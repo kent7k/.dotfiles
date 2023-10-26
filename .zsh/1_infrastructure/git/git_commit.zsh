@@ -15,7 +15,7 @@ function git_add() {
   local files_and_status=$(git status --short | grep -v '^??' | fzf --multi)
 
   if [ -n "$files_and_status" ]; then
-    echo -e "$(c_light_gray "Added files:")"
+    printf "${LIGHT_GRAY}Added files:%s\n" "${NORMAL}"
     while IFS= read -r line; do
       # Split the file_status and filename
       local file_status="${line:0:2}"
@@ -23,7 +23,7 @@ function git_add() {
 
       git add "$file"
       # Show both the file_status and filename
-      echo -e "$(c_cyan "  $file_status $file")"
+      echo -e "${CYAN}  $file_status $file${NORMAL}"
     done <<<"$files_and_status"
 
     use_commit
@@ -40,10 +40,10 @@ function git_add_untracked_files() {
   local added_untracked_files=$(git ls-files --others --exclude-standard | fzf --multi)
 
   if [ -n "$added_untracked_files" ]; then
-    echo -e "$(c_light_gray "Added untracked files:")"
+    printf "${LIGHT_GRAY}Added untracked files:%s\n" "${NORMAL}"
     while IFS= read -r file; do
       git add "$file"
-      echo -e "$(c_cyan "  - $file")"
+      echo -e "${CYAN}  - $file${NORMAL}"
     done <<<"$added_untracked_files"
 
     use_commit
@@ -55,7 +55,8 @@ function git_add_untracked_files() {
 function use_commit() {
   echo_section "Committing Selected Files"
 
-  printf "\n%s\n" "$(c_green "Do you want to commit files above?") (Y/n)"
+  printf "\n%sDo you want to commit files above?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
+
   read -r CONFIRM_CONFIRM
   if [ "$CONFIRM_CONFIRM" = "y" ] || [ -z "$CONFIRM_CONFIRM" ]; then
     git_commit
@@ -66,8 +67,6 @@ function use_commit() {
 
 alias ghc='git_commit'
 function git_commit() {
-    echo_section "Committing Changes"
-
     if [ -f "./.envrc" ]; then
         source "./.envrc"
     fi
@@ -78,8 +77,7 @@ function git_commit() {
         export GIT_COMMIT_NAME="Default Commit Message"
     fi
 
-    # Display the default commit name from .envrc
-    echo "Default commit name from .envrc is: $GIT_COMMIT_NAME"
+    echo_section "Committing Changes as $GIT_COMMIT_NAME"
 
     # Get today's date and calculate the difference in days
     TODAY_DATE=$(date +"%Y-%m-%d")
@@ -91,7 +89,8 @@ function git_commit() {
     fi
 
     # Prompt the user to enter a new commit name or use the default one
-    echo -e "$(c_green "? Type a commit name (or press Enter to use the default)")"
+    printf "\n%s? Type a commit name (or press Enter to use the default)" "${GREEN}" "${NORMAL}"
+
     read -r TYPED_COMMIT_NAME
 
     # If the user typed something, update GIT_COMMIT_NAME
@@ -118,7 +117,8 @@ function git_commit() {
     # Display the chosen commit name
     echo "Using commit name: $COMMIT_NAME"
 
-  printf "\n%s\n" "$(c_green "Do you want to use --no-verify option?") (Y/n)"
+  printf "\n%sDo you want to use --no-verify option?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
+
   read -r VERIFY
   if [ "$VERIFY" = "y" ] || [ -z "$VERIFY" ]; then
     git commit -m "$COMMIT_NAME" --no-verify
@@ -132,7 +132,8 @@ function git_commit() {
 function git_push() {
   echo_section "Pushing Changes"
 
-  printf "\n%s\n" "$(c_green "Do you want to push now?") (Y/n)?"
+  printf "\n%sDo you want to push now?%s (Y/n)?\n" "${GREEN}" "${NORMAL}"
+
   read -r CONFIRM_PUSH
   if [ "$CONFIRM_PUSH" = "y" ] || [ -z "$CONFIRM_PUSH" ]; then
     git push
@@ -145,7 +146,8 @@ function git_push() {
 function create_or_open_pr() {
   echo_section "Managing Pull Requests"
 
-  printf "\n%s\n" "$(c_green "Do you want to create/open a pull request?") ( [end] / c: create / o: open)"
+  printf "\n%sDo you want to create/open a pull request?%s ( [end] / c: create / o: open)\n" "${GREEN}" "${NORMAL}"
+
   read -r -t 10 CREATE_PR
   if [ -z "$CREATE_PR" ]; then
     echo "Timeout exceeded. You can create/open a pull request later."
@@ -179,7 +181,7 @@ function open_pr() {
 function git_force_push() { #---------- Other files are related to this function ----------#
   echo_section "Force Pushing Changes"
 
-  printf "\n%s\n" "$(c_green "Do you want to force push now?") (Y/n)?"
+  printf "\n%sDo you want to force push now?%s (Y/n)?\n" "${GREEN}" "${NORMAL}"
   read -r CONFIRM_FORCE_PUSH
   if [ "$CONFIRM_FORCE_PUSH" = "y" ] || [ -z "$CONFIRM_FORCE_PUSH" ]; then
     git push --force-with-lease
