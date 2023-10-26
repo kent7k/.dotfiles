@@ -1,4 +1,3 @@
-
 alias gha='git_add'
 function git_add() {
   echo_section "Adding Selected Files"
