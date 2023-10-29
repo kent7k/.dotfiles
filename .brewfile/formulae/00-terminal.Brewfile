@@ -68,6 +68,8 @@ brew "glow"
 brew "direnv"
 brew "tre-command"
 
+brew "swiftformat"
+
 # tmux
 brew "reattach-to-user-namespace"
 
