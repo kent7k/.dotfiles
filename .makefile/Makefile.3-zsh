@@ -1,21 +1,24 @@
+ZSH_DARWIN = /opt/homebrew/bin/zsh
+ZSH_LINUX = /home/linuxbrew/.linuxbrew/bin/zsh
+
 zsh: add_brew_zsh_to_shells set_zsh
 
 add_brew_zsh_to_shells:
 	@case "$(shell uname)" in \
 	Darwin) \
-		if grep -q "^/opt/homebrew/bin/zsh$$" /etc/shells; then \
-			echo "${BOLD}${GREEN}/opt/homebrew/bin/zsh is already listed in /etc/shells. No need to add it again.${NORMAL}"; \
+		if grep -q "^$(ZSH_DARWIN)$$" /etc/shells; then \
+			echo "${BOLD}${GREEN}$(ZSH_DARWIN) is already listed in /etc/shells. No need to add it again.${NORMAL}"; \
 		else \
-			echo "${BOLD}${YELLOW}Adding /opt/homebrew/bin/zsh to /etc/shells...${NORMAL}"; \
-			echo "/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells; \
+			echo "${BOLD}${YELLOW}Adding $(ZSH_DARWIN) to /etc/shells...${NORMAL}"; \
+			echo "$(ZSH_DARWIN)" | sudo tee -a /etc/shells; \
 		fi \
 		;; \
 	Linux) \
-		if grep -q "^/home/linuxbrew/.linuxbrew/bin/zsh$$" /etc/shells; then \
-			echo "${BOLD}${GREEN}/home/linuxbrew/.linuxbrew/bin/zsh is already listed in /etc/shells. No need to add it again.${NORMAL}"; \
+		if grep -q "^$(ZSH_LINUX)$$" /etc/shells; then \
+			echo "${BOLD}${GREEN}$(ZSH_LINUX) is already listed in /etc/shells. No need to add it again.${NORMAL}"; \
 		else \
-			echo "${BOLD}${YELLOW}Adding /home/linuxbrew/.linuxbrew/bin/zsh to /etc/shells (for Ubuntu)...${NORMAL}"; \
-			echo "/home/linuxbrew/.linuxbrew/bin/zsh" | sudo tee -a /etc/shells; \
+			echo "${BOLD}${YELLOW}Adding $(ZSH_LINUX) to /etc/shells (for Ubuntu)...${NORMAL}"; \
+			echo "$(ZSH_LINUX)" | sudo tee -a /etc/shells; \
 		fi \
 		;; \
 	*) \

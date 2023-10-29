@@ -3,7 +3,7 @@ eval "$(gh completion -s zsh)"
 
 # Makes git auto completion faster favouring for local completions
 __git_files() {
-  _wanted files expl 'local files' _files
+	_wanted files expl 'local files' _files
 }
 
 # Opens the project repository in browser
@@ -21,43 +21,43 @@ alias girl='git reflog'
 alias ghcr='create_github_repo'
 
 function create_github_repo() {
-  echo_section "Repository Creation"
+	echo_section "Repository Creation"
 
-  # Prompt for repository name
-  echo "${YELLOW}Enter the repository's name:${NORMAL}"
-  read -r repo_name
-  if [[ -z "$repo_name" ]]; then
-    echo "${RED}Repository name is required.${NORMAL}"
-    return 1
-  fi
+	# Prompt for repository name
+	echo "${YELLOW}Enter the repository's name:${NORMAL}"
+	read -r repo_name
+	if [[ -z "$repo_name" ]]; then
+		echo "${RED}Repository name is required.${NORMAL}"
+		return 1
+	fi
 
-  # Prompt for description
-  echo "${YELLOW}Enter the repository's description:${NORMAL}"
-  read -r repo_description
+	# Prompt for description
+	echo "${YELLOW}Enter the repository's description:${NORMAL}"
+	read -r repo_description
 
-  # Create the repository on GitHub
-  if ! gh repo create "$repo_name" --private -d "$repo_description"; then
-    echo "${RED}Failed to create the GitHub repository.${NORMAL}"
-    return 1
-  fi
+	# Create the repository on GitHub
+	if ! gh repo create "$repo_name" --private -d "$repo_description"; then
+		echo "${RED}Failed to create the GitHub repository.${NORMAL}"
+		return 1
+	fi
 
-  # Initialize the repository locally
-  echo_section "Local Initialization"
+	# Initialize the repository locally
+	echo_section "Local Initialization"
 
-  mkdir "$repo_name" && cd "$repo_name" || {
-    echo "${RED}Failed to navigate to the new directory.${NORMAL}"
-    return 1
-  }
+	mkdir "$repo_name" && cd "$repo_name" || {
+		echo "${RED}Failed to navigate to the new directory.${NORMAL}"
+		return 1
+	}
 
-  # Setup README.md and push the initial commit
-  echo "${YELLOW}Setting up README.md and pushing the initial commit...${NORMAL}"
-  echo "# $repo_name" > README.md
-  git init
-  git add README.md
-  git commit -m "Initial commit"
-  git branch -M main
-  git remote add origin git@github.com:kent7k/"$repo_name".git
-  git push -u origin main
+	# Setup README.md and push the initial commit
+	echo "${YELLOW}Setting up README.md and pushing the initial commit...${NORMAL}"
+	echo "# $repo_name" >README.md
+	git init
+	git add README.md
+	git commit -m "Initial commit"
+	git branch -M main
+	git remote add origin git@github.com:kent7k/"$repo_name".git
+	git push -u origin main
 }
 
 # Makes git logs more readable
@@ -68,4 +68,3 @@ alias gistl='git status --long'
 alias gilo='git log --oneline --graph'
 alias girl='git reflog'
 alias giba='git branch -a'
-
