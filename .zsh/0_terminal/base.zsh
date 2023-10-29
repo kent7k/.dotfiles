@@ -11,3 +11,9 @@ echo_section() {
 	fi
 	printf "\n\n%s%s► %s%s%s%s\n%s%s%s\n" "${BOLD}" "${GREEN}" "$1" "${NORMAL}" "${NORMAL}" "$second_white_message" "${YELLOW}" "───" "$(printf '─%.0s' {1..60})${NORMAL}"
 }
+
+function coloredEcho() {
+	local color="$1"
+	shift
+	echo -e "\033[${color}m\n$@\033[0m" # Add \n before $@
+}
