@@ -7,5 +7,14 @@
 # alias rm='nocorrect rm'
 
 if type trash >/dev/null 2>&1; then
-  alias rm='trash -r'
+	alias rm='trash -r'
 fi
+
+# rm regex: ( [^0-9]* => not including 0-9)
+#rm -rf <files>
+
+# rm regex: ( [^a-z]*.pl => pl not including a-z ) )
+#rm -rf <files>
+
+# rm regex: ( [0-9].pl => pl including 0-9 )
+#rm -rf <files>

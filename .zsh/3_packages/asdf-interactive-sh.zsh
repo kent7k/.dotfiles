@@ -8,6 +8,51 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 NC='\033[0m' # No Color
 
+alias asdfa="set_asdf_version"
+function set_asdf_version() {
+    # Display currently installed versions
+    echo "asdfa starts"
+    asdf current
+    print_separator
+
+    echo "${BOLD}Do you want to list all plugins?${NORMAL} This might take a minute. (y/[n])"
+    read -r input
+
+    case $input in
+    [Yy]*)
+        print_separator
+        echo "${BOLD}Displaying all plugins:${NC}"
+        asdf plugin list all
+        print_separator
+        ;;
+    esac
+
+    # Use fzf to let the user select the plugin
+    local pluginName=$(asdf plugin list | fzf --prompt "${BOLD}Select the plugin to manage its version:${NC} ")
+
+    # If no plugin was selected, exit
+    if [ -z "$pluginName" ]; then
+        echo "${YELLOW}No plugin selected. Exiting.${NC}"
+        return
+    fi
+
+    print_separator
+    local latestVersion
+    local installedVersion
+
+    latestVersion=$(asdf latest $pluginName)
+    echo "${BOLD}${pluginName}'s latest stable version is ${latestVersion}${NC}"
+    print_separator
+
+    installedVersion=$(asdf list $pluginName)
+    echo "${BOLD}Installed ${pluginName}'s versions are:${NC}"
+    echo "$installedVersion"
+    print_separator
+
+    asdf_SelectPluginVersion "$pluginName" "$latestVersion"
+    asdf_uninstall "$pluginName"
+}
+
 function asdf_SelectPluginVersion() {
     local pluginName="$1"
     local suggestedVersion="$2"
@@ -49,49 +94,6 @@ function asdf_SelectPluginVersion() {
 
 function print_separator() {
     echo "${BOLD}${GREEN}----------------------------${NC}"
-}
-
-function asdfa() {
-    # Display currently installed versions
-    asdf current
-    print_separator
-
-    echo "${BOLD}Do you want to list all plugins?${NORMAL} This might take a minute. (y/[n])"
-    read -r input
-
-    case $input in
-    [Yy]*)
-        print_separator
-        echo "${BOLD}Displaying all plugins:${NC}"
-        asdf plugin list all
-        print_separator
-        ;;
-    esac
-
-    # Use fzf to let the user select the plugin
-    local pluginName=$(asdf plugin list | fzf --prompt "${BOLD}Select the plugin to manage its version:${NC} ")
-
-    # If no plugin was selected, exit
-    if [ -z "$pluginName" ]; then
-        echo "${YELLOW}No plugin selected. Exiting.${NC}"
-        return
-    fi
-
-    print_separator
-    local latestVersion
-    local installedVersion
-
-    latestVersion=$(asdf latest $pluginName)
-    echo "${BOLD}${pluginName}'s latest stable version is ${latestVersion}${NC}"
-    print_separator
-
-    installedVersion=$(asdf list $pluginName)
-    echo "${BOLD}Installed ${pluginName}'s versions are:${NC}"
-    echo "$installedVersion"
-    print_separator
-
-    asdf_SelectPluginVersion "$pluginName" "$latestVersion"
-    asdf_uninstall "$pluginName"
 }
 
 function asdf_SetVersion() {

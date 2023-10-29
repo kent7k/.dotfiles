@@ -9,6 +9,7 @@ brew "sqlite"
 
 # postgresql & its dependencies
 brew "postgresql@14", restart_service: true
+brew "postgresql"
 
 # mysql & its dependencies
 brew "mysql"
