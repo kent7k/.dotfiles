@@ -46,7 +46,7 @@ function git_add_untracked_files() {
 function use_commit() {
 	echo_section "Committing Selected Files"
 
-	printf "\n%sDo you want to commit files above?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
+	printf "\n%sDo you want to commit files above?%s (Y/n)" "${GREEN}" "${NORMAL}"
 
 	read -r CONFIRM_CONFIRM
 	if [ "$CONFIRM_CONFIRM" = "y" ] || [ -z "$CONFIRM_CONFIRM" ]; then
@@ -103,11 +103,6 @@ function git_commit() {
 	else
 		echo "export GIT_COMMIT_DATE=\"$TODAY_DATE\"" >>./.envrc
 	fi
-
-	echo ".envrc has been updated."
-
-	# Display the chosen commit name
-	echo "Using commit name: $COMMIT_NAME"
 
 	printf "\n%sDo you want to use --no-verify option?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
 
