@@ -116,6 +116,7 @@ function git_commit() {
 	git_push
 }
 
+alias ghp='git_push'
 function git_push() {
 	echo_section "Pushing Changes"
 
