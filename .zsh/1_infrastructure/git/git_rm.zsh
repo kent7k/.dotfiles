@@ -1,5 +1,5 @@
 function git_rm() {
-	printf "\n%sRemove file from repository index but keep it untouched locally?%s (y/N)\n" "${RED}" "${NORMAL}"
+	printf "%sRemove file from repository index but keep it untouched locally?%s (y/N)\n" "${RED}" "${NORMAL}"
 	read -r CONFIRM_REMOVE_FROM_INDEX
 	if [ "$CONFIRM_REMOVE_FROM_INDEX" = "y" ]; then
 

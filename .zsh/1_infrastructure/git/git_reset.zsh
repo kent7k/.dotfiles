@@ -61,7 +61,7 @@ function git_unstage() {
 
 alias gire='git_reset'
 function git_reset() {
-	printf "\n%sDo you want to reset repository?%s (y/N)\n" "${GREEN}" "${NORMAL}"
+	printf "%sDo you want to reset repository?%s (y/N)\n" "${GREEN}" "${NORMAL}"
 	read -r CONFIRM_RESET
 	if [ "$CONFIRM_RESET" = "y" ]; then
 		printf "  %s1: Return back 'add' (=Unstage everything)%s\n" "${GREEN}" "${NORMAL}"
@@ -86,7 +86,7 @@ function git_reset() {
 
 function git_clean_untracked_files() {
 	# FIXME
-	printf "\n%sDo you want to clean files?%s\n" "${GREEN}"
+	printf "%sDo you want to clean files?%s\n" "${GREEN}"
 	git clean -i
 }
 

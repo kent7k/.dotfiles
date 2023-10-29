@@ -54,7 +54,7 @@ function list_1password_versions() {
 }
 
 function list_all_versions() {
-	printf "\n%16s\n" "${BOLD}${GREEN}Latest${NORMAL}"
+	printf "%16s\n" "${BOLD}${GREEN}Latest${NORMAL}"
 
 	list_node_versions
 	list_python_versions

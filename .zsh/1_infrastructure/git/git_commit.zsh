@@ -46,7 +46,7 @@ function git_add_untracked_files() {
 function use_commit() {
 	echo_section "Committing Selected Files"
 
-	printf "\n%sDo you want to commit files above?%s (Y/n)" "${GREEN}" "${NORMAL}"
+	printf "%sDo you want to commit files above?%s (Y/n)" "${GREEN}" "${NORMAL}"
 
 	read -r CONFIRM_CONFIRM
 	if [ "$CONFIRM_CONFIRM" = "y" ] || [ -z "$CONFIRM_CONFIRM" ]; then
@@ -81,7 +81,7 @@ function git_commit() {
 	# Prompt the user to enter a new commit name or use the default one
 	# Note: this message is being called twice. So, I'm using shellcheck disable to ignore the second one.
 	# shellcheck disable=SC2059
-	printf "\n${GREEN}? commit name: ${NORMAL}"
+	printf "${GREEN}? commit name: ${NORMAL}"
 
 	read -r TYPED_COMMIT_NAME
 
@@ -104,7 +104,7 @@ function git_commit() {
 		echo "export GIT_COMMIT_DATE=\"$TODAY_DATE\"" >>./.envrc
 	fi
 
-	printf "\n%sDo you want to use --no-verify option?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
+	printf "%sDo you want to use --no-verify option?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
 
 	read -r VERIFY
 	if [ "$VERIFY" = "y" ] || [ -z "$VERIFY" ]; then
@@ -119,7 +119,7 @@ function git_commit() {
 function git_push() {
 	echo_section "Pushing Changes"
 
-	printf "\n%sDo you want to push now?%s (Y/n)?\n" "${GREEN}" "${NORMAL}"
+	printf "%sDo you want to push now?%s (Y/n)?\n" "${GREEN}" "${NORMAL}"
 
 	read -r CONFIRM_PUSH
 	if [ "$CONFIRM_PUSH" = "y" ] || [ -z "$CONFIRM_PUSH" ]; then
@@ -133,7 +133,7 @@ function git_push() {
 function create_or_open_pr() {
 	echo_section "Managing Pull Requests"
 
-	printf "\n%sDo you want to create/open a pull request?%s ( [end] / c: create / o: open)\n" "${GREEN}" "${NORMAL}"
+	printf "%sDo you want to create/open a pull request?%s ( [end] / c: create / o: open)\n" "${GREEN}" "${NORMAL}"
 
 	read -r -t 10 CREATE_PR
 	if [ -z "$CREATE_PR" ]; then
@@ -168,7 +168,7 @@ function open_pr() {
 function git_force_push() { #---------- Other files are related to this function ----------#
 	echo_section "Force Pushing Changes"
 
-	printf "\n%sDo you want to force push now?%s (Y/n)?\n" "${GREEN}" "${NORMAL}"
+	printf "%sDo you want to force push now?%s (Y/n)?\n" "${GREEN}" "${NORMAL}"
 	read -r CONFIRM_FORCE_PUSH
 	if [ "$CONFIRM_FORCE_PUSH" = "y" ] || [ -z "$CONFIRM_FORCE_PUSH" ]; then
 		git push --force-with-lease

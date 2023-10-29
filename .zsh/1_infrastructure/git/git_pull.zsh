@@ -9,7 +9,7 @@ function git_fetch_merge() {
 	git merge "$target"
 	git status
 	git diff "$CURRENT_BRANCH" origin/"$target"
-	printf "\n%sDo you want to merge main to current branch now?%s (y/N)\n" "${GREEN}" "${NORMAL}"
+	printf "%sDo you want to merge main to current branch now?%s (y/N)\n" "${GREEN}" "${NORMAL}"
 	read -r CONFIRM_MERGE
 	if [ "$CONFIRM_MERGE" = "y" ]; then
 		git merge origin/"$target"
