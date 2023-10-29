@@ -1,6 +1,6 @@
 alias sns='check_sns'
 function check_sns() {
-  osascript <<EOF
+	osascript <<EOF
     tell application "/Applications/LINE.app" to activate
     delay 5
 
@@ -35,11 +35,11 @@ EOF
 # Define the function to quit social networking apps and close certain tabs in Google Chrome
 alias qsns='quit_sns'
 function quit_sns() {
-  osascript -e 'quit app "/Applications/Tweetbot.localized/Tweetbot.app"'
-  osascript -e 'quit app "/Applications/LINE.app"'
+	osascript -e 'quit app "/Applications/Tweetbot.localized/Tweetbot.app"'
+	osascript -e 'quit app "/Applications/LINE.app"'
 
-  # Use a heredoc to send multiple lines of AppleScript to close Chrome tabs
-  osascript <<EOF
+	# Use a heredoc to send multiple lines of AppleScript to close Chrome tabs
+	osascript <<EOF
     tell application "/Applications/Google Chrome.app"
       close tab 1 of window 1
       	-- "window 1" refers to the frontmost window, and "tab 1" refers to the leftmost tab in that window

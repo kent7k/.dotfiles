@@ -12,9 +12,9 @@ OS_NAME=$(uname)
 
 # Create symbolic links based on OS
 if [ "$OS_NAME" == "Linux" ]; then
-  ln -s $ZSH_LINUX ~/.asdf/installs/php/8.2
+	ln -s $ZSH_LINUX ~/.asdf/installs/php/8.2
 elif [ "$OS_NAME" == "Darwin" ]; then
-  ln -s $ZSH_DARWIN ~/.asdf/installs/php/8.2
+	ln -s $ZSH_DARWIN ~/.asdf/installs/php/8.2
 else
-  echo "Unsupported OS: $OS_NAME"
+	echo "Unsupported OS: $OS_NAME"
 fi
