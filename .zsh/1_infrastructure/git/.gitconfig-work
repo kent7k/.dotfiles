@@ -1,0 +1,3 @@
+[user]
+	name = "${GIT_AUTHOR_NAME}"
+    path = "${GIT_AUTHOR_PRIVATE_EMAIL}"

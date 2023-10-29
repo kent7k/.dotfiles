@@ -1,9 +1,32 @@
+# -----------------------------
+# Git Configuration Levels
+# -----------------------------
+
+# 1. System Level:
+# Path: /etc/gitconfig
+# Command: git config --system
+
+# 2. Global Level:
+# Path: ~/.gitconfig or ~/.config/git/config
+# Command: git config --global
+
+# 3. Local Level:
+# Path: [repository]/.git/config
+# Command: git config --local
+
+# NOTE: Configuration priorities are as follows: system < global < local.
+# This means local settings override global settings, which in turn override system settings.
+
 [core]
 	editor = /usr/bin/vim
 	symlinks = true
 [user]
 	name = "${GIT_AUTHOR_NAME}"
-	email = "${GIT_AUTHOR_EMAIL}"
+    email = "${GIT_AUTHOR_PRIVATE_EMAIL}"
+  [includeIf "gitdir:~/ghq/main/"]
+    path = ~/.dotfiles/.zsh/1_infrastructure/git/.gitconfig-main
+  [includeIf "gitdir:~/ghq/work/"]
+    path = ~/.dotfiles/.zsh/1_infrastructure/git/.gitconfig-work
 [pull]
     rebase = true
 [init]
@@ -14,7 +37,7 @@
     process = git-lfs filter-process
     required = true
 [ghq]
-    root = ~/ghq
+	root = ~/ghq/main
 [push]
     autoSetupRemote = true
 [diff]
