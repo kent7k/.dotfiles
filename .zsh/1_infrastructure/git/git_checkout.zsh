@@ -80,9 +80,16 @@ alias ghchb='git_checkout_b'
 function git_checkout_b() {
 	local branch_name
 
+	# Display a section header using echo_section
+	echo_section "Checking Out a New Branch"
+
 	# Prompt the user for the branch name
-	read "?Enter the branch name to checkout: " branch_name
+	printf "${GREEN}? branch name: ${NORMAL}"
+	read -r branch_name
 
 	# Check out to the given branch name
 	git checkout -b $branch_name
+
+	# Optionally, you can add a confirmation message with echo_section again
+	echo_section "Checked Out Successfully"
 }

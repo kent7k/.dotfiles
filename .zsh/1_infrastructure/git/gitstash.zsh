@@ -1,11 +1,4 @@
 function switchToMain() {
-	# Helper function to print messages in color
-	function coloredEcho() {
-		local color="$1"
-		shift
-		echo -e "\033[${color}m\n$@\033[0m" # Add \n before $@
-	}
-
 	# Ensure that we're in a git directory
 	if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
 		coloredEcho "31" "Not inside a git repository. Exiting." # Red color
