@@ -62,8 +62,6 @@ function git_commit() {
 		source "./.envrc"
 	fi
 
-	echo_section "Committing Changes as $GIT_COMMIT_NAME"
-
 	# If GIT_COMMIT_NAME doesn't exist (wasn't exported), set a default value
 	if [ -z "${GIT_COMMIT_NAME}" ]; then
 		echo 'export GIT_COMMIT_NAME="Default Commit Message"' >>./.envrc
@@ -74,10 +72,11 @@ function git_commit() {
 	TODAY_DATE=$(date +"%Y-%m-%d")
 	if [ -n "$GIT_COMMIT_DATE" ]; then
 		DATE_DIFF=$((($(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s)) / 86400))
-		echo "Days since last commit: $DATE_DIFF days"
 	else
 		DATE_DIFF=0
 	fi
+
+	echo_section "Committing Changes as $GIT_COMMIT_NAME" "$DATE_DIFF"
 
 	# Prompt the user to enter a new commit name or use the default one
 	# Note: this message is being called twice. So, I'm using shellcheck disable to ignore the second one.
