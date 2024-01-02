@@ -1,8 +1,11 @@
-import re
 from .markdown_modification import format_sections
 from .switch_even_odd_lines import switch_even_odd_lines
 from .delete_index import delete_index
 from .replace_with_uwatsuki import replace_pattern_uwatsuki, replace_half_width_pattern_exclude_short
+from .replace_terms import replace_terms
+from .kanji_converter import replace_kanji_numerals
+from .convert_era_to_gregorian import convert_era_to_gregorian
+from .convert_dates_and_times import replace_dates_and_times
 
 
 def convert_to_md(md_content):
@@ -26,10 +29,14 @@ def convert_to_md(md_content):
     #
 
     # 漢数字
+    md_content = replace_kanji_numerals(md_content)
+    md_content = convert_era_to_gregorian(md_content)
+    md_content = replace_dates_and_times(md_content)
 
-    # md_content = replace_kanji_numerals(md_content)
-    # md_content = replace_complex_numerals(md_content)
-
-        # Write the modified content to a new file
+    # Applying the replace_terms function
+    md_content = replace_terms(md_content)
 
     return md_content
+
+
+
