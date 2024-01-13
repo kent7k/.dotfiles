@@ -1,6 +1,6 @@
 import re
 
-kanji_numbers = '一二三四五六七八九十百千万億兆'
+kanji_numbers = '一二三四五六七八九十百千〇'
 
 def replace_combined(match):
     eng_numeral, eng_title, eng_def, jp_numeral, jp_title, jp_def = match.groups()
@@ -73,7 +73,7 @@ def format_sections(md_content):
         r'\((.*?)\)\n'  # \1
         r'（(.*?)）\n'  # \2
         # 否定先読み (?!\(\d+\)) により、Article 19 (1) を除外する場合も考えられたが、期待するToのためには必要ない
-        r'(Article[\s　][0-9]+(?:-\d+)?)[\s　](.+)\n'  # \3, \4
+        r'Article[\s　]([0-9]+(?:-\d+)?)[\s　](.+)\n'  # \3, \4
         rf'(第[{kanji_numbers}]+条(?:の[{kanji_numbers}]+)?)\s+(.+)'  # \5, \6
     )
 
@@ -173,6 +173,8 @@ def format_sections(md_content):
         r"\t\t\t\t- \2\n"
         r"\t\t\t\t- \3"
     )
+
+    md_content = re.sub(pattern_123, replacement_pattern, md_content)
 
 
 
