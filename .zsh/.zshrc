@@ -84,6 +84,8 @@ setopt nonomatch
 
 # Loads configs about zsh.
 export DOT_FILES="$HOME/.dotfiles"
+export DOT_FILES_PY="$HOME/.dotfiles-py"
+export PY_BASE="$DOT_FILES/python/.base/"
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 export LC_ALL=en_US.UTF-8

@@ -165,3 +165,4 @@ dist
 .pnp.*
 
 **/__pycache__/
+test.py
