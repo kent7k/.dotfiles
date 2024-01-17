@@ -7,7 +7,7 @@ class ConfigUtils:
     @staticmethod
     def load_config(config_path):
         try:
-            with open(config_path, 'r') as config_file:
+            with open(config_path, "r") as config_file:
                 config = json.load(config_file)
                 # Expand environment variables in config
                 for key, value in config.items():
