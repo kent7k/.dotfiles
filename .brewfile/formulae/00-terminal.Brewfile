@@ -42,7 +42,7 @@ brew "tmux"
 # ⛔ Missing one or more of the following dependencies: tar, gpg
 
 # Install GNU Tar to avoid conflicting with macOS's BSD Tar.
-brew install readline
+# brew install readline
 # Installing Python          2.7.16         ...
 # python-build 2.7.16 /Users/kent/.asdf/installs/Python/2.7.16
 # python-build: use openssl from homebrew
