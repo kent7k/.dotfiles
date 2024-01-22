@@ -5,7 +5,7 @@ export BREW_FORMULAE_PATH="${DOT_FILES}/.brewfile"
 export TMUX_CONF_PATH="${DOT_FILES}/.tmux/conf"
 
 # Config about Language
-export ASDF_CONFIG_PATH="${DOT_FILES}/.asdfrc"
+export ASDF_CONFIG_PATH="${DOT_FILES}/.asdf"
 
 # Config about Package
 export NAVI_CONFIG="${DOT_FILES}/.zsh/0_terminal/.navi.yaml"

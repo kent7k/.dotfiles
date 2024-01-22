@@ -2,9 +2,15 @@ BREW_CASK_FILES= \
 	${BREW_CASK_PATH}/00-app.Brewfile
 
 install_cask_homebrew:
-	@echo "------ Start installing apps via Homebrew ------";
-	@for file in $(BREW_CASK_FILES); do \
-    	echo "Installing from: $$file"; \
-   		$(BREW_BIN_PATH)/brew bundle --file "$$file"; \
-	done
-	@echo "------ Finish installing apps via Homebrew ------";
+	@if [ "$(shell uname)" = "Darwin" ]; then \
+		@echo "------ Start installing apps via Homebrew ------";
+		@for file in $(BREW_CASK_FILES); do \
+			echo "Installing from: $$file"; \
+			$(BREW_BIN_PATH)/brew bundle --file "$$file"; \
+		done
+		@echo "------ Finish installing apps via Homebrew ------";
+	else \
+		echo "${BOLD}${RED}This script is intended for macOS only.${NORMAL}"; \
+		exit 1; \
+	fi
+
