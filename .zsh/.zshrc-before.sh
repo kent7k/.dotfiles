@@ -1,4 +1,6 @@
 #!/bin/bash
+DOT_FILES="$HOME/.dotfiles"
+
 # Associative arrays are only available in Bash 4 or later.
 # But macOS only supports Bash 3.
 # Therefore, an array is declared using declare -a instead.
@@ -23,10 +25,20 @@ declare -a LINKS=(
 )
 
 for ((i = 0; i < ${#LINKS[@]}; i += 2)); do
-	SOURCE="${DOT_FILES}/${LINKS[i]}"
-	TARGET="${LINKS[i + 1]}"
-	if [ ! -e "$TARGET" ]; then
-		touch "$TARGET"
-	fi
-	ln -snfv "$SOURCE" "$TARGET"
+    SOURCE="${DOT_FILES}/${LINKS[i]}"
+    TARGET="${LINKS[i + 1]}"
+    TARGET_DIR=$(dirname "$TARGET")
+
+    # Ensure the target directory exists
+    if [ ! -d "$TARGET_DIR" ]; then
+        mkdir -p "$TARGET_DIR"
+    fi
+
+    # Remove existing symbolic link if it exists
+    if [ -L "$TARGET" ]; then
+        rm "$TARGET"
+    fi
+
+    # No need to touch the target file, as ln will create it
+    ln -snfv "$SOURCE" "$TARGET"
 done

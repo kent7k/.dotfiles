@@ -58,25 +58,34 @@ function use_commit() {
 
 alias ghc='git_commit'
 function git_commit() {
-	if [ -f "./.envrc" ]; then
-		source "./.envrc"
-	fi
+    if [ -f "./.envrc" ]; then
+        source "./.envrc"
+    fi
 
-	# If GIT_COMMIT_NAME doesn't exist (wasn't exported), set a default value
-	if [ -z "${GIT_COMMIT_NAME}" ]; then
-		echo 'export GIT_COMMIT_NAME="Default Commit Message"' >>./.envrc
-		export GIT_COMMIT_NAME="Default Commit Message"
-	fi
+    # If GIT_COMMIT_NAME doesn't exist (wasn't exported), set a default value
+    if [ -z "${GIT_COMMIT_NAME}" ]; then
+        echo 'export GIT_COMMIT_NAME="Default Commit Message"' >>./.envrc
+        export GIT_COMMIT_NAME="Default Commit Message"
+    fi
 
-	# Get today's date and calculate the difference in days
-	TODAY_DATE=$(date +"%Y-%m-%d")
-	if [ -n "$GIT_COMMIT_DATE" ]; then
-		DATE_DIFF=$((($(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s)) / 86400))
-	else
-		DATE_DIFF=0
-	fi
+    # Diagnostic line to check the value of OSTYPE
+    echo "Detected OSTYPE: $OSTYPE"
 
-	echo_section "Committing Changes as $GIT_COMMIT_NAME" "$DATE_DIFF"
+    # Get today's date and calculate the difference in days
+    TODAY_DATE=$(date +"%Y-%m-%d")
+    if [ -n "$GIT_COMMIT_DATE" ]; then
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            DATE_DIFF=$((($(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s)) / 86400))
+        elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+            DATE_DIFF=$((($(date -d "$TODAY_DATE" +%s) - $(date -d "$GIT_COMMIT_DATE" +%s)) / 86400))
+        else
+            echo "Unsupported operating system: $OSTYPE"
+            return 1
+        fi
+    else
+        DATE_DIFF=0
+    fi
+    echo_section "Committing Changes as $GIT_COMMIT_NAME" "$DATE_DIFF"
 
 	# Prompt the user to enter a new commit name or use the default one
 	# Note: this message is being called twice. So, I'm using shellcheck disable to ignore the second one.
@@ -86,23 +95,37 @@ function git_commit() {
 	read -r TYPED_COMMIT_NAME
 
 	# If the user typed something, update GIT_COMMIT_NAME
-	if [ ! -z "$TYPED_COMMIT_NAME" ]; then
-		COMMIT_NAME="$TYPED_COMMIT_NAME"
-		if grep -q "export GIT_COMMIT_NAME=" "./.envrc"; then
-			sed -i "" "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
-		else
-			echo "export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >>./.envrc
-		fi
-	else
-		COMMIT_NAME="$GIT_COMMIT_NAME"
-	fi
+  if [ ! -z "$TYPED_COMMIT_NAME" ]; then
+      COMMIT_NAME="$TYPED_COMMIT_NAME"
+      if grep -q "export GIT_COMMIT_NAME=" "./.envrc"; then
+          if [[ "$OSTYPE" == "darwin"* ]]; then
+              sed -i "" "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
+          elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+              sed -i "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
+          else
+              echo "Unsupported operating system for sed command: $OSTYPE"
+              return 1
+          fi
+      else
+          echo "export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >>./.envrc
+      fi
+  else
+      COMMIT_NAME="$GIT_COMMIT_NAME"
+  fi
 
-	# Update or append GIT_COMMIT_DATE
-	if grep -q "export GIT_COMMIT_DATE=" "./.envrc"; then
-		sed -i "" "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
-	else
-		echo "export GIT_COMMIT_DATE=\"$TODAY_DATE\"" >>./.envrc
-	fi
+  # Update or append GIT_COMMIT_DATE
+  if grep -q "export GIT_COMMIT_DATE=" "./.envrc"; then
+      if [[ "$OSTYPE" == "darwin"* ]]; then
+          sed -i "" "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
+      elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+          sed -i "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
+      else
+          echo "Unsupported operating system for sed command: $OSTYPE"
+          return 1
+      fi
+  else
+      echo "export GIT_COMMIT_DATE=\"$TODAY_DATE\"" >>./.envrc
+  fi
 
 	printf "%sDo you want to use --no-verify option?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
 

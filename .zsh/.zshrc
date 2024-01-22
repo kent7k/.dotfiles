@@ -39,11 +39,10 @@ case "$(uname)" in
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
         # Check for Ubuntu for some specific commands
-        if grep -qi "ubuntu" /etc/os-release; then
-            # Additional Ubuntu specific configurations can be added here
-            # export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-        fi
-
+        # if grep -qi "Ubuntu" /etc/os-release; then
+        ## Additional Ubuntu specific configurations can be added here
+        ## export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+        # fi
         ;;
 esac
 
@@ -96,9 +95,6 @@ for config_file ($DOT_FILES/.zsh/**/*.zsh) source $config_file
 
 # Loads Configs about zsh.
 alias sh2='source ~/.zshrc'
-
-# Always load Fig at the end - relevant for both macOS and Ubuntu
-source /Users/kent/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

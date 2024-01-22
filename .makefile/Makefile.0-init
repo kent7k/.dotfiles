@@ -1,0 +1,16 @@
+init: ubuntu_check
+
+ubuntu_check:
+	@if grep -qi "ubuntu" /etc/os-release; then \
+		echo "Detected Ubuntu. Running sudo apt update..."; \
+		sudo apt update; \
+		echo "Installing essential tools"; \
+		sudo apt install build-essential git; \
+		echo "Installing xsel for clipboard functionality similar to pbcopy on macOS"; \
+		sudo apt install xsel; \
+		echo "Installing xdg-utils for the xdg-open command, similar to the open command on macOS"; \
+		sudo apt install xdg-utils; \
+		echo "Run these two commands in your terminal to add Homebrew to your PATH:"; \
+		(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/kento/.bashrc; \
+		eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; \
+	fi
