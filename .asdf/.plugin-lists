@@ -2,9 +2,10 @@
 awscli
 golang
 nodejs
+pnpm
 php
+yarn
 python
 ruby
 terraform
 terragrunt
-yarn

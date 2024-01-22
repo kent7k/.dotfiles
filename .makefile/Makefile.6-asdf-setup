@@ -8,28 +8,40 @@ GREEN := $(shell tput setaf 2)
 YELLOW := $(shell tput setaf 3)
 RED := $(shell tput setaf 1)
 
-asdf: check-asdf-plugins install-asdf-tools
+asdf: check-asdf-plugins update-asdf-plugins install-asdf-tools
 
 # The main target
 check-asdf-plugins:
+	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
+	@echo "${BOLD}${GREEN}► Checking ASDF plugins:${NORMAL}"
+	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
 	@PLUGINS=$$(grep -v '^#' $(PLUGIN_LIST_PATH)); \
 	for PLUGIN in $$PLUGINS; do \
-		echo "\n${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"; \
-		echo "${BOLD}${GREEN}► Checking ASDF plugin: $$PLUGIN ${NORMAL}"; \
-		echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"; \
 		PLUGIN_EXISTS=`asdf plugin list | grep -q $$PLUGIN && echo 1 || echo 0`; \
 		if [ $$PLUGIN_EXISTS -eq 0 ]; then \
-            echo "${BOLD}${RED}Plugin $$PLUGIN is not installed${NORMAL}"; \
-            echo "${BOLD}${GREEN}Installing plugin $$PLUGIN${NORMAL}"; \
-            asdf plugin add $$PLUGIN; \
-        else \
-            echo "\n${BOLD}${GREEN}✓ $$PLUGIN is installed${NORMAL}\n"; \
-        fi; \
-	done; \
-	printf "${BOLD}${GREEN}Updating all ASDF plugins...${NORMAL}\n"; \
-	asdf plugin-update --all
+			echo "${BOLD}${RED}✗ $$PLUGIN not installed${NORMAL}"; \
+		else \
+			echo "${BOLD}${GREEN}✓ $$PLUGIN${NORMAL}"; \
+		fi; \
+	done
+
+update-asdf-plugins:
+	@echo ""
+	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
+	@echo "${BOLD}${GREEN}► Updating all ASDF plugins...${NORMAL}"
+	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
+	@PLUGINS=$$(grep -v '^#' $(PLUGIN_LIST_PATH)); \
+	for PLUGIN in $$PLUGINS; do \
+		update_status=$$(asdf plugin-update $$PLUGIN 2>&1); \
+		if echo "$$update_status" | grep -q 'Already on'; then \
+			echo "${GREEN}Already up to date: $$PLUGIN${NORMAL}"; \
+		else \
+			echo "${BOLD}${GREEN}Updated $$PLUGIN${NORMAL}"; \
+		fi; \
+	done
 
 # -------------------------------------
+
 # > asdf plugin-update --all
 # Updating python to master
 # From https://github.com/danhper/asdf-python
@@ -78,3 +90,4 @@ install-asdf-tools:
 		fi; \
 		i=$$((i+1)); \
 	done
+	asdf reshim
