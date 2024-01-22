@@ -4,4 +4,6 @@ if [[ "$(uname)" == "Linux" ]]; then
 	alias pbpaste='xsel --clipboard --output'
 elif [[ "$(uname)" == "Darwin" ]]; then
     alias pbc='pbcopy'
+#    pbc コピ
+#    pbcx? コピー＆出力
 fi
