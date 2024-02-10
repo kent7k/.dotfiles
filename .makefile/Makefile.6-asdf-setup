@@ -1,5 +1,5 @@
 # Define the path to the .plugin-lists
-PLUGIN_LIST_PATH := $(HOME)/.dotfiles/.asdf/.plugin-lists
+PLUGIN_LIST_PATH := ${DOT_FILES}/.asdf/.plugin-lists
 
 # Shell commands to make text bold and colored
 BOLD := $(shell tput bold)
@@ -8,18 +8,32 @@ GREEN := $(shell tput setaf 2)
 YELLOW := $(shell tput setaf 3)
 RED := $(shell tput setaf 1)
 
-asdf: check-asdf-plugins update-asdf-plugins install-asdf-tools
+asdf: install-asdf check-asdf-plugins update-asdf-plugins install-asdf-tools
+
+ASDF_DIR := $(HOME)/.asdf
+# TODO: Update this to the latest version
+ASDF_VERSION := v0.14.0
+
+install-asdf:
+	@if [ ! -d "$(ASDF_DIR)" ]; then \
+		echo "asdf not found. Cloning asdf into $(ASDF_DIR)..."; \
+		git clone https://github.com/asdf-vm/asdf.git $(ASDF_DIR) --branch $(ASDF_VERSION); \
+	else \
+		echo "asdf is already installed at $(ASDF_DIR)"; \
+	fi
 
 # The main target
 check-asdf-plugins:
 	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
 	@echo "${BOLD}${GREEN}► Checking ASDF plugins:${NORMAL}"
 	@echo "${BOLD}${YELLOW}-----------------------------------------------${NORMAL}"
+	asdf update
 	@PLUGINS=$$(grep -v '^#' $(PLUGIN_LIST_PATH)); \
 	for PLUGIN in $$PLUGINS; do \
 		PLUGIN_EXISTS=`asdf plugin list | grep -q $$PLUGIN && echo 1 || echo 0`; \
 		if [ $$PLUGIN_EXISTS -eq 0 ]; then \
 			echo "${BOLD}${RED}✗ $$PLUGIN not installed${NORMAL}"; \
+			asdf plugin add $$PLUGIN; \
 		else \
 			echo "${BOLD}${GREEN}✓ $$PLUGIN${NORMAL}"; \
 		fi; \
