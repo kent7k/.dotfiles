@@ -35,6 +35,40 @@ case "$(uname)" in
         echo "$(uname)"
 
         # Fixme: PATH for Ubuntu, between eval and export
+        export PATH="/home/kento/.local/bin:$PATH"
+        export PATH="/usr/local/sbin:$PATH"
+        export PATH="/usr/local/bin:$PATH"
+        export PATH="/usr/sbin:$PATH"
+        export PATH="/usr/bin:$PATH"
+        export PATH="/sbin:$PATH"
+        export PATH="/bin:$PATH"
+        export PATH="/usr/games:$PATH"
+        export PATH="/usr/local/games:$PATH"
+        export PATH="/snap/bin:$PATH"
+        export PATH="/usr/lib/wsl/lib:$PATH"
+
+        export PATH="$HOME/.local/bin:$PATH"
+        export PATH="/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:$PATH"
+        export PATH="/mnt/c/Program Files/Amazon/AWSCLIV2/:$PATH"
+        export PATH="/mnt/c/Program Files/Git/cmd:$PATH"
+        export PATH="/mnt/c/Program Files/Microsoft VS Code/bin:$PATH"
+        export PATH="/mnt/c/Program Files/PowerShell/7/:$PATH"
+        export PATH="/mnt/c/Program Files/Python310/:$PATH"
+        export PATH="/mnt/c/Program Files/Python310/Scripts/:$PATH"
+        export PATH="/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_2.0.9.0_x64__8wekyb3d8bbwe:$PATH"     
+        export PATH="/mnt/c/Program Files/dotnet/:$PATH"
+        export PATH="/mnt/c/Program Files/nodejs/:$PATH"
+        export PATH="/mnt/c/Users/$USER_NAME/AppData/Local/JetBrains/Toolbox/scripts:$PATH"
+        export PATH="/mnt/c/Users/$USER_NAME/AppData/Local/Microsoft/WindowsApps:$PATH"
+        export PATH="/mnt/c/Users/$USER_NAME/AppData/Roaming/npm:$PATH"
+        export PATH="/mnt/c/Users/$USER_NAME/scoop/shims:$PATH"
+        export PATH="/mnt/c/WINDOWS:$PATH"
+        export PATH="/mnt/c/WINDOWS/System32/OpenSSH/:$PATH"
+        export PATH="/mnt/c/WINDOWS/System32/Wbem:$PATH"
+        export PATH="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:$PATH"
+        export PATH="/mnt/c/WINDOWS/system32:$PATH"
+
+        export PATH="$PATH:$HOME/.local/bin”
 
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
