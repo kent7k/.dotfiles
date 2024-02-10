@@ -10,8 +10,8 @@ else
     $(error Unsupported OS)
 endif
 
-BREW_FORMULAE_PATH := $(DOT_FILES)/.brewfile/formulae
-BREW_CASK_PATH := $(DOT_FILES)/.brewfile/cask
+BREW_FORMULAE_PATH := ${DOT_FILES}/.brewfile/formulae
+BREW_CASK_PATH := ${DOT_FILES}/.brewfile/cask
 
 BREW_FORMULAE_FILES= \
 	${BREW_FORMULAE_PATH}/00-terminal.Brewfile \

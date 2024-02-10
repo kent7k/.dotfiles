@@ -35,8 +35,8 @@ add_brew_zsh_to_shells:
 
 set_zsh:
 	@echo "\n${BOLD}${GREEN}► Setting up zsh...${NORMAL}\n";
-	chmod +x .zsh/.zshrc-before.sh
-	.zsh/.zshrc-before.sh
+	chmod +x ${DOT_FILES}/.zsh/.zshrc-before.sh
+	${DOT_FILES}/.zsh/.zshrc-before.sh
 	@case "$(shell uname)" in \
 	Darwin) \
 		if [ "$$SHELL" != "/opt/homebrew/bin/zsh" ]; then \

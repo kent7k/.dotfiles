@@ -1,4 +1,4 @@
-MAS_APPS_FILE := $(DOT_FILES)/.masfile/Masfile
+MAS_APPS_FILE := ${DOT_FILES}/.masfile/Masfile
 MAS_APPS := $(shell awk -F '//' '{print $$1}' $(MAS_APPS_FILE) | tr -d ' ')
 
 BOLD := $(shell tput bold)

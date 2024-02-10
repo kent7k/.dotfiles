@@ -44,7 +44,22 @@ Coming soon...
 Coming soon...
 
 ### Start
+V2:
+```sh
+cd ~
 
+# Config for SSH
+git clone .dotfile
+
+
+cd ~; chmod +x ./.dotfiles/.makefile/entrypoint.sh
+source ./.dotfiles/.makefile/entrypoint.sh
+
+cd ~; make -f ./.dotfiles/.makefile/Makefile.0-setup setup-brew
 ```
+
+V1
+```sh
 make -f Makefile.main 
 ```
+
