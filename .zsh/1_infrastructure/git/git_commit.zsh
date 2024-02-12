@@ -89,25 +89,25 @@ function git_commit() {
 
 # If the user typed something, update GIT_COMMIT_NAME
 if [ -n "$TYPED_COMMIT_NAME" ]; then
-    COMMIT_NAME="$TYPED_COMMIT_NAME"
-    if [[ "$(uname)" == "Darwin" ]]; then
-        # macOS version
-        sed -i "" "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
-    else
-        # GNU/Linux version (including WSL)
-        sed -i "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
-    fi
+	COMMIT_NAME="$TYPED_COMMIT_NAME"
+	if [[ "$(uname)" == "Darwin" ]]; then
+		# macOS version
+		sed -i "" "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
+	else
+		# GNU/Linux version (including WSL)
+		sed -i "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
+	fi
 else
-    COMMIT_NAME="$GIT_COMMIT_NAME"
+	COMMIT_NAME="$GIT_COMMIT_NAME"
 fi
 
 # Update or append GIT_COMMIT_DATE
 if [[ "$(uname)" == "Darwin" ]]; then
-    # macOS version
-    sed -i "" "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
+	# macOS version
+	sed -i "" "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
 else
-    # GNU/Linux version (including WSL)
-    sed -i "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
+	# GNU/Linux version (including WSL)
+	sed -i "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
 fi
 
 
