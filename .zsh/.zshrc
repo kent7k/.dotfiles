@@ -34,7 +34,7 @@ case "$(uname)" in
         # HISTFILESIZE=2000
         echo "$(uname)"
 
-        export PATH="$PATH:$HOME/.local/bin”
+        export PATH="$PATH:$HOME/.local/bin"
 
 #         Fixme: This is a temporary fix for the issue with the PATH
 #         export PATH="/home/kento/.local/bin:$PATH"
@@ -135,5 +135,3 @@ alias sh2='source ~/.zshrc'
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

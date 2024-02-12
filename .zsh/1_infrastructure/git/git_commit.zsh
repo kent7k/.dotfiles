@@ -70,10 +70,12 @@ function git_commit() {
 
 	# Get today's date and calculate the difference in days
 	TODAY_DATE=$(date +"%Y-%m-%d")
-	if [ -n "$GIT_COMMIT_DATE" ]; then
+	if [[ "$(uname)" == "Darwin" ]]; then
+		# macOS version with -j flag
 		DATE_DIFF=$((($(date -jf "%Y-%m-%d" "$TODAY_DATE" +%s) - $(date -jf "%Y-%m-%d" "$GIT_COMMIT_DATE" +%s)) / 86400))
 	else
-		DATE_DIFF=0
+		# Linux version without -j flag
+		DATE_DIFF=$((($(date -d "$TODAY_DATE" +%s) - $(date -d "$GIT_COMMIT_DATE" +%s)) / 86400))
 	fi
 
 	echo_section "Committing Changes as $GIT_COMMIT_NAME" "$DATE_DIFF"
@@ -85,24 +87,29 @@ function git_commit() {
 
 	read -r TYPED_COMMIT_NAME
 
-	# If the user typed something, update GIT_COMMIT_NAME
-	if [ ! -z "$TYPED_COMMIT_NAME" ]; then
-		COMMIT_NAME="$TYPED_COMMIT_NAME"
-		if grep -q "export GIT_COMMIT_NAME=" "./.envrc"; then
-			sed -i "" "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
-		else
-			echo "export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"" >>./.envrc
-		fi
+# If the user typed something, update GIT_COMMIT_NAME
+if [ -n "$TYPED_COMMIT_NAME" ]; then
+	COMMIT_NAME="$TYPED_COMMIT_NAME"
+	if [[ "$(uname)" == "Darwin" ]]; then
+		# macOS version
+		sed -i "" "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
 	else
-		COMMIT_NAME="$GIT_COMMIT_NAME"
+		# GNU/Linux version (including WSL)
+		sed -i "s/^export GIT_COMMIT_NAME=.*/export GIT_COMMIT_NAME=\"$TYPED_COMMIT_NAME\"/" "./.envrc"
 	fi
+else
+	COMMIT_NAME="$GIT_COMMIT_NAME"
+fi
 
-	# Update or append GIT_COMMIT_DATE
-	if grep -q "export GIT_COMMIT_DATE=" "./.envrc"; then
-		sed -i "" "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
-	else
-		echo "export GIT_COMMIT_DATE=\"$TODAY_DATE\"" >>./.envrc
-	fi
+# Update or append GIT_COMMIT_DATE
+if [[ "$(uname)" == "Darwin" ]]; then
+	# macOS version
+	sed -i "" "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
+else
+	# GNU/Linux version (including WSL)
+	sed -i "s/^export GIT_COMMIT_DATE=.*/export GIT_COMMIT_DATE=\"$TODAY_DATE\"/" "./.envrc"
+fi
+
 
 	printf "%sDo you want to use --no-verify option?%s (Y/n)\n" "${GREEN}" "${NORMAL}"
 
